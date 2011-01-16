@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>The Computability Menagerie</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"/>
+  <script type='text/javascript' src='{{ url_for('static', filename='jquery-1.4.4.min.js') }}'></script>
+  <script type="text/javascript"><![CDATA[
+    var nodes;
+    var numSelected = 0;
+    $(document).ready(function(){
+      nodes = $('g[class="node"]');
+      nodes.each(function(i, node) {
+        node.selected = false; 
+        node.toggleSelected = function() {
+          if (this.getAttribute('class') == 'node') {
+            this.setAttribute('class', 'selected');
+            this.selected = true;
+            numSelected++;
+          } else {
+            this.setAttribute('class', 'node');
+            this.selected = false;
+            numSelected--;
+          }
+          $('#numSelected').text(numSelected);
+          $('#viewSubgraph')[0].disabled = (numSelected < 2);
+          $('#showClassDetails')[0].disabled = (numSelected != 1);
+          $('#showImplications')[0].disabled = (numSelected != 2);
+        };
+        node.addEventListener("click", function(evt) { evt.target.parentNode.toggleSelected(); }, true);
+      });
+    });
+
+
+    function showClassDetails() {
+      nodes.each(function(i, node) {
+        if (node.selected) $(document)[0].location = 'showClassDetails/' + node.id;
+      });
+    }
+
+    function showImplications() {
+      var url = 'showImplications';
+      nodes.each(function(i, node) {
+        if (node.selected) url += '/'+node.id;
+      });
+      $(document)[0].location = url;
+    }
+
+    function viewSubgraph() {
+      var selected = [];
+      nodes.each(function(i, node) {
+        if (node.selected) { selected.push(node.id); };
+      });
+      var url = '?classes=' + selected;
+      $(document)[0].location = url;
+    }
+
+    function unselectAll() {
+      nodes.each(function(i, node) {
+        if (node.selected) { node.toggleSelected(); }
+      }); 
+    }
+
+]]>
+</script>
+</head>
+<body>
+  <div id="controls">
+    <table>
+      <tr>
+	<td><div id="numSelected">0</div></td>
+	<td>selected</td>
+	<td><input type="button" id="showClassDetails" onclick="showClassDetails();" value="Show class details" disabled="true"/></td>
+	<td><input type="button" id="showImplications" onclick="showImplications();" value="Show implications" disabled="true"/></td>
+	<td><input type="button" id="viewSubgraph" onclick="viewSubgraph();" value="View subgraph" disabled="true"/></td>
+	<td><input type="button" id="unselectAll" onclick="unselectAll();" value="Unselect all"/></td>
+      </tr>
+    </table>
+  </div>
+  
+  
+  <div id="graph">
+  {{ graph | safe }}
+  </div>
+</body>
+</html>
+
+
