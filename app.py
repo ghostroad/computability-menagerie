@@ -42,7 +42,7 @@ def showClassDetails(className):
     return render_template("classDetail.html", **properties)
 
 @app.route('/showImplications/<classA>/<classB>')
-def showClassDetails(classA, classB):
+def showImplications(classA, classB):
     A = m[classA]
     B = m[classB]
     implications = [];
