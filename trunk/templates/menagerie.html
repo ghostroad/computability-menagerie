@@ -7,9 +7,18 @@
   <script type='text/javascript' src='{{ url_for('static', filename='jquery-1.4.4.min.js') }}'></script>
   <script type="text/javascript"><![CDATA[
     var nodes;
+
+    var showClassDetailsButton;
+    var showImplicationsButton;
+    var viewSubgraphButton;
+
     var numSelected = 0;
     $(document).ready(function(){
       nodes = $('g[class="node"]');
+      showClassDetailsButton = $('#showClassDetails')[0];
+      showImplicationsButton = $('#showImplications')[0];
+      viewSubgraphButton = $('#viewSubgraph')[0];
+
       nodes.each(function(i, node) {
         node.selected = false; 
         node.toggleSelected = function() {
@@ -23,22 +32,29 @@
             numSelected--;
           }
           $('#numSelected').text(numSelected);
-          $('#viewSubgraph')[0].disabled = (numSelected < 2);
-          $('#showClassDetails')[0].disabled = (numSelected != 1);
-          $('#showImplications')[0].disabled = (numSelected != 2);
+          viewSubgraphButton.disabled = (numSelected < 2);
+          showClassDetailsButton.disabled = (numSelected != 1);
+          showImplicationsButton.disabled = (numSelected != 2);
         };
         node.addEventListener("click", function(evt) { evt.target.parentNode.toggleSelected(); }, true);
       });
     });
 
+    function disableButtons() {
+      showImplicationsButton.disabled = true;
+      showClassDetailsButton.disabled = true;
+      viewSubgraphButton.disabled = true;
+    }
 
     function showClassDetails() {
+      disableButtons();
       nodes.each(function(i, node) {
         if (node.selected) $(document)[0].location = 'showClassDetails/' + node.id;
       });
     }
 
     function showImplications() {
+      disableButtons();
       var url = 'showImplications';
       nodes.each(function(i, node) {
         if (node.selected) url += '/'+node.id;
@@ -47,6 +63,7 @@
     }
 
     function viewSubgraph() {
+      disableButtons();
       var selected = [];
       nodes.each(function(i, node) {
         if (node.selected) { selected.push(node.id); };
