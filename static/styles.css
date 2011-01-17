@@ -1,15 +1,17 @@
-.selected ellipse {
-    fill: #FFCC66;
+.selected ellipse, .selected polygon {
+    fill: #FF5050
 }
 
-.selected polygon {
-    fill: #FFCC66;
+g text {
+    pointer-events : none
+}
+
+g.node:hover, g.selected:hover {
+    fill: white;
+    font-weight: bold;
 }
 
 .className {
     color: #990000;
 }
 
-text {
-    pointer-events: none;
-}

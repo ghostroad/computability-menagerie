@@ -1,7 +1,8 @@
+Display something if an implication is unknown on the justifications page
+Error page
+Titles for justification pages
 Write tests to make sure node styling doesn't break
-Highlight nodes when hovered over (make text highlighted/bold?)
 Recolor/restore when a single node selected/deselected
-Put in checkboxes for showing/hiding weak/strong open implications
 Labels should be Tex?
 What to do when graph has cycles
 Trivial justifications need to be handled correctly

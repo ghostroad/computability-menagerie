@@ -4,18 +4,30 @@
 <head>
   <title>The Computability Menagerie</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"/>
-  <script type='text/javascript' src='{{ url_for('static', filename='jquery-1.4.4.min.js') }}'></script>
+  <script type="text/javascript" src='{{ url_for('static', filename='jquery-1.4.4.min.js') }}'></script>
   <script type="text/javascript"><![CDATA[
     var nodes;
+    var weakEdges;
+    var strongEdges;
 
     var showImplicationsButton;
     var viewSubgraphButton;
-
+    var showWeakOpenCheckbox;
+    var showStrongOpenCheckbox;
     var numSelected = 0;
+
     $(document).ready(function(){
+
       nodes = $('g[class="node"]');
+      weakEdges = $('g[id|="weak"]');
+      strongEdges = $('g[id|="strong"]');
+
       showImplicationsButton = $('#showImplications')[0];
       viewSubgraphButton = $('#viewSubgraph')[0];
+      showWeakOpenCheckbox = $('#showWeakOpen')[0];
+      showStrongOpenCheckbox = $('#showStrongOpen')[0];
+
+      handleOpenImplicationPreferences();
 
       nodes.each(function(i, node) {
         node.selected = false; 
@@ -36,6 +48,7 @@
         node.addEventListener("click", function(evt) { evt.target.parentNode.toggleSelected(); }, true);
         node.addEventListener("dblclick", function(evt) { showClassDetails(evt.target.parentNode.id); }, true);
       });
+
     });
 
     function disableButtons() {
@@ -45,7 +58,7 @@
 
     function showClassDetails(node) {
       disableButtons();
-      $(document)[0].location = 'showClassDetails/' + node;
+      window.open('showClassDetails/' + node);
     }
 
     function showImplications() {
@@ -54,7 +67,7 @@
       nodes.each(function(i, node) {
         if (node.selected) url += '/'+node.id;
       });
-      $(document)[0].location = url;
+      window.open(url);
     }
 
     function viewSubgraph() {
@@ -64,13 +77,44 @@
         if (node.selected) { selected.push(node.id); };
       });
       var url = '?classes=' + selected;
-      $(document)[0].location = url;
+      window.location = url;
     }
 
     function unselectAll() {
       nodes.each(function(i, node) {
         if (node.selected) { node.toggleSelected(); }
       }); 
+    }
+
+    function updateWeakOpen() {
+      var display = showWeakOpenCheckbox.checked ? "" : "none";
+      weakEdges.each(function(i, e) { e.setAttribute("display", display); });
+    }
+
+    function updateStrongOpen() {
+      var display = showStrongOpenCheckbox.checked ? "" : "none";
+      strongEdges.each(function(i, e) { e.setAttribute("display", display); });
+    }
+
+    function updateHash() {
+      var showWeakOpen = showWeakOpenCheckbox.checked;
+      var showStrongOpen = showStrongOpenCheckbox.checked;
+      window.location.hash = showWeakOpen + '-' + showStrongOpen;
+    }
+
+    function handleOpenImplicationPreferences() {
+      var hash = window.location.hash;
+      var showWeakOpen;
+      var showStrongOpen;
+      if (hash) {
+        var split = hash.substring(1).split('-');
+        showWeakOpen = split[0] == 'true';
+        showStrongOpen = split[1] == 'true';
+      }
+      showWeakOpenCheckbox.checked = showWeakOpen;
+      showStrongOpenCheckbox.checked = showStrongOpen;
+      updateStrongOpen();
+      updateWeakOpen();
     }
 
 ]]>
@@ -85,14 +129,22 @@
 	<td><input type="button" id="showImplications" onclick="showImplications();" value="Show implications" disabled="true"/></td>
 	<td><input type="button" id="viewSubgraph" onclick="viewSubgraph();" value="View subgraph" disabled="true"/></td>
 	<td><input type="button" id="unselectAll" onclick="unselectAll();" value="Unselect all"/></td>
+	<td>&nbsp;</td>
+ 	<td>Show weakest open implications</td>
+	<td><input type="checkbox" id="showWeakOpen" onclick="updateHash(); updateWeakOpen();"/></td>
+	<td>&nbsp;</td>
+	<td>Show strongest open implications</td>
+	<td><input type="checkbox" id="showStrongOpen" onclick="updateHash(); updateStrongOpen();"/></td>
       </tr>
     </table>
+
   </div>
-  
+
   
   <div id="graph">
   {{ graph | safe }}
   </div>
+
 </body>
 </html>
 

@@ -372,6 +372,7 @@ class DotRenderer:
         return graph
 
     def __addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications, classes):
+        idCounter = 0
         for a, b in permutations(classes, 2):
             if a.implicationUnknown(b):
                 strong = weak = True
@@ -385,11 +386,15 @@ class DotRenderer:
                     edge = Edge(a.name, b.name)
                     edge.set_color("red")
                     edge.set_style("dashed")
+                    edge.set_id('"weak-{0}"'.format(idCounter))
+                    idCounter += 1
                     graph.add_edge(edge)
                 if strong and showStrongOpenImplications:
                     edge = Edge(a.name, b.name)
                     edge.set_color("green")
                     edge.set_style("dashed")
+                    edge.set_id('"strong-{0}"'.format(idCounter))
+                    idCounter += 1
                     graph.add_edge(edge)
                         
     def __addClasses(self, graph, displayLongNames, classes):

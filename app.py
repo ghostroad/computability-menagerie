@@ -15,7 +15,7 @@ app = Flask(__name__)
 @app.route('/')
 def displayMenagerie():
     classes = request.args.get("classes", None)
-    g = DotRenderer(m).render(showOnly = classes and classes.split(","), displayLongNames=True, showWeakOpenImplications = request.args.get("showWeakOpen", False), showStrongOpenImplications = request.args.get("showStrongOpen", False))
+    g = DotRenderer(m).render(showOnly = classes and classes.split(","), displayLongNames=True, showWeakOpenImplications = True, showStrongOpenImplications = True)
     processedSvg = SVGPostProcessor().process(g)
     response = make_response(render_template("menagerie.html", graph = processedSvg.toxml()))
     response.headers["Content-Type"] = "application/xhtml+xml"
