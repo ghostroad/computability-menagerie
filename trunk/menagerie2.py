@@ -222,27 +222,35 @@ class Property(Justifiable):
         self.propertyValue = propertyValue
         self.justification = justification
     def __repr__(self):
-        if not self.known(): return "The {0} of {1} is not known.".format(self.propertyName, self.cls)
-        return self.summary()
-    def summary(self):
         return "{0}({1}) = {2}".format(self.propertyName, self.cls, self.propertyValue)
+    def writeSummary(self, out):
+        out.writeString(self.propertyName + "(")
+        out.writeClass(self.cls)
+        out.writeString(") = {0}".format(self.propertyValue))
     def __eq__(self, other):
         return self.propertyValue == other
     def __ne__(self, other):
         return self.propertyValue != other
 
-class Cardinality(Property):
-    def __init__(self, cls):
-        Property.__init__(self, cls, "cardinality")
-    def summary(self):
-        return "{0} is {1}".format(self.cls, self.propertyValue and "uncountable" or "countable")
+class IsProperty(Property):
+    def __repr__(self):
+        return "{0} is {1}".format(self.cls, self.prettyPropertyValue())
+    def writeSummary(self, out):
+        out.writeClass(self.cls)
+        out.writeString(" is ")
+        out.writeString(self.prettyPropertyValue())
 
-class Category(Property):
+class Cardinality(IsProperty):
     def __init__(self, cls):
-        Property.__init__(self, cls, "category")
-    def summary(self):
-        return "{0} is {1}".format(self.cls, self.propertyValue and "comeager" or "meager")
-        
+        IsProperty.__init__(self, cls, "cardinality")
+    def prettyPropertyValue(self):
+        return self.propertyValue and "uncountable" or "countable"
+
+class Category(IsProperty):
+    def __init__(self, cls):
+        IsProperty.__init__(self, cls, "category")
+    def prettyPropertyValue(self):
+        return self.propertyValue and "comeager" or "meager"
     
 
 class Implication(Justifiable):
@@ -250,12 +258,20 @@ class Implication(Justifiable):
         self.source = source
         self.dest = dest
         self.justification = justification
+    def writeSummary(self, out):
+        out.writeClass(self.source)
+        out.writeImplication()
+        out.writeClass(self.dest)
     def __repr__(self):
         return "{0} -> {1}".format(self.source, self.dest)
 
 class Nonimplication(Implication):
     def __repr__(self):
         return "{0} -/> {1}".format(self.source, self.dest)
+    def writeSummary(self, out):
+        out.writeClass(self.source)
+        out.writeNonImplication()
+        out.writeClass(self.dest)
 
 
 class DirectJustification(NonEmpty):
@@ -313,14 +329,21 @@ class HtmlWriter:
     def __init__(self):
         self.result = []
     def __repr__(self):
-        return "<ul>" + "\n".join(self.result) + "</ul>"
+        return "<ul>" + "".join(self.result) + "</ul>"
     def beginFact(self, fact):
-        self.result.append("<li>" + str(fact))
+        self.result.append("<li>")
+        fact.writeSummary(self)
         self.result.append("<ul>")
     def endFact(self):
         self.result.append("</ul></li>")
     def writeString(self, str):
         self.result.append(str)
+    def writeClass(self, cls):
+        self.result.append('<span class="className">' + (cls.longName or cls.name) + '</span>');
+    def writeImplication(self):
+        self.result.append(" $\\rightarrow$ ")
+    def writeNonImplication(self):
+        self.result.append(" $\\nrightarrow$ ")
     
 
 class DotRenderer:
