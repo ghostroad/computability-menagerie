@@ -1,7 +1,5 @@
 Why is MathJax using image fonts on Firefox?
-Refactor layouts for HTML5 templates
 Recolor/restore when a single node selected/deselected
-Display justifications
 Put in checkboxes for showing/hiding weak/strong open implications
 Labels should be Tex?
 What to do when graph has cycles
