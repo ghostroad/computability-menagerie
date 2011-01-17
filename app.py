@@ -33,12 +33,9 @@ def showClassDetails(className):
     properties = {}
     for attr in CLASS_ATTRIBUTES:
         prop = getattr(cls, attr)
-        if prop.known(): 
-            out = HtmlWriter()
-            prop.write(out)
-            properties[attr] = out
-        else:
-            properties[attr] = "<ul><li> The {0} of <span class=\"className\">{1}</span> is not known.</li></ul>".format(prop.propertyName, cls.longName or cls.name) # fix this ugliness
+        out = HtmlWriter()
+        prop.write(out)
+        properties[attr] = out
     return render_template("classDetail.html", **properties)
 
 @app.route('/showImplications/<classA>/<classB>')
