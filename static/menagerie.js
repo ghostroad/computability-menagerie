@@ -21,10 +21,24 @@ $(document).ready(function(){
 
   handleOpenImplicationPreferences();
 
+
+  $(function() {
+    $('a#calculate').bind('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
+        a: $('input[name="a"]').val(),
+        b: $('input[name="b"]').val()
+      }, function(data) {
+        $("#result").text(data.result);
+      });
+      return false;
+    });
+  });
+
+
   nodes.each(function(i, node) {
     node.selected = false; 
     node.toggleSelected = function() {
-      if (this.getAttribute('class') == 'node') {
+      if (this.getAttribute('class') != 'selected') {
         this.setAttribute('class', 'selected');
         this.selected = true;
         numSelected++;
@@ -34,6 +48,24 @@ $(document).ready(function(){
         numSelected--;
       }
       $('#numSelected').text(numSelected);
+
+      if (numSelected == 1) {
+        var classes = nodes.map(function() { return this.id; }).toArray().join(",");
+	nodes.each(function() {
+	  if (this.selected) {
+            $.getJSON($SCRIPT_ROOT + '/_recolor', { selectedClass: this.id, classes: classes }, 
+              function(data) {
+                if (numSelected == 1) applyColor(data);
+              }
+            );
+          };
+        });
+      } else {
+        nodes.each(function() {
+          if (!this.selected) this.setAttribute('class', 'node');	  
+        });
+      }
+
       viewSubgraphButton.disabled = (numSelected < 2);
       showImplicationsButton.disabled = (numSelected != 2);
     };
@@ -43,18 +75,25 @@ $(document).ready(function(){
 
 });
 
+function applyColor(data) {
+  for (var cls in data) {
+    var nodesToRecolor= data[cls];
+    for (var i = 0; i < nodesToRecolor.length; i++){ 
+      document.getElementById(nodesToRecolor[i]).setAttribute("class", cls);
+    } 
+  }
+}
+
 function disableButtons() {
   showImplicationsButton.disabled = true;
   viewSubgraphButton.disabled = true;
 }
 
 function showClassDetails(node) {
-  disableButtons();
   window.open('showClassDetails/' + node);
 }
 
 function showImplications() {
-  disableButtons();
   var url = 'showImplications';
   nodes.each(function(i, node) {
     if (node.selected) url += '/'+node.id;
@@ -63,7 +102,7 @@ function showImplications() {
 }
 
 function viewSubgraph() {
-  disableButtons();
+  disableButtons(); // hack for firefox weirdness with back button
   var selected = [];
   nodes.each(function(i, node) {
     if (node.selected) { selected.push(node.id); };

@@ -2,6 +2,30 @@
     fill: #FF5050
 }
 
+.properlyAbove ellipse, .properlyAbove polygon {
+    fill: darkred
+}
+
+.above ellipse, .above polygon {
+    fill: red
+}
+
+.properlyBelow ellipse, .properlyBelow polygon {
+    fill: darkblue
+}
+
+.below ellipse, .below polygon {
+    fill: blue
+}
+
+.incomparable ellipse, .incomparable polygon {
+    fill: purple
+}
+
+.other ellipse, .other polygon {
+    fill: gray
+}
+
 g text {
     pointer-events : none
 }

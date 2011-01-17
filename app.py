@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, make_response
+from flask import Flask, jsonify, request, render_template, make_response
 from menagerie2 import *
 from svgutils import *
 
@@ -54,6 +54,25 @@ def showImplications(classA, classB):
         backwardImplication.write(out)
         implications.append(out)
     return render_template("implications.html", implications=implications)
+
+
+@app.route('/_recolor')
+def recolor():
+    cls = m[request.args.get('selectedClass', None)]
+    classes = [m[clsName] for clsName in request.args.get("classes", None).split(",")]
+    result = {"properlyAbove" : [], "above" : [], "properlyBelow": [], "below": [], "incomparable" : [], "other" : []}
+    for other in classes:
+        if other is not cls:
+            if cls.implies(other): 
+                if other.doesNotImply(cls): result["properlyAbove"].append(other.name)
+                else: result["above"].append(other.name)
+            elif other.implies(cls):
+                if cls.doesNotImply(other): result["properlyBelow"].append(other.name)
+                else: result["below"].append(other.name)
+            elif cls.doesNotImply(other) and other.doesNotImply(cls):
+                result["incomparable"].append(other.name)
+            else: result["other"].append(other.name)
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)
