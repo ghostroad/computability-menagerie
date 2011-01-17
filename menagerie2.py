@@ -15,7 +15,7 @@ class MenagerieParser:
     def __init__(self, menagerie):
         comment = Literal("#") + SkipTo(LineEnd())
         name = (Word(alphas+"_", alphanums+"_") + NotAny(Literal("("))).setParseAction(lambda t: menagerie.classMap[t[0]])
-        justification = Optional(QuotedString("\"").setParseAction(lambda t: DirectJustification(t[0])), Empty())
+        justification = Optional(QuotedString("\"").setParseAction(lambda t: DirectJustification(t[0])), Unjustified())
         nonimplication = Literal("-/>").setParseAction(lambda t: menagerie.addNonimplication)
         implication = Literal("->").setParseAction(lambda t: menagerie.addImplication)
         impOp = nonimplication | implication
@@ -196,7 +196,7 @@ class ClassNode:
     def __repr__(self):
         return self.name
 
-class NonEmpty():
+class NonEmpty:
     def empty(self):
         return False
 
@@ -224,6 +224,13 @@ class Property(Justifiable):
     def __repr__(self):
         return "{0}({1}) = {2}".format(self.propertyName, self.cls, self.propertyValue)
     def writeSummary(self, out):
+        if not self.known(): 
+            out.writeString("The {0} of ".format(self.propertyName))
+            out.writeClass(self.cls)
+            out.writeString(" is not known.")
+        else:
+            self.writeSummaryKnown(out)
+    def writeSummaryKnown(self, out):
         out.writeString(self.propertyName + "(")
         out.writeClass(self.cls)
         out.writeString(") = {0}".format(self.propertyValue))
@@ -235,7 +242,7 @@ class Property(Justifiable):
 class IsProperty(Property):
     def __repr__(self):
         return "{0} is {1}".format(self.cls, self.prettyPropertyValue())
-    def writeSummary(self, out):
+    def writeSummaryKnown(self, out):
         out.writeClass(self.cls)
         out.writeString(" is ")
         out.writeString(self.prettyPropertyValue())
@@ -273,7 +280,6 @@ class Nonimplication(Implication):
         out.writeNonImplication()
         out.writeClass(self.dest)
 
-
 class DirectJustification(NonEmpty):
     def __init__(self, justification):
         self.justification = justification
@@ -286,8 +292,11 @@ class DirectJustification(NonEmpty):
     def write(self, out):
         out.writeString(self.justification)
         
+class Empty:
+    def write(self, out):
+        pass
 
-class Empty(DirectJustification):
+class Unjustified(DirectJustification):
     def __init__(self):
         DirectJustification.__init__(self, "UNJUSTIFIED")
     def empty(self):
@@ -416,11 +425,11 @@ class DotRenderer:
             node.set_margin("0.22,0.1")
             node.set_color("red")
             if cls.cardinality == COUNTABLE:
-                node.set_style=""
+                node.set_style("")
             elif cls.cardinality == UNCOUNTABLE:
-                node.set_style="filled"
+                node.set_style("filled")
             else:
-                node.set_style="filled, dashed"
+                node.set_style("filled, dashed")
         else:
             node.set_shape("box")
             node.set_margin("0.22,0.1")

@@ -1,6 +1,5 @@
-Make text unselectable http://volity.org/wiki/index.cgi?SVG_Tricks
+Write tests to make sure node styling doesn't break
 Highlight nodes when hovered over (make text highlighted/bold?)
-Why is MathJax using image fonts on Firefox?
 Recolor/restore when a single node selected/deselected
 Put in checkboxes for showing/hiding weak/strong open implications
 Labels should be Tex?
