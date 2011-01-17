@@ -8,14 +8,12 @@
   <script type="text/javascript"><![CDATA[
     var nodes;
 
-    var showClassDetailsButton;
     var showImplicationsButton;
     var viewSubgraphButton;
 
     var numSelected = 0;
     $(document).ready(function(){
       nodes = $('g[class="node"]');
-      showClassDetailsButton = $('#showClassDetails')[0];
       showImplicationsButton = $('#showImplications')[0];
       viewSubgraphButton = $('#viewSubgraph')[0];
 
@@ -33,24 +31,21 @@
           }
           $('#numSelected').text(numSelected);
           viewSubgraphButton.disabled = (numSelected < 2);
-          showClassDetailsButton.disabled = (numSelected != 1);
           showImplicationsButton.disabled = (numSelected != 2);
         };
         node.addEventListener("click", function(evt) { evt.target.parentNode.toggleSelected(); }, true);
+        node.addEventListener("dblclick", function(evt) { showClassDetails(evt.target.parentNode.id); }, true);
       });
     });
 
     function disableButtons() {
       showImplicationsButton.disabled = true;
-      showClassDetailsButton.disabled = true;
       viewSubgraphButton.disabled = true;
     }
 
-    function showClassDetails() {
+    function showClassDetails(node) {
       disableButtons();
-      nodes.each(function(i, node) {
-        if (node.selected) $(document)[0].location = 'showClassDetails/' + node.id;
-      });
+      $(document)[0].location = 'showClassDetails/' + node;
     }
 
     function showImplications() {
@@ -87,7 +82,6 @@
       <tr>
 	<td><div id="numSelected">0</div></td>
 	<td>selected</td>
-	<td><input type="button" id="showClassDetails" onclick="showClassDetails();" value="Show class details" disabled="true"/></td>
 	<td><input type="button" id="showImplications" onclick="showImplications();" value="Show implications" disabled="true"/></td>
 	<td><input type="button" id="viewSubgraph" onclick="viewSubgraph();" value="View subgraph" disabled="true"/></td>
 	<td><input type="button" id="unselectAll" onclick="unselectAll();" value="Unselect all"/></td>
