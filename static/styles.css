@@ -9,3 +9,7 @@
 .className {
     color: #990000;
 }
+
+text {
+    pointer-events: none;
+}
