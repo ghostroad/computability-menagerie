@@ -87,13 +87,11 @@
     }
 
     function updateWeakOpen() {
-      var display = showWeakOpenCheckbox.checked ? "" : "none";
-      weakEdges.each(function(i, e) { e.setAttribute("display", display); });
+      showWeakOpenCheckbox.checked ? weakEdges.show() : weakEdges.hide();
     }
 
     function updateStrongOpen() {
-      var display = showStrongOpenCheckbox.checked ? "" : "none";
-      strongEdges.each(function(i, e) { e.setAttribute("display", display); });
+      showStrongOpenCheckbox.checked ? strongEdges.show() : strongEdges.hide();
     }
 
     function updateHash() {
