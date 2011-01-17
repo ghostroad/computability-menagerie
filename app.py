@@ -38,7 +38,7 @@ def showClassDetails(className):
             prop.write(out)
             properties[attr] = out
         else:
-            properties[attr] = "<ul><li>" + str(prop) + "</li></ul>" # fix this ugliness
+            properties[attr] = "<ul><li> The {0} of <span class=\"className\">{1}</span> is not known.</li></ul>".format(prop.propertyName, cls.longName or cls.name) # fix this ugliness
     return render_template("classDetail.html", **properties)
 
 @app.route('/showImplications/<classA>/<classB>')

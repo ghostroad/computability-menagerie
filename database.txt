@@ -98,7 +98,7 @@ SuperLow "superlow"
 
 
 BB3R -> BB2R				""
-M(BB3R) = 1					"The class of 3-randoms has measure one"
+#M(BB3R) = 1					"The class of 3-randoms has measure one"
 BN1R -> BN2R				""
 M(BN2R) = 0					"The class of 2-randoms has measure one"
 BB2G -> BB1G				""

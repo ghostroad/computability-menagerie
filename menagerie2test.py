@@ -64,7 +64,7 @@ class TestMenagerie(unittest.TestCase):
         parser = MenagerieParser(m)
         parser.read("A -> B\nB is countable")
         B = m["B"]
-        self.assertEqual("The hdim of B is not known.", str(B.hdim))
+        self.assertEqual("hdim(B) = None", str(B.hdim))
         Deductions().apply(m)
         self.assertEqual(COUNTABLE, B.cardinality)
         self.assertEqual(MEAGER, B.category)
@@ -119,6 +119,21 @@ class TestMenagerie(unittest.TestCase):
         C = m["C"]
         Deductions().apply(m)
         self.assertEqual("[A -> B : UNJUSTIFIED, C -/> B : UNJUSTIFIED]", C.doesNotImply(A).justification.plain())
+
+    def test_generate_html_output_of_justtifications(self):
+        m = Menagerie()
+        parser = MenagerieParser(m)
+        parser.readFromFile("database.txt")
+        Deductions().apply(m)
+        BBmin = m["BBmin"]
+        BN3G = m["BN3G"]
+        out = HtmlWriter()
+        BBmin.implies(BN3G).write(out)
+        self.assertTrue(str(out).startswith("""<ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 3-generic</span><ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 1-generic</span>"""))
+
+        out = HtmlWriter()
+        BBmin.cardinality.write(out)
+        self.assertEqual('<ul><li><span class="className">minimal or computable</span> is uncountable<ul><li>hdim(<span class="className">minimal or computable</span>) = 1<ul>In [Greenberg and Miller 2010, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of minimal degree and effective Hausdorff dimension 1. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) Hausdorff dimension 1 [Kjos-Hanssen]</ul></li></ul></li></ul>', str(out))
 
     def test_generate_dot_output(self):
         m = Menagerie()

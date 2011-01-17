@@ -1,11 +1,9 @@
-Replace implication and nonimplication symbols with Latex when rendering HTML
+Why is MathJax using image fonts on Firefox?
 Refactor layouts for HTML5 templates
 Recolor/restore when a single node selected/deselected
 Display justifications
 Put in checkboxes for showing/hiding weak/strong open implications
 Labels should be Tex?
-Should short names ever be displayed?
-Border around graph so that we can see popup
 What to do when graph has cycles
 Trivial justifications need to be handled correctly
 LatexWriter
