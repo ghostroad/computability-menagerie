@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>The Computability Menagerie</title>
-  <script type="text/javascript" src="{{ url_for('static', filename = 'mathjax/MathJax.js') }}">
-      MathJax.Hub.Config({
-          extensions: ["tex2jax.js", "TeX/AMSsymbols.js"],
-          jax: ["input/TeX", "output/HTML-CSS"],
-          tex2jax: {
-              inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-              displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-          },
-          "HTML-CSS": { availableFonts: ["TeX"] }
-      });
-  </script>
-</head>
-<body>
+{% extends "justificationLayout.html" %}
+{% block body %}
+
     {{ cardinality|safe }}
 <hr/>
     {{ category|safe }}
@@ -26,7 +11,7 @@
 <hr/>
     {{ pdim|safe }}
 <hr/>
-</body>
-</html>
+
+{% endblock %}
 
 
