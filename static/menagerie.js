@@ -9,6 +9,7 @@ var showStrongOpenCheckbox;
 var numSelected = 0;
 
 $(document).ready(function(){
+  hovertipInit();
   
   $('#help').hide();
   $('#toggleHelp').click( function() { $('#help').toggle(400); } );

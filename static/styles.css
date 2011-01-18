@@ -52,3 +52,17 @@ a.toggleHelp:hover {
     color: red;
     text-decoration: underline;
 }
+
+
+.hovertip {
+    position: relative;
+    display: none; /* in case javascript is disabled */
+    width: 80px;
+    border: 2px #82AE47 solid ;
+    background-color: #A2D959;
+    font-size: 12px;
+    z-index: 100;
+    margin-left: 0px;
+    margin-top: 0px;
+}
+

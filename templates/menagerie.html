@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"/>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.4.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
   <script type="text/javascript">
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
   </script>
@@ -39,7 +40,7 @@
   <div id="help">
     <ul>
       <li>Select/unselect classes by clicking on them. Selected classes are shown in {{ svgbox("selected") }}.</li>
-      <li>Double-click on a class to see its properties in detail (opens a new tab).</li>
+      <li>Double-click on a class to see its properties in detail (opens a new tab). Alternatively, hover over the class to see a short summary.</li>
       <li>When a single class is selected, the graph is recolored to indicate how other classes relate to the selected class:
 	<table>
 	  <tr><td>{{ svgbox("properlyAbove") }}</td><td>Known to be a proper subclass of the selected class.</td></tr>
@@ -60,6 +61,19 @@
   <div id="graph">
   {{ graph | safe }}
   </div>
+  {% for cls in classes %}
+    <div target="{{ cls.name }}" class="hovertip">
+       <table>
+	 <tr><td>{{ cls.cardinality.prettyPropertyValue() }}</td></tr>
+	 <tr><td>{{ cls.category.prettyPropertyValue() }}</td></tr>
+	 <tr><td>measure {{ cls.measure.propertyValue }}</td></tr>
+	 <tr><td>hdim {{ cls.hdim.propertyValue }}</td></tr>
+	 <tr><td>pdim {{ cls.pdim.propertyValue }}</td></tr>
+	 <tr><td><a class="toggleHelp" onclick="window.open('{{ url_for('showClassDetails', className=cls.name) }}');"><span> Details</span> </a></td></tr>
+       </table>
+    </div>
+  {% endfor %}
 
+  
 </body>
 </html>
