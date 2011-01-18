@@ -29,8 +29,6 @@ class TestMenagerie(unittest.TestCase):
         self.assertEquals(0, len(m.errors))
         BBmin = m["BBmin"]
         BN1R = m["BN1R"]
-        out = TextWriter()
-        BN1R.doesNotImply(BBmin).write(out)
         self.assertEqual("""BN1R -/> BBmin
     BBmin -> BN1G
         If $A\oplus B$ is 1-generic then $A$ and $B$ are Turing incomparable
@@ -47,7 +45,8 @@ class TestMenagerie(unittest.TestCase):
             NotDNC -> BN1R
                 Every 1-random compute a diagonally noncomputable function [Ku{\\v c}era 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA]
         Low1Rand -/> BN1G
-            There is a noncomputable c.e.\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\ set computes a 1-generic""", str(out))
+            There is a noncomputable c.e.\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\ set computes a 1-generic""", str(TextWriter().write(BN1R.doesNotImply(BBmin))))
+        self.assertEqual("""BN1G -> BN2G""", str(TextWriter().write(m["BN1G"].implies(m["BN2G"]))))
 
 
     def test_load_a_database_from_a_string(self):
@@ -120,20 +119,17 @@ class TestMenagerie(unittest.TestCase):
         Deductions().apply(m)
         self.assertEqual("[A -> B : UNJUSTIFIED, C -/> B : UNJUSTIFIED]", C.doesNotImply(A).justification.plain())
 
-    def test_generate_html_output_of_justtifications(self):
+    def test_generate_html_output_of_justifications(self):
         m = Menagerie()
         parser = MenagerieParser(m)
         parser.readFromFile("database.txt")
         Deductions().apply(m)
         BBmin = m["BBmin"]
         BN3G = m["BN3G"]
-        out = HtmlWriter()
-        BBmin.implies(BN3G).write(out)
-        self.assertTrue(str(out).startswith("""<ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 3-generic</span><ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 1-generic</span>"""))
+        actual = HtmlWriter().write(BBmin.implies(BN3G))
+        self.assertTrue(str(actual).startswith("""<ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 3-generic</span><ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 1-generic</span>"""))
 
-        out = HtmlWriter()
-        BBmin.cardinality.write(out)
-        self.assertEqual('<ul><li><span class="className">minimal or computable</span> is uncountable<ul><li>hdim(<span class="className">minimal or computable</span>) = 1<ul>In [Greenberg and Miller 2010, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of minimal degree and effective Hausdorff dimension 1. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) Hausdorff dimension 1 [Kjos-Hanssen]</ul></li></ul></li></ul>', str(out))
+        self.assertEqual('<ul><li><span class="className">minimal or computable</span> is uncountable<ul><li>hdim(<span class="className">minimal or computable</span>) = 1<ul><li>In [Greenberg and Miller 2010, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of minimal degree and effective Hausdorff dimension 1. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) Hausdorff dimension 1 [Kjos-Hanssen]</li></ul></li></ul></li></ul>', str(HtmlWriter().write(BBmin.cardinality)))
 
     def test_generate_dot_output(self):
         m = Menagerie()
@@ -143,6 +139,31 @@ class TestMenagerie(unittest.TestCase):
         graph = DotRenderer(m).render(showOnly = ["LowSchnorr", "LowKurtz", "BBmin", "BB1G", "BNLFO", "NotHigh", "CET", "BN2G", "BN3G", "NotPAinZP"], displayLongNames=True, showWeakOpenImplications=True, showStrongOpenImplications=True)
         processedSvg = SVGPostProcessor().process(graph)
         self.assertTrue("<g class=\"node\" id=\"BN2G\">\n<ellipse" in processedSvg.toxml())
+
+    def test_write_latex_justification(self):
+        m = Menagerie()
+        parser = MenagerieParser(m)
+        parser.readFromFile("database.txt")
+        Deductions().apply(m)
+        self.assertEqual("""\\begin{fact}{BNLFO -/> BBmin}
+\\begin{fact}{BBmin -> NotPA}
+\\begin{fact}{BBmin -> BN1R}
+If $A\\oplus B$ is 1-random then $A$ and $B$ are Turing incomparable
+\\end{fact}
+\\begin{fact}{BN1R -> NotPA}
+There is a $\\Pi^0_1$ class containing only 1-random reals, hence every PA degree computes a 1-random
+\\end{fact}
+\\end{fact}
+\\begin{fact}{BNLFO -/> NotPA}
+\\begin{fact}{HIF -> BNLFO}
+Hyperimmune-free and low for $\\Omega$ implies computable [Miller and Nies] (See [Nies 2009, Computability and Randomness])
+\\end{fact}
+\\begin{fact}{HIF -/> NotPA}
+Use the hyperimmune-free basis theorem
+\\end{fact}
+\\end{fact}
+\\end{fact}
+""", str(LatexWriter().write(m["BNLFO"].doesNotImply(m["BBmin"]))))
 
 if __name__ == "__main__":
     unittest.main()

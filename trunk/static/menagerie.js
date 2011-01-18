@@ -28,12 +28,12 @@ $(document).ready(function(){
   nodes.each(function(i, node) {
     node.selected = false; 
     node.toggleSelected = function() {
-      if (this.getAttribute('class') != 'selected') {
-        this.setAttribute('class', 'selected');
+      if (!this.selected) {
+        $(this).addClass('selected');
         this.selected = true;
         numSelected++;
       } else {
-        this.setAttribute('class', 'node');
+        $(this).removeClass('selected');
         this.selected = false;
         numSelected--;
       }
@@ -52,7 +52,7 @@ $(document).ready(function(){
         });
       } else {
         nodes.each(function() {
-          if (!this.selected) this.setAttribute('class', 'node');	  
+          $(this).removeClass('above properlyAbove below properlyBelow incomparable other');	  
         });
       }
 
@@ -69,7 +69,7 @@ function applyColor(data) {
   for (var cls in data) {
     var nodesToRecolor= data[cls];
     for (var i = 0; i < nodesToRecolor.length; i++){ 
-      document.getElementById(nodesToRecolor[i]).setAttribute("class", cls);
+      $(document.getElementById(nodesToRecolor[i])).addClass(cls); // why is jquery id selection not working here?
     } 
   }
 }

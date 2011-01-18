@@ -28,9 +28,11 @@
 
 g text {
     pointer-events: none;
+    font-family: "Lucida Grande",Lucida,Helvetica,sans-serif;
+    font-size: 12px;
 }
 
-g.node:hover, g.selected:hover {
+g.node:hover {
     fill: white;
     font-weight: bold;
 }
@@ -39,16 +41,21 @@ g.node:hover, g.selected:hover {
     color: #990000;
 }
 
-a.toggleHelp {
+.justificationsTitle {
+   font-weight: bold;
+   font-size: 20px;
+}
+
+a.notALink {
     color: darkblue;
     text-decoration: underline; 
 }
 
-a.toggleHelp span {
+a.notALink span {
     pointer-events: none;
 }
 
-a.toggleHelp:hover {
+a.notALink:hover {
     color: red;
     text-decoration: underline;
 }
@@ -57,9 +64,10 @@ a.toggleHelp:hover {
 .hovertip {
     position: relative;
     display: none; /* in case javascript is disabled */
-    width: 80px;
+    width: 120px;
     border: 2px #82AE47 solid ;
     background-color: #A2D959;
+    font-family: "Lucida Grande",Lucida,Helvetica,sans-serif;
     font-size: 12px;
     z-index: 100;
     margin-left: 0px;

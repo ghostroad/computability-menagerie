@@ -12,6 +12,8 @@
  * Released under the MIT, BSD, and GPL Licenses.
  *
  * Date: Thu Nov 11 19:04:53 2010 -0500
+ * 
+ * Patched by Mushfeq Khan for working with inline SVG elements
  */
 (function( window, undefined ) {
 
@@ -1476,19 +1478,19 @@ jQuery.fn.extend({
 				var elem = this[i];
 
 				if ( elem.nodeType === 1 ) {
-					if ( !elem.className ) {
-						elem.className = value;
+					if ( !elem.getAttribute("class") ) {
+						elem.setAttribute("class", value);
 
 					} else {
-						var className = " " + elem.className + " ",
-							setClass = elem.className;
+						var className = " " + elem.getAttribute("class") + " ",
+							setClass = elem.getAttribute("class");
 
 						for ( var c = 0, cl = classNames.length; c < cl; c++ ) {
 							if ( className.indexOf( " " + classNames[c] + " " ) < 0 ) {
 								setClass += " " + classNames[c];
 							}
 						}
-						elem.className = jQuery.trim( setClass );
+						elem.setAttribute("class", jQuery.trim( setClass ));
 					}
 				}
 			}
@@ -1511,16 +1513,16 @@ jQuery.fn.extend({
 			for ( var i = 0, l = this.length; i < l; i++ ) {
 				var elem = this[i];
 
-				if ( elem.nodeType === 1 && elem.className ) {
+				if ( elem.nodeType === 1 && elem.getAttribute("class") ) {
 					if ( value ) {
-						var className = (" " + elem.className + " ").replace(rclass, " ");
+						var className = (" " + elem.getAttribute("class") + " ").replace(rclass, " ");
 						for ( var c = 0, cl = classNames.length; c < cl; c++ ) {
 							className = className.replace(" " + classNames[c] + " ", " ");
 						}
-						elem.className = jQuery.trim( className );
+						elem.setAttribute("class", jQuery.trim( className ));
 
 					} else {
-						elem.className = "";
+						elem.setAttribute("class", "");
 					}
 				}
 			}
