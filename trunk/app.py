@@ -14,18 +14,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def displayMenagerie():
-    classes = request.args.get("classes", None)
+    classes = request.args.get("classes", None) # change the DotRenderer so it takes honest to god classes
     g = DotRenderer(m).render(showOnly = classes and classes.split(","), displayLongNames=True, showWeakOpenImplications = True, showStrongOpenImplications = True)
     processedSvg = SVGPostProcessor().process(g)
-    response = make_response(render_template("menagerie.html", graph = processedSvg.toxml()))
+    response = make_response(render_template("menagerie.html", graph = processedSvg.toxml(), classes = classes and [m[cls] for cls in classes.split(",")] or m.classes())) # fix this
     response.headers["Content-Type"] = "application/xhtml+xml"
     return response
-
-@app.route('/properties')
-def showProperties():
-    className = request.args.get("className", None)
-    cls = m[className]
-    return render_template("properties.html", cls = cls)
 
 @app.route('/showClassDetails/<className>')
 def showClassDetails(className):
