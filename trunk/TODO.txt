@@ -2,7 +2,6 @@ Display something if an implication is unknown on the justifications page
 Error page
 Titles for justification pages
 Write tests to make sure node styling doesn't break
-Recolor/restore when a single node selected/deselected
 Labels should be Tex?
 What to do when graph has cycles
 Trivial justifications need to be handled correctly

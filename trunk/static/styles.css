@@ -1,33 +1,33 @@
 .selected ellipse, .selected polygon {
-    fill: gold
+    fill: gold;
 }
 
 .properlyAbove ellipse, .properlyAbove polygon {
-    fill: darkred
+    fill: darkred;
 }
 
 .above ellipse, .above polygon {
-    fill: red
+    fill: red;
 }
 
 .properlyBelow ellipse, .properlyBelow polygon {
-    fill: darkblue
+    fill: darkblue;
 }
 
 .below ellipse, .below polygon {
-    fill: blue
+    fill: blue;
 }
 
 .incomparable ellipse, .incomparable polygon {
-    fill: purple
+    fill: purple;
 }
 
 .other ellipse, .other polygon {
-    fill: gray
+    fill: gray;
 }
 
 g text {
-    pointer-events : none
+    pointer-events: none;
 }
 
 g.node:hover, g.selected:hover {
@@ -39,3 +39,16 @@ g.node:hover, g.selected:hover {
     color: #990000;
 }
 
+a.toggleHelp {
+    color: darkblue;
+    text-decoration: underline; 
+}
+
+a.toggleHelp span {
+    pointer-events: none;
+}
+
+a.toggleHelp:hover {
+    color: red;
+    text-decoration: underline;
+}
