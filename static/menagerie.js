@@ -9,6 +9,9 @@ var showStrongOpenCheckbox;
 var numSelected = 0;
 
 $(document).ready(function(){
+  
+  $('#help').hide();
+  $('#toggleHelp').click( function() { $('#help').toggle(400); } );
 
   nodes = $('g[class="node"]');
   weakEdges = $('g[id|="weak"]');
@@ -20,20 +23,6 @@ $(document).ready(function(){
   showStrongOpenCheckbox = $('#showStrongOpen')[0];
 
   handleOpenImplicationPreferences();
-
-
-  $(function() {
-    $('a#calculate').bind('click', function() {
-      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
-        a: $('input[name="a"]').val(),
-        b: $('input[name="b"]').val()
-      }, function(data) {
-        $("#result").text(data.result);
-      });
-      return false;
-    });
-  });
-
 
   nodes.each(function(i, node) {
     node.selected = false; 
