@@ -25,11 +25,20 @@
 	<td>&nbsp;</td>
 	<td>Show strongest open implications</td>
 	<td><input type="checkbox" id="showStrongOpen" onclick="updateHash(); updateStrongOpen();"/></td>
+	<td>&nbsp;</td>
+	<td><a href="#" id="toggleHelp">Help</a></td>
       </tr>
     </table>
-
   </div>
-
+  <div id="help">
+    <ul>
+      <li>Select/unselect classes by clicking on them</li>
+      <li>Double-click on a class to see its properties in detail</li>
+      <li>Select a pair of classes, then click "Show implications" to see the implications between them</li>
+      <li>Select a group of classes, then click "View subgraph" to generate a subgraph consisting only of the selected classes</li>
+    </ul>
+  </div>
+  <hr/>
   
   <div id="graph">
   {{ graph | safe }}
