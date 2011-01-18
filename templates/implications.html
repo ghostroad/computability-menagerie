@@ -1,5 +1,7 @@
 {% extends "justificationLayout.html" %}
 {% block body %}
+  <div class="justificationsTitle">Implications between <span class="className">{{ clsA.longName }}</span> and <span class="className">{{ clsB.longName }}</span></div>
+  <hr/>
 {% for implication in implications %}
   {{ implication|safe }}
   <hr/>

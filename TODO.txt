@@ -1,6 +1,5 @@
-Display something if an implication is unknown on the justifications page
+Make server reload database.txt if it changes
 Error page
-Titles for justification pages
 Write tests to make sure node styling doesn't break
 Labels should be Tex?
 What to do when graph has cycles

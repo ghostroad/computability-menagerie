@@ -11,25 +11,39 @@ Deductions().apply(m)
 app = Flask(__name__)
 
 
+class UnknownImplication:
+    def __init__(self, src, dest):
+        self.src = src
+        self.dest = dest
+    def write(self, out):
+        out.beginFact(self)
+        out.endFact()
+    def writeSummary(self, out):
+        out.writeString("It is not known whether ")
+        out.writeClass(self.src)
+        out.writeImplication()
+        out.writeClass(self.dest)
+        out.writeString(".")
 
 @app.route('/')
 def displayMenagerie():
-    classes = request.args.get("classes", None) # change the DotRenderer so it takes honest to god classes
-    g = DotRenderer(m).render(showOnly = classes and classes.split(","), displayLongNames=True, showWeakOpenImplications = True, showStrongOpenImplications = True)
+    classesParam = request.args.get("classes", None)
+    classNames = classesParam and classesParam.split(",") or []
+    g = DotRenderer(m).render(showOnly = classNames, displayLongNames=True, showWeakOpenImplications = True, showStrongOpenImplications = True)
     processedSvg = SVGPostProcessor().process(g)
-    response = make_response(render_template("menagerie.html", graph = processedSvg.toxml(), classes = classes and [m[cls] for cls in classes.split(",")] or m.classes())) # fix this
+    
+    classes = classNames and [m[className] for className in classNames] or m.classes()
+    response = make_response(render_template("menagerie.html", graph = processedSvg.toxml(), classes = classes))
     response.headers["Content-Type"] = "application/xhtml+xml"
     return response
 
 @app.route('/showClassDetails/<className>')
 def showClassDetails(className):
     cls = m[className]
-    properties = {}
+    properties = {"cls" : cls}
     for attr in CLASS_ATTRIBUTES:
         prop = getattr(cls, attr)
-        out = HtmlWriter()
-        prop.write(out)
-        properties[attr] = out
+        properties[attr] = HtmlWriter().write(prop)
     return render_template("classDetail.html", **properties)
 
 @app.route('/showImplications/<classA>/<classB>')
@@ -37,17 +51,13 @@ def showImplications(classA, classB):
     A = m[classA]
     B = m[classB]
     implications = [];
-    forwardImplication = A.implies(B) or A.doesNotImply(B)
-    backwardImplication = B.implies(A) or B.doesNotImply(A)
-    if forwardImplication:
-        out = HtmlWriter()
-        forwardImplication.write(out)
-        implications.append(out)
-    if backwardImplication:
-        out = HtmlWriter()
-        backwardImplication.write(out)
-        implications.append(out)
-    return render_template("implications.html", implications=implications)
+    forwardImplication = A.implies(B) or A.doesNotImply(B) or UnknownImplication(A, B)
+    backwardImplication = B.implies(A) or B.doesNotImply(A) or UnknownImplication(B, A)
+
+    implications.append(str(HtmlWriter().write(forwardImplication)))
+    implications.append(str(HtmlWriter().write(backwardImplication)))
+    
+    return render_template("implications.html", implications=implications, clsA=A, clsB=B)
 
 
 @app.route('/_recolor')

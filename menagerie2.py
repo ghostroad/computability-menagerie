@@ -15,7 +15,7 @@ class MenagerieParser:
     def __init__(self, menagerie):
         comment = Literal("#") + SkipTo(LineEnd())
         name = (Word(alphas+"_", alphanums+"_") + NotAny(Literal("("))).setParseAction(lambda t: menagerie.classMap[t[0]])
-        justification = Optional(QuotedString("\"").setParseAction(lambda t: DirectJustification(t[0])), Unjustified())
+        justification = Optional(QuotedString("\"").setParseAction(lambda t: t[0] and DirectJustification(t[0]) or Obvious()), Unjustified())
         nonimplication = Literal("-/>").setParseAction(lambda t: menagerie.addNonimplication)
         implication = Literal("->").setParseAction(lambda t: menagerie.addImplication)
         impOp = nonimplication | implication
@@ -290,9 +290,15 @@ class DirectJustification(NonEmpty):
     def plain(self):
         return self.justification
     def write(self, out):
-        out.writeString(self.justification)
+        out.writeLine(self.justification)
         
 class Empty:
+    def write(self, out):
+        pass
+
+class Obvious(DirectJustification):
+    def __init__(self):
+        DirectJustification.__init__(self, None)
     def write(self, out):
         pass
 
@@ -324,6 +330,9 @@ class TextWriter:
         self.indentLevel = 0
     def __currIndent(self):
         return "    " * self.indentLevel
+    def write(self, item):
+        item.write(self)
+        return self
     def __repr__(self):
         return "\n".join(self.result)
     def beginFact(self, fact):
@@ -333,12 +342,19 @@ class TextWriter:
         self.indentLevel -= 1
     def writeString(self, str):
         self.result.append(self.__currIndent() + str)
+    def writeLine(self, str):
+        self.result.append(self.__currIndent() + str)
 
 class HtmlWriter:
     def __init__(self):
         self.result = []
+    def write(self, item):
+        self.result.append("<ul>")
+        item.write(self)
+        self.result.append("</ul>")
+        return self
     def __repr__(self):
-        return "<ul>" + "".join(self.result) + "</ul>"
+        return "".join(self.result)
     def beginFact(self, fact):
         self.result.append("<li>")
         fact.writeSummary(self)
@@ -353,7 +369,35 @@ class HtmlWriter:
         self.result.append(" $\\rightarrow$ ")
     def writeNonImplication(self):
         self.result.append(" $\\nrightarrow$ ")
+    def writeLine(self, str):
+        self.result.append("<li>{0}</li>".format(str))
     
+
+class LatexWriter:
+    def __init__(self):
+        self.result = []
+    def write(self, item):
+        item.write(self)
+        return self
+    def __repr__(self):
+        return "".join(self.result)
+    def beginFact(self, fact):
+        self.result.append("\\begin{fact}{")
+        fact.writeSummary(self)
+        self.result.append("}\n")
+    def endFact(self):
+        self.result.append("\\end{fact}\n")
+    def writeClass(self, cls):
+        self.result.append(cls.name)
+    def writeImplication(self):
+        self.result.append(" -> ")
+    def writeNonImplication(self):
+        self.result.append(" -/> ")
+    def writeString(self, str):
+        self.result.append(str)
+    def writeLine(self, str):
+        self.result.append(str + "\n")
+
 
 class DotRenderer:
     def __init__(self, menagerie):

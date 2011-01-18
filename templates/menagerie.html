@@ -5,7 +5,7 @@
   <title>The Computability Menagerie</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"/>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-  <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.4.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.4.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
   <script type="text/javascript">
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
@@ -33,7 +33,7 @@
 	<td>Show strongest open implications</td>
 	<td><input type="checkbox" id="showStrongOpen" onclick="updateHash(); updateStrongOpen();"/></td>
 	<td>&nbsp;</td>
-	<td><a class="toggleHelp" id="toggleHelp"><span>Help</span></a></td>
+	<td><a class="notALink" id="toggleHelp"><span>Help</span></a></td>
       </tr>
     </table>
   </div>
@@ -57,19 +57,18 @@
     </ul>
   </div>
   <hr/>
-  
   <div id="graph">
   {{ graph | safe }}
   </div>
   {% for cls in classes %}
     <div target="{{ cls.name }}" class="hovertip">
        <table>
-	 <tr><td>{{ cls.cardinality.prettyPropertyValue() }}</td></tr>
-	 <tr><td>{{ cls.category.prettyPropertyValue() }}</td></tr>
-	 <tr><td>measure {{ cls.measure.propertyValue }}</td></tr>
-	 <tr><td>hdim {{ cls.hdim.propertyValue }}</td></tr>
-	 <tr><td>pdim {{ cls.pdim.propertyValue }}</td></tr>
-	 <tr><td><a class="toggleHelp" onclick="window.open('{{ url_for('showClassDetails', className=cls.name) }}');"><span> Details</span> </a></td></tr>
+	 <tr><td>{% if cls.cardinality.known() %} {{cls.cardinality.prettyPropertyValue()}} {% else %} cardinality unknown {% endif %}</td></tr>
+	 <tr><td>{% if cls.category.known() %} {{cls.category.prettyPropertyValue()}} {% else %} category unknown {% endif %}</td></tr>
+	 <tr><td>measure {% if cls.measure.known() %} {{ cls.measure.propertyValue }} {% else %} unknown {% endif %}</td></tr>
+	 <tr><td>hdim {% if cls.hdim.known() %} {{ cls.hdim.propertyValue }} {% else %} unknown {% endif %}</td></tr>
+	 <tr><td>pdim {% if cls.pdim.known() %} {{ cls.pdim.propertyValue }} {% else %} unknown {% endif %}</td></tr>
+	 <tr><td><a class="notALink" onclick="window.open('{{ url_for('showClassDetails', className=cls.name) }}');"><span> Details</span> </a></td></tr>
        </table>
     </div>
   {% endfor %}

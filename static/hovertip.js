@@ -2,6 +2,7 @@
  *  Hovertip - easy and elegant tooltips
  *  
  *  By Dave Cohen <http://dave-cohen.com>
+ *  Patched by Mushfeq Khan <http://www.math.wisc.edu/~khan> for working with SVG target elements
  *  With ideas and and javascript code borrowed from many folks.
  *  (See URLS in the comments)
  *  
@@ -218,8 +219,8 @@ hovertipShowUnderMouse = function(el) {
       window.setTimeout(function() {
           el.ht.tip.css({
               'position':'absolute',
-                'top': (hovertipMouseY + 10) + 'px',
-                'left': (hovertipMouseX + 10) + 'px'})
+                'top': (hovertipMouseY + 20) + 'px',
+                'left': (hovertipMouseX + 20) + 'px'})
             .show();
         }, el.ht.config.showDelay);
   }
