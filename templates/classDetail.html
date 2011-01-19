@@ -1,6 +1,6 @@
 {% extends "justificationLayout.html" %}
 {% block body %}
-    <div class="justificationsTitle">Details for <span class="className">{{ cls.longName }}</span></div>
+    <div class="justificationsTitle">Details for <span class="className">{{ cls.longName or cls.name }}</span></div>
 <hr/>
     {{ cardinality|safe }}
 <hr/>
