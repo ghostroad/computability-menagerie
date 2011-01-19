@@ -167,29 +167,24 @@ class ClassMap(dict):
             self[key] = ClassNode(key)
         return self.get(key)
 
-class SafeDict(dict):
-    def __getitem__(self, key):
-        if key not in self: return None
-        return self.get(key)
-
 class ClassNode:
     def __init__(self, name):
         self.name = name
         self.longName = None
-        self.implications = SafeDict()
-        self.nonimplications = SafeDict()
+        self.implications = {}
+        self.nonimplications = {}
         self.cardinality = Cardinality(self)
         self.category = Category(self)
         self.measure = Property(self, "measure")
         self.hdim = Property(self, "hdim")
         self.pdim = Property(self, "pdim")
     def implies(self, other):
-        return self.implications[other]
+        return self.implications.get(other)
     def doesNotImply(self, other):
-        return self.nonimplications[other]
+        return self.nonimplications.get(other)
     def implicationUnknown(self, other):
         return not (self.implies(other) or self.doesNotImply(other))
-    def __hash__(self):
+    def __hash__(self): # this should hurt performance, but actually improves it.
         return hash(self.name)
     def __eq__(self, other):
         return self.name == other.name
