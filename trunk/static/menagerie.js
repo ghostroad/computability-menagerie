@@ -2,6 +2,7 @@ var nodes;
 var weakEdges;
 var strongEdges;
 
+var showClassDetailsButton;
 var showImplicationsButton;
 var viewSubgraphButton;
 var showWeakOpenCheckbox;
@@ -10,7 +11,7 @@ var numSelected = 0;
 var recolored = false;
 
 $(document).ready(function(){
-  hovertipInit();
+  if (!window.Touch) hovertipInit();
   
   $('#help').hide();
   $('#toggleHelp').click( function() { $('#help').toggle(400); } );
@@ -19,7 +20,9 @@ $(document).ready(function(){
   weakEdges = $('g[id|="weak"]');
   strongEdges = $('g[id|="strong"]');
 		     
-
+		      
+  showClassDetailsButton = $('#showClassDetails input')[0];
+  if (window.Touch) $('#showClassDetails').show();
   showImplicationsButton = $('#showImplications')[0];
   viewSubgraphButton = $('#viewSubgraph')[0];
   showWeakOpenCheckbox = $('#showWeakOpen')[0];
@@ -43,6 +46,7 @@ $(document).ready(function(){
 
       viewSubgraphButton.disabled = (numSelected < 2);
       showImplicationsButton.disabled = (numSelected != 2);
+      showClassDetailsButton.disabled = (numSelected != 1);
     };
     node.addEventListener("click", function(evt) { evt.target.parentNode.toggleSelected(); recolorIfNecessary(); }, true);
     node.addEventListener("dblclick", function(evt) { showClassDetails(evt.target.parentNode.id); }, true);
@@ -81,12 +85,19 @@ function applyColor(data) {
 }
 
 function disableButtons() {
+  showClassDetailsButton.disabled = true;
   showImplicationsButton.disabled = true;
   viewSubgraphButton.disabled = true;
 }
 
 function showClassDetails(node) {
   window.open('showClassDetails/' + node);
+}
+
+function showClassDetailsClicked() {
+    nodes.each( function() {
+		     if (this.selected) showClassDetails(this.id);
+		} );
 }
 
 function showImplications() {
