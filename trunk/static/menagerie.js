@@ -39,39 +39,37 @@ $(document).ready(function(){
       }
       $('#numSelected').text(numSelected);
 
-      if (numSelected == 1) {
-        var classes = nodes.map(function() { return this.id; }).toArray().join(",");
-	nodes.each(function() {
-	  if (this.selected) {
-            $.getJSON($SCRIPT_ROOT + '/_recolor', { selectedClass: this.id, classes: classes }, 
-              function(data) {
-                if (numSelected == 1) applyColor(data);
-              }
-            );
-          };
-        });
-      } else {
-        nodes.each(function() {
-          $(this).removeClass('above properlyAbove below properlyBelow incomparable other');	  
-        });
-      }
-
       viewSubgraphButton.disabled = (numSelected < 2);
       showImplicationsButton.disabled = (numSelected != 2);
     };
-    node.addEventListener("click", function(evt) { evt.target.parentNode.toggleSelected(); }, true);
+    node.addEventListener("click", function(evt) { evt.target.parentNode.toggleSelected(); recolorIfNecessary(); }, true);
     node.addEventListener("dblclick", function(evt) { showClassDetails(evt.target.parentNode.id); }, true);
   });
 
 });
 
+function recolorIfNecessary() {
+    if (numSelected == 1) {
+	nodes.each(function() {
+		       if (this.selected) {
+			   $.getJSON($SCRIPT_ROOT + '/_recolor', { selectedClass: this.id }, 
+				     function(data) {
+					 if (numSelected == 1) applyColor(data);
+				     }
+				    );
+		       };
+		   });
+    } else {
+	nodes.each(function() {
+		       $(this).removeClass('above properlyAbove below properlyBelow incomparable other');	  
+		   });
+    }
+}
+
 function applyColor(data) {
-  for (var cls in data) {
-    var nodesToRecolor= data[cls];
-    for (var i = 0; i < nodesToRecolor.length; i++){ 
-      $(document.getElementById(nodesToRecolor[i])).addClass(cls); // why is jquery id selection not working here?
-    } 
-  }
+    nodes.each(function() {
+		   $(this).addClass(data[this.id]);
+	       });
 }
 
 function disableButtons() {
