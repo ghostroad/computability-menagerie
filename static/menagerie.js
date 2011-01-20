@@ -7,6 +7,7 @@ var viewSubgraphButton;
 var showWeakOpenCheckbox;
 var showStrongOpenCheckbox;
 var numSelected = 0;
+var recolored = false;
 
 $(document).ready(function(){
   hovertipInit();
@@ -17,6 +18,7 @@ $(document).ready(function(){
   nodes = $('g[class="node"]');
   weakEdges = $('g[id|="weak"]');
   strongEdges = $('g[id|="strong"]');
+		     
 
   showImplicationsButton = $('#showImplications')[0];
   viewSubgraphButton = $('#viewSubgraph')[0];
@@ -59,10 +61,15 @@ function recolorIfNecessary() {
 				    );
 		       };
 		   });
-    } else {
+    } else { restoreColor(); }
+}
+
+function restoreColor() {
+    if (recolored) {
 	nodes.each(function() {
 		       $(this).removeClass('above properlyAbove below properlyBelow incomparable other');	  
 		   });
+	recolored = false;
     }
 }
 
@@ -70,6 +77,7 @@ function applyColor(data) {
     nodes.each(function() {
 		   $(this).addClass(data[this.id]);
 	       });
+    recolored = true;
 }
 
 function disableButtons() {
@@ -103,6 +111,7 @@ function unselectAll() {
   nodes.each(function(i, node) {
     if (node.selected) { node.toggleSelected(); }
   }); 
+  restoreColor();
 }
 
 function updateWeakOpen() {
