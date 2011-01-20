@@ -39,15 +39,16 @@ class MenagerieParser:
 class Menagerie:
 
     def __init__(self):
+        self.implicationsMatrix = []
+        self.nonimplicationsMatrix = []
+        self.classCounter = 0
         self.classes = []
-        self.classMap = ClassMap(self.classes)
+        self.classMap = ClassMap(self)
         self.warnings = []
         self.errors = []
 
     def __getitem__(self, name):
-        if self.classMap.has_key(name):
-            return self.classMap[name]
-        else: return None
+        return self.classMap.get(name)
 
     def addStrictImplication(self, source, dest, forwardJustification, backwardJustification):
         self.addImplication(source, dest, forwardJustification)
@@ -59,9 +60,16 @@ class Menagerie:
             self.errors.append("Inconsistency detected: {0}, reason for change: {1}".format(source.doesNotImply(dest), justification.plain()))
             return
         
-        if not source.implies(dest) or justification.weight() < source.implies(dest).justification.weight():
+        existingImplication = source.implies(dest)
+        if not existingImplication:
+            self.implicationsMatrix[source.index][dest.index] = implication
+            source.implications.append(implication)
             if justification.empty(): self.warnings.append("Adding a fact without justification: {0}".format(implication))
-            source.implications[dest] = implication
+        elif justification.weight < existingImplication.justification.weight:
+            existingImplication.justification = justification
+            existingImplication.weight = justification.weight + 1
+            if justification.empty(): self.warnings.append("Adding a fact without justification: {0}".format(implication))
+
 
     def addNonimplication(self, source, dest, justification):
         nonimplication = Nonimplication(source, dest, justification)
@@ -69,9 +77,16 @@ class Menagerie:
             self.errors.append("Inconsistency detected: {0}, reason for change: {1}".format(source.implies(dest), justification.plain()))
             return
         
-        if not source.doesNotImply(dest) or justification.weight() < source.doesNotImply(dest).justification.weight():
+        existingNonimplication = source.doesNotImply(dest)
+        if not existingNonimplication:
+            self.nonimplicationsMatrix[source.index][dest.index] = nonimplication
+            source.nonimplications.append(nonimplication)
             if justification.empty(): self.warnings.append("Adding a fact without justification: {0}".format(nonimplication))
-            source.nonimplications[dest] = nonimplication
+        elif existingNonimplication.justification.weight > justification.weight:
+            existingNonimplication.justification = justification
+            existingNonimplication.weight = justification.weight + 1
+            if justification.empty(): self.warnings.append("Adding a fact without justification: {0}".format(nonimplication))
+
 
     def setProperty(self, cls, propertyName, value, justification):
         prop = getattr(cls, propertyName)
@@ -79,15 +94,15 @@ class Menagerie:
             self.errors.append("Inconsistency detected: {0}, reason for change: {1}".format(prop, justification.plain()))
             return
 
-        if not prop.known() or justification.weight() < prop.justification.weight():
+        if not prop.known() or justification.weight < prop.justification.weight:
             prop.set(value, justification)
             if justification.empty(): self.warnings.append("Adding a fact without justification: {0}".format(prop))
 
     def facts(self):
         for cls in self.classes:
             for prop in [getattr(cls, attr) for attr in CLASS_ATTRIBUTES if getattr(cls, attr).known()]: yield prop
-            for imp in cls.implications.values(): yield imp
-            for imp in cls.nonimplications.values(): yield imp
+            for imp in cls.implications: yield imp
+            for imp in cls.nonimplications: yield imp
 
     def numFactsAndUnjustifiedFacts(self):
         numFacts = 0
@@ -141,7 +156,7 @@ class Deductions:
 
     def __deriveSizePropertiesFromImplications(self, menagerie):
         for cls in menagerie.classes:
-            for implication in cls.implications.values():
+            for implication in cls.implications:
                 supercls = implication.dest
                 for attr in CLASS_ATTRIBUTES:
                     clsprop = getattr(cls, attr)
@@ -156,40 +171,53 @@ class Deductions:
                     menagerie.addNonimplication(a, b, CompositeJustification(getattr(a, attr), getattr(b, attr)))
     
     def __inferNonimplicationsFromTransivityOfImplication(self, menagerie):
+        imp = menagerie.implicationsMatrix
+        nonimp = menagerie.nonimplicationsMatrix
         for a, b, c in product(menagerie.classes, repeat=3):
-            if c.implies(a) and b.doesNotImply(a): menagerie.addNonimplication(b, c, CompositeJustification(c.implies(a), b.doesNotImply(a)))
-            if a.implies(b) and a.doesNotImply(c): menagerie.addNonimplication(b, c, CompositeJustification(a.implies(b), a.doesNotImply(c)))
+            cimpa = imp[c.index][a.index]
+            bnotimpa = nonimp[b.index][a.index]
+            aimpb = imp[a.index][b.index]
+            anotimpc = nonimp[a.index][c.index]
+            if cimpa and bnotimpa: menagerie.addNonimplication(b, c, CompositeJustification(cimpa, bnotimpa))
+            if aimpb and anotimpc: menagerie.addNonimplication(b, c, CompositeJustification(aimpb, anotimpc))
 
 class ClassMap(defaultdict):
-    def __init__(self, classList):
-        self.classList = classList
+    def __init__(self, menagerie):
+        self.menagerie = menagerie
     def __missing__(self, key):
-        newClass = ClassNode(key)
-        self.classList.append(newClass)
+        newClass = ClassNode(key, self.menagerie.classCounter, self.menagerie)
+        self.menagerie.classCounter += 1
+        self.menagerie.classes.append(newClass)
+        self.__expandImplicationsMatrices()
         self[key] = newClass
         return newClass
+    def __expandImplicationsMatrices(self):
+        for row in self.menagerie.implicationsMatrix:
+            row.append(None)
+        self.menagerie.implicationsMatrix.append([None]*self.menagerie.classCounter)
+        for row in self.menagerie.nonimplicationsMatrix:
+            row.append(None)
+        self.menagerie.nonimplicationsMatrix.append([None]*self.menagerie.classCounter)
 
 class ClassNode:
-    def __init__(self, name):
+    def __init__(self, name, index, menagerie):
+        self.index = index
+        self.menagerie = menagerie
         self.name = name
         self.longName = None
-        self.implications = {}
-        self.nonimplications = {}
+        self.implications = []
+        self.nonimplications = []
         self.cardinality = Cardinality(self)
         self.category = Category(self)
         self.measure = Property(self, "measure")
         self.hdim = Property(self, "hdim")
         self.pdim = Property(self, "pdim")
     def implies(self, other):
-        return self.implications.get(other)
+        return self.menagerie.implicationsMatrix[self.index][other.index]
     def doesNotImply(self, other):
-        return self.nonimplications.get(other)
+        return self.menagerie.nonimplicationsMatrix[self.index][other.index]
     def implicationUnknown(self, other):
         return not (self.implies(other) or self.doesNotImply(other))
-    def __hash__(self): # this should hurt performance, but actually improves it.
-        return hash(self.name)
-    def __eq__(self, other):
-        return self.name == other.name
     def __repr__(self):
         return self.name
 
@@ -204,8 +232,6 @@ class Justifiable(NonEmpty):
         out.beginFact(self)
         self.justification.write(out)
         out.endFact()
-    def weight(self):
-        return 1 + self.justification.weight()
 
 class Property(Justifiable):
     def __init__(self, cls, propertyName):
@@ -218,6 +244,7 @@ class Property(Justifiable):
     def set(self, propertyValue, justification):
         self.propertyValue = propertyValue
         self.justification = justification
+        self.weight = justification.weight + 1
     def __repr__(self):
         return "{0}({1}) = {2}".format(self.propertyName, self.cls, self.propertyValue)
     def writeSummary(self, out):
@@ -262,6 +289,7 @@ class Implication(Justifiable):
         self.source = source
         self.dest = dest
         self.justification = justification
+        self.weight = self.justification.weight + 1
     def writeSummary(self, out):
         out.writeClass(self.source)
         out.writeImplication()
@@ -280,8 +308,7 @@ class Nonimplication(Implication):
 class DirectJustification(NonEmpty):
     def __init__(self, justification):
         self.justification = justification
-    def weight(self):
-        return 1
+        self.weight = 1
     def __repr__(self):
         return self.justification
     def plain(self):
@@ -308,11 +335,9 @@ class Unjustified(DirectJustification):
 class CompositeJustification(NonEmpty):
     def __init__(self, *children):
         self.children = children
-    def weight(self):
-        result = 1
+        self.weight = 1
         for child in self.children:
-            result += child.weight();
-        return result
+            self.weight += child.weight
     def __repr__(self):
         return self.children.__repr__()
     def plain(self):
@@ -413,16 +438,17 @@ class DotRenderer:
         return graph
 
     def __addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications, classes):
+        imp, nonimp = self.menagerie.implicationsMatrix, self.menagerie.nonimplicationsMatrix
         idCounter = 0
         for a, b in permutations(classes, 2):
             if a.implicationUnknown(b):
                 strong = weak = True
                 for c in classes:
                     if (c is not a) and (c is not b):
-                        if c.implies(a) and c.implicationUnknown(b): weak = False
-                        if b.implies(c) and a.implicationUnknown(c): weak = False
-                        if a.implies(c) and c.implicationUnknown(b): strong = False
-                        if c.implies(b) and a.implicationUnknown(c): strong = False
+                        if imp[c.index][a.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): weak = False
+                        if imp[b.index][c.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): weak = False
+                        if imp[a.index][c.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): strong = False
+                        if imp[c.index][b.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): strong = False
                 if weak and showWeakOpenImplications:
                     edge = Edge(a.name, b.name)
                     edge.set_color("red")
@@ -447,8 +473,9 @@ class DotRenderer:
 
     def __addEdges(self, graph, classes):
         for cls in classes:
-            for dest in classes.intersection(cls.implications):
-                for other in classes.intersection(cls.implications):
+            implied = classes.intersection(imp.dest for imp in cls.implications)
+            for dest in implied:
+                for other in implied:
                     if (other is not dest) and other.implies(dest): break
                 else:
                     graph.add_edge(Edge(cls.name, dest.name))
