@@ -232,7 +232,7 @@ BBmin -/> BNLFO				"There is a noncomputable c.e.\ low for random [Ku{\v c}era a
 BB1G -/> BNLFO				"There is a noncomputable c.e.\ low for random [Ku{\v c}era and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\ set computes a 1-generic"
 
 LowSchnorr -/> BNHIF		"Every computably traceable degree is hyperimmune-free"
-BNmin -/> BNDeltaTwo		"Every noncomputable degree below a $\Delta^0_2$ 1-generic contains a 1-generic [Haught 1986, The degrees below a 1-generic degree < $<{\bf 0}'$], hence is not minimal"
+BNmin -/> BNDeltaTwo		"Every noncomputable degree below a $\Delta^0_2$ 1-generic contains a 1-generic [Haught 1986, The degrees below a 1-generic degree $<{\bf 0}'$], hence is not minimal"
 BNmin -/> BNHIF				"Demuth proved that every noncomputable set truth-table below a 1-random is Turing equivalent to a 1-random (see [Downey and Hirschfeldt 2010, Algorithmic randomness and complexity]). Consider a hyperimmune-free 1-random $X$. Every set Turing below $X$ is truth-table below $X$. Thus every noncomputable degree below $X$ is 1-random, hence not minimal"
 
 #

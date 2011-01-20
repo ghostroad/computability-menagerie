@@ -21,7 +21,7 @@ class TestMenagerie(unittest.TestCase):
         self.assertTrue(m["DeltaTwo"].cardinality == COUNTABLE)
         self.assertTrue(m["JumpTraceable"].cardinality == UNCOUNTABLE)
         self.assertEqual("[Nies 2002, Reals which compute little]", str(m["JumpTraceable"].cardinality.justification))
-        self.assertEqual(33, len(m.classes()))
+        self.assertEqual(33, len(m.classes))
         numFacts, numUnjustifiedFacts = m.numFactsAndUnjustifiedFacts();
         self.assertEqual(113, numFacts)
         self.assertEqual(19, numUnjustifiedFacts)
@@ -30,20 +30,20 @@ class TestMenagerie(unittest.TestCase):
         BBmin = m["BBmin"]
         BN1R = m["BN1R"]
         self.assertEqual("""BN1R -/> BBmin
-    BBmin -> BN1G
-        If $A\oplus B$ is 1-generic then $A$ and $B$ are Turing incomparable
-    BN1R -/> BN1G
-        Low1Rand -> BN1R
-            Low1Rand -> NotDNC
-                Low1Rand -> CET
-                    Low1Rand -> JumpTraceable
-                        UNJUSTIFIED
-                    JumpTraceable -> CET
-                        [Nies 2002, Reals which compute little]
+    Low1Rand -> BN1R
+        Low1Rand -> NotDNC
+            Low1Rand -> JumpTraceable
+                UNJUSTIFIED
+            JumpTraceable -> NotDNC
+                JumpTraceable -> CET
+                    [Nies 2002, Reals which compute little]
                 CET -> NotDNC
                     UNJUSTIFIED
-            NotDNC -> BN1R
-                Every 1-random compute a diagonally noncomputable function [Ku{\\v c}era 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA]
+        NotDNC -> BN1R
+            Every 1-random compute a diagonally noncomputable function [Ku{\\v c}era 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA]
+    Low1Rand -/> BBmin
+        BBmin -> BN1G
+            If $A\oplus B$ is 1-generic then $A$ and $B$ are Turing incomparable
         Low1Rand -/> BN1G
             There is a noncomputable c.e.\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\ set computes a 1-generic""", str(TextWriter().write(BN1R.doesNotImply(BBmin))))
         self.assertEqual("""BN1G -> BN2G""", str(TextWriter().write(m["BN1G"].implies(m["BN2G"]))))
@@ -53,10 +53,10 @@ class TestMenagerie(unittest.TestCase):
         m = Menagerie()
         parser = MenagerieParser(m)
         parser.read("A -> B\nM(B) = 1\n")
-        self.assertEqual(2, len(m.classes()))
+        self.assertEqual(2, len(m.classes))
         parser.read("A is countable")
         self.assertEqual(COUNTABLE, m["A"].cardinality)
-        self.assertEqual(2, len(m.classes()))
+        self.assertEqual(2, len(m.classes))
 
     def test_close_under_size_implications(self):
         m = Menagerie()
@@ -83,7 +83,7 @@ class TestMenagerie(unittest.TestCase):
         E = m["E"]
         Deductions().apply(m)
         self.assertTrue(A.implies(E))
-        self.assertEqual("[A -> B : UNJUSTIFIED, B -> E : [B -> C : UNJUSTIFIED, C -> E : UNJUSTIFIED]]" , A.implies(E).justification.plain())
+        self.assertEqual("[A -> C : [A -> B : UNJUSTIFIED, B -> C : UNJUSTIFIED], C -> E : UNJUSTIFIED]" , A.implies(E).justification.plain())
 
     def test_derive_size_properties_from_implications(self):
         m = Menagerie()
@@ -127,7 +127,7 @@ class TestMenagerie(unittest.TestCase):
         BBmin = m["BBmin"]
         BN3G = m["BN3G"]
         actual = HtmlWriter().write(BBmin.implies(BN3G))
-        self.assertTrue(str(actual).startswith("""<ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 3-generic</span><ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 1-generic</span>"""))
+        self.assertTrue(str(actual).startswith("""<ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 3-generic</span><ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 2-generic</span>"""))
 
         self.assertEqual('<ul><li><span class="className">minimal or computable</span> is uncountable<ul><li>hdim(<span class="className">minimal or computable</span>) = 1<ul><li>In [Greenberg and Miller 2010, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of minimal degree and effective Hausdorff dimension 1. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) Hausdorff dimension 1 [Kjos-Hanssen]</li></ul></li></ul></li></ul>', str(HtmlWriter().write(BBmin.cardinality)))
 

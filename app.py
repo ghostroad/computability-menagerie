@@ -32,7 +32,7 @@ def displayMenagerie():
     g = DotRenderer(m).render(showOnly = classNames, displayLongNames=True, showWeakOpenImplications = True, showStrongOpenImplications = True)
     processedSvg = SVGPostProcessor().process(g)
     
-    classes = classNames and [m[className] for className in classNames] or m.classes()
+    classes = classNames and [m[className] for className in classNames] or m.classes
     response = make_response(render_template("menagerie.html", graph = processedSvg.toxml(), classes = classes))
     response.headers["Content-Type"] = "application/xhtml+xml"
     return response
@@ -54,8 +54,8 @@ def showImplications(classA, classB):
     forwardImplication = A.implies(B) or A.doesNotImply(B) or UnknownImplication(A, B)
     backwardImplication = B.implies(A) or B.doesNotImply(A) or UnknownImplication(B, A)
 
-    implications.append(str(HtmlWriter().write(forwardImplication)))
-    implications.append(str(HtmlWriter().write(backwardImplication)))
+    implications.append(HtmlWriter().write(forwardImplication))
+    implications.append(HtmlWriter().write(backwardImplication))
     
     return render_template("implications.html", implications=implications, clsA=A, clsB=B)
 
@@ -63,19 +63,18 @@ def showImplications(classA, classB):
 @app.route('/_recolor')
 def recolor():
     cls = m[request.args.get('selectedClass', None)]
-    classes = [m[clsName] for clsName in request.args.get("classes", None).split(",")]
-    result = {"properlyAbove" : [], "above" : [], "properlyBelow": [], "below": [], "incomparable" : [], "other" : []}
-    for other in classes:
+    result = {}
+    for other in m.classes:
         if other is not cls:
             if cls.implies(other): 
-                if other.doesNotImply(cls): result["properlyAbove"].append(other.name)
-                else: result["above"].append(other.name)
+                if other.doesNotImply(cls): result[other.name] = "properlyAbove"
+                else: result[other.name] = "above"
             elif other.implies(cls):
-                if cls.doesNotImply(other): result["properlyBelow"].append(other.name)
-                else: result["below"].append(other.name)
+                if cls.doesNotImply(other): result[other.name] = "properlyBelow"
+                else: result[other.name] = "below"
             elif cls.doesNotImply(other) and other.doesNotImply(cls):
-                result["incomparable"].append(other.name)
-            else: result["other"].append(other.name)
+                result[other.name] = "incomparable"
+            else: result[other.name] = "other"
     return jsonify(result)
 
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
 from pyparsing import *
+from collections import defaultdict
 from itertools import product, permutations
 from pydot import Dot, Node, Edge
 import textwrap
@@ -38,7 +39,8 @@ class MenagerieParser:
 class Menagerie:
 
     def __init__(self):
-        self.classMap = ClassMap()
+        self.classes = []
+        self.classMap = ClassMap(self.classes)
         self.warnings = []
         self.errors = []
 
@@ -71,9 +73,6 @@ class Menagerie:
             if justification.empty(): self.warnings.append("Adding a fact without justification: {0}".format(nonimplication))
             source.nonimplications[dest] = nonimplication
 
-    def classes(self):
-        return self.classMap.values()
-
     def setProperty(self, cls, propertyName, value, justification):
         prop = getattr(cls, propertyName)
         if prop.known() and prop != value: 
@@ -85,7 +84,7 @@ class Menagerie:
             if justification.empty(): self.warnings.append("Adding a fact without justification: {0}".format(prop))
 
     def facts(self):
-        for cls in self.classes():
+        for cls in self.classes:
             for prop in [getattr(cls, attr) for attr in CLASS_ATTRIBUTES if getattr(cls, attr).known()]: yield prop
             for imp in cls.implications.values(): yield imp
             for imp in cls.nonimplications.values(): yield imp
@@ -108,7 +107,7 @@ class Deductions:
             self.__inferNonimplicationsFromTransivityOfImplication(menagerie)
 
     def __closeUnderSizeImplications(self, menagerie):
-        for cls in menagerie.classes():
+        for cls in menagerie.classes:
             if cls.cardinality == COUNTABLE:
                 for prop, val in [("category", MEAGER), ("measure", 0), ("hdim", 0), ("pdim", 0)]:
                     menagerie.setProperty(cls, prop, val, cls.cardinality)
@@ -131,7 +130,7 @@ class Deductions:
 
     def __closeImplicationsUnderTransitivityAndDetectCycles(self, menagerie):
         cyclic = False
-        for b, a, c in product(menagerie.classes(), repeat=3):
+        for b, a, c in product(menagerie.classes, repeat=3):
             if a.implies(b) and b.implies(c):
                 if a is c: 
                     menagerie.errors.append("Graph is cyclic: {0} and {1}".format(a.implies(b).plain(), b.implies(c).plain()))
@@ -141,7 +140,7 @@ class Deductions:
         return cyclic
 
     def __deriveSizePropertiesFromImplications(self, menagerie):
-        for cls in menagerie.classes():
+        for cls in menagerie.classes:
             for implication in cls.implications.values():
                 supercls = implication.dest
                 for attr in CLASS_ATTRIBUTES:
@@ -151,21 +150,24 @@ class Deductions:
                     if superclsprop == 0: menagerie.setProperty(cls, attr, 0, CompositeJustification(superclsprop, implication))
 
     def __deriveNonimplicationsFromSizeProperties(self, menagerie):
-        for a, b in product(menagerie.classes(), repeat=2):
+        for a, b in product(menagerie.classes, repeat=2):
             for attr in CLASS_ATTRIBUTES:
                 if getattr(a, attr) == 1 and getattr(b, attr) == 0:
                     menagerie.addNonimplication(a, b, CompositeJustification(getattr(a, attr), getattr(b, attr)))
     
     def __inferNonimplicationsFromTransivityOfImplication(self, menagerie):
-        for a, b, c in product(menagerie.classes(), repeat=3):
+        for a, b, c in product(menagerie.classes, repeat=3):
             if c.implies(a) and b.doesNotImply(a): menagerie.addNonimplication(b, c, CompositeJustification(c.implies(a), b.doesNotImply(a)))
             if a.implies(b) and a.doesNotImply(c): menagerie.addNonimplication(b, c, CompositeJustification(a.implies(b), a.doesNotImply(c)))
 
-class ClassMap(dict):
-    def __getitem__(self, key):
-        if key not in self:
-            self[key] = ClassNode(key)
-        return self.get(key)
+class ClassMap(defaultdict):
+    def __init__(self, classList):
+        self.classList = classList
+    def __missing__(self, key):
+        newClass = ClassNode(key)
+        self.classList.append(newClass)
+        self[key] = newClass
+        return newClass
 
 class ClassNode:
     def __init__(self, name):
@@ -400,7 +402,7 @@ class DotRenderer:
     def render(self, showOnly = [], showWeakOpenImplications = False, showStrongOpenImplications = False, displayLongNames = False):
         if showOnly: 
             classes = set([self.menagerie[name] for name in showOnly])
-        else: classes = set(self.menagerie.classes())
+        else: classes = set(self.menagerie.classes)
 
         graph = Dot(rankdir = "BT")
         graph.set_name("\"The Computability Menagerie\"")
