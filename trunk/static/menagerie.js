@@ -29,6 +29,7 @@ $(document).ready(function(){
   showStrongOpenCheckbox = $('#showStrongOpen')[0];
 
   handleOpenImplicationPreferences();
+  disableButtonsIfAppropriate();
 
   nodes.each(function(i, node) {
     node.selected = false; 
@@ -43,17 +44,19 @@ $(document).ready(function(){
         numSelected--;
       }
       $('#numSelected').text(numSelected);
-
-      viewSubgraphButton.disabled = (numSelected < 2);
-      showImplicationsButton.disabled = (numSelected != 2);
-      showClassDetailsButton.disabled = (numSelected != 1);
+	
+      disableButtonsIfAppropriate();
     };
     node.addEventListener("click", function(evt) { evt.target.parentNode.toggleSelected(); recolorIfNecessary(); }, true);
     node.addEventListener("dblclick", function(evt) { showClassDetails(evt.target.parentNode.id); }, true);
   });
-
 });
 
+function disableButtonsIfAppropriate() {
+      viewSubgraphButton.disabled = (numSelected < 2);
+      showImplicationsButton.disabled = (numSelected != 2);
+      showClassDetailsButton.disabled = (numSelected != 1);
+}
 function recolorIfNecessary() {
     if (numSelected == 1) {
 	nodes.each(function() {
@@ -109,7 +112,6 @@ function showImplications() {
 }
 
 function viewSubgraph() {
-  disableButtons(); // hack for firefox weirdness with back button
   var selected = [];
   nodes.each(function(i, node) {
     if (node.selected) { selected.push(node.id); };
