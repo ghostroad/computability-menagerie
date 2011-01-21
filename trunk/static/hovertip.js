@@ -350,8 +350,8 @@ jQuery.fn.hovertipActivate = function(config, targetSelect, tipPrepare, targetPr
 function hovertipInit() {
   // specify our configuration for hovertips, including delay times (millisec)
   var hovertipConfig = {'attribute':'hovertip',
-                        'showDelay': 300,
-                        'hideDelay': 400};
+                        'showDelay': 900,
+                        'hideDelay': 300};
   
   // use <div class='hovertip'>blah blah</div>
   var hovertipSelect = 'div.hovertip';
