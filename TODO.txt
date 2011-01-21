@@ -1,3 +1,12 @@
+Email yvonne and john heim
+Put title and credits
+See list of classes that have been excluded and also be able to click on them and go back
+Also be able to click on classes and throw them out
+Make all nodes oval, make all text black (get rid of unknown hints)
+Have display options to show category properties
+If a nodes property is unknown display stripes to indicate possible values
+If above but might be equivalent, make it red and gold, etc.
+If two classes selected, highlight things that are possibly intermediate, known to be intermediate, everything else grey
 Make server reload database.txt if it changes
 Error page
 Write tests to make sure node styling doesn't break
