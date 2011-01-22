@@ -28,7 +28,7 @@ $(document).ready(function(){
   showWeakOpenCheckbox = $('#showWeakOpen')[0];
   showStrongOpenCheckbox = $('#showStrongOpen')[0];
 
-  handleOpenImplicationPreferences();
+//  handleOpenImplicationPreferences();
   disableButtonsIfAppropriate();
 
   nodes.each(function(i, node) {
