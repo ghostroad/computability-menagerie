@@ -28,7 +28,7 @@ class UnknownImplication:
 def displayMenagerie():
     classesParam = request.args.get("classes", None)
     classNames = classesParam and classesParam.split(",") or []
-    g = DotRenderer(m).render(showOnly = classNames, displayLongNames=True, showWeakOpenImplications = True, showStrongOpenImplications = True)
+    g = DotRenderer(m).render(showOnly = classNames, displayLongNames=True, showWeakOpenImplications = False, showStrongOpenImplications = False)
     processedSvg = SVGPostProcessor().process(g)
     
     classes = classNames and [m[className] for className in classNames] or m.classes
