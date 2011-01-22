@@ -94,7 +94,7 @@ function disableButtons() {
 }
 
 function showClassDetails(node) {
-  window.open('showClassDetails/' + node);
+  window.open($SCRIPT_ROOT + '/showClassDetails/' + node);
 }
 
 function showClassDetailsClicked() {
@@ -104,7 +104,7 @@ function showClassDetailsClicked() {
 }
 
 function showImplications() {
-  var url = 'showImplications';
+  var url = $SCRIPT_ROOT + '/showImplications';
   nodes.each(function(i, node) {
     if (node.selected) url += '/'+node.id;
   });
@@ -116,7 +116,7 @@ function viewSubgraph() {
   nodes.each(function(i, node) {
     if (node.selected) { selected.push(node.id); };
   });
-  var url = '?classes=' + selected;
+  var url = $SCRIPT_ROOT + '?classes=' + selected;
   window.location = url;
 }
 
