@@ -5,51 +5,46 @@ var strongEdges;
 var showClassDetailsButton;
 var showImplicationsButton;
 var viewSubgraphButton;
-var showWeakOpenCheckbox;
-var showStrongOpenCheckbox;
 var numSelected = 0;
 var recolored = false;
 
 $(document).ready(function(){
-  if (!window.Touch) hovertipInit();
+		      if (!window.Touch) hovertipInit();
   
-  $('#toggleHelp').click( function() { $('#help').toggle(400); } );
-  $('#toggleKey').click( function() { $('#key').toggle(400); } );
+		      $('#toggleHelp').click( function() { $('#help').toggle(400); } );
+		      $('#toggleKey').click( function() { $('#key').toggle(400); } );
 
-  nodes = $('g[class="node"]');
-  weakEdges = $('g[id|="weak"]');
-  strongEdges = $('g[id|="strong"]');
+		      nodes = $('g[class="node"]');
 		     
-  showClassDetailsButton = $('#showClassDetails input')[0];
-  if (window.Touch) $('#showClassDetails').show();
-  showImplicationsButton = $('#showImplications')[0];
-  viewSubgraphButton = $('#viewSubgraph')[0];
-  showWeakOpenCheckbox = $('#showWeakOpen')[0];
-  showStrongOpenCheckbox = $('#showStrongOpen')[0];
+		      showClassDetailsButton = $('#showClassDetails input')[0];
+		      if (window.Touch) $('#showClassDetails').show();
+		      showImplicationsButton = $('#showImplications')[0];
+		      viewSubgraphButton = $('#viewSubgraph')[0];
 
-  disableButtonsIfAppropriate();
+		      disableButtonsIfAppropriate();
 
-  nodes.each(function(i, node) {
-    $(node).addClass($CARDINALITY_CATEGORY[node.id]);
-    node.selected = false; 
-    node.toggleSelected = function() {
-      if (!this.selected) {
-        $(this).addClass('selected');
-        this.selected = true;
-        numSelected++;
-      } else {
-        $(this).removeClass('selected');
-        this.selected = false;
-        numSelected--;
-      }
-      $('#numSelected').text(numSelected);
+		      nodes.each(function(i, node) {
+				     $(node).addClass($MEASURE[node.id]);
+				     node.selected = false; 
+				     node.toggleSelected = function() {
+					 if (!this.selected) {
+					     $(this).addClass('selected');
+					     this.selected = true;
+					     numSelected++;
+					 } else {
+					     $(this).removeClass('selected');
+					     this.selected = false;
+					     numSelected--;
+					 }
+					 $('#numSelected').text(numSelected);
 	
-      disableButtonsIfAppropriate();
-    };
-    node.addEventListener("click", function(evt) { evt.target.parentNode.toggleSelected(); recolorIfNecessary(); }, true);
-    node.addEventListener("dblclick", function(evt) { showClassDetails(evt.target.parentNode.id); }, true);
-  });
-});
+					 disableButtonsIfAppropriate();
+				     };
+				     node.addEventListener("click", function(evt) { 
+							       evt.target.parentNode.toggleSelected(); recolorIfNecessary(); }, true);
+				     node.addEventListener("dblclick", function(evt) { showClassDetails(evt.target.parentNode.id); }, true);
+				 });
+		  });
 
 function disableButtonsIfAppropriate() {
       viewSubgraphButton.disabled = (numSelected < 2);
@@ -88,13 +83,13 @@ function applyColor(data) {
 }
 
 function disableButtons() {
-  showClassDetailsButton.disabled = true;
-  showImplicationsButton.disabled = true;
-  viewSubgraphButton.disabled = true;
+    showClassDetailsButton.disabled = true;
+    showImplicationsButton.disabled = true;
+    viewSubgraphButton.disabled = true;
 }
 
 function showClassDetails(node) {
-  window.open($SCRIPT_ROOT + '/showClassDetails/' + node);
+    window.open($SCRIPT_ROOT + '/showClassDetails/' + node);
 }
 
 function showClassDetailsClicked() {
@@ -104,55 +99,41 @@ function showClassDetailsClicked() {
 }
 
 function showImplications() {
-  var url = $SCRIPT_ROOT + '/showImplications';
-  nodes.each(function(i, node) {
-    if (node.selected) url += '/'+node.id;
-  });
-  window.open(url);
+    var url = $SCRIPT_ROOT + '/showImplications';
+    nodes.each(function(i, node) {
+		   if (node.selected) url += '/'+node.id;
+	       });
+    window.open(url);
 }
 
 function viewSubgraph() {
-  var selected = [];
-  nodes.each(function(i, node) {
-    if (node.selected) { selected.push(node.id); };
-  });
-  var url = $SCRIPT_ROOT + '?classes=' + selected;
-  window.location = url;
+    var selected = [];
+    nodes.each(function(i, node) {
+		   if (node.selected) { selected.push(node.id); };
+	       });
+    var url = $SCRIPT_ROOT + '?classes=' + selected;
+    window.location = url;
 }
 
 function unselectAll() {
-  nodes.each(function(i, node) {
-    if (node.selected) { node.toggleSelected(); }
-  }); 
-  restoreColor();
-}
-
-function updateWeakOpen() {
-  showWeakOpenCheckbox.checked ? weakEdges.show() : weakEdges.hide();
-}
-
-function updateStrongOpen() {
-  showStrongOpenCheckbox.checked ? strongEdges.show() : strongEdges.hide();
-}
-
-function updateHash() {
-  var showWeakOpen = showWeakOpenCheckbox.checked;
-  var showStrongOpen = showStrongOpenCheckbox.checked;
-  window.location.hash = showWeakOpen + '-' + showStrongOpen;
+    nodes.each(function(i, node) {
+		   if (node.selected) { node.toggleSelected(); }
+	       }); 
+    restoreColor();
 }
 
 function handleOpenImplicationPreferences() {
-  var hash = window.location.hash;
-  var showWeakOpen;
-  var showStrongOpen;
-  if (hash) {
-    var split = hash.substring(1).split('-');
-    showWeakOpen = split[0] == 'true';
-    showStrongOpen = split[1] == 'true';
-  }
-  showWeakOpenCheckbox.checked = showWeakOpen;
-  showStrongOpenCheckbox.checked = showStrongOpen;
-  updateStrongOpen();
-  updateWeakOpen();
+    var hash = window.location.hash;
+    var showWeakOpen;
+    var showStrongOpen;
+    if (hash) {
+	var split = hash.substring(1).split('-');
+	showWeakOpen = split[0] == 'true';
+	showStrongOpen = split[1] == 'true';
+    }
+    showWeakOpenCheckbox.checked = showWeakOpen;
+    showStrongOpenCheckbox.checked = showStrongOpen;
+    updateStrongOpen();
+    updateWeakOpen();
 }
 

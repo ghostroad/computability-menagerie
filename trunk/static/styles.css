@@ -22,6 +22,68 @@
     fill: url(#unknownUnknownPattern)
 }
 
+.level0 ellipse {
+    fill: gray;
+}
+
+.level1 ellipse {
+    fill: #66FFCC;
+}
+
+.level2 ellipse {
+    fill: #6699FF
+}
+
+.level3 ellipse {
+    fill: #CC33FF
+}
+
+.level4 ellipse {
+    fill: #FF0066
+}
+
+.level3-4 ellipse {
+    fill: url(#level3-4)
+}
+
+.level2-3 ellipse {
+    fill: url(#level2-3)
+}
+
+.level2-4 ellipse {
+    fill: url(#level2-4)
+}
+
+.level1-2 ellipse {
+    fill: url(#level1-2)
+}
+
+.level0-3 ellipse {
+    fill: url(#level0-3)
+}
+
+.level1-4 ellipse {
+    fill: url(#level1-4)
+}
+
+.level0-1 ellipse {
+    fill: url(#level0-1)
+}
+
+.level0-2 ellipse {
+    fill: url(#level0-2)
+}
+
+.level0-3 ellipse {
+    fill: url(#level0-3)
+}
+
+.level0-4 ellipse {
+    fill: url(#level0-4)
+}
+
+
+
 .properlyAbove ellipse, .properlyAbove rect {
     fill: #FFADAD;
 }
