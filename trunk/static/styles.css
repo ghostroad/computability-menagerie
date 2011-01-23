@@ -22,23 +22,23 @@
     fill: url(#unknownUnknownPattern)
 }
 
-.level0 ellipse {
+.level0 ellipse, .level0 rect {
     fill: gray;
 }
 
-.level1 ellipse {
+.level1 ellipse, .level1 rect {
     fill: #66FFCC;
 }
 
-.level2 ellipse {
+.level2 ellipse, .level2 rect {
     fill: #6699FF
 }
 
-.level3 ellipse {
+.level3 ellipse, .level3 rect {
     fill: #CC33FF
 }
 
-.level4 ellipse {
+.level4 ellipse, .level4 rect {
     fill: #FF0066
 }
 
