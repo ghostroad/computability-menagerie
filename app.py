@@ -7,7 +7,7 @@ m = Menagerie()
 parser = MenagerieParser(m)
 parser.readFromFile(getenv("MENAGERIE_DATABASE_FILE") or "database.txt")
 Deductions().apply(m)
-cardinalityAndCategory, measure = Coloring(m).buildPropertiesMaps()
+category, measure = Coloring(m).buildPropertiesMaps()
 
 app = Flask(__name__)
 
@@ -19,7 +19,7 @@ def displayMenagerie():
     processedSvg = SVGPostProcessor().process(g)
     
     classes = classNames and [m[className] for className in classNames] or m.classes
-    response = make_response(render_template("menagerie.html", graph = processedSvg.toxml(), classes = classes, cardinalityAndCategory = cardinalityAndCategory, measure = measure))
+    response = make_response(render_template("menagerie.html", graph = processedSvg.toxml(), classes = classes, category = category, measure = measure))
     response.headers["Content-Type"] = "application/xhtml+xml"
     return response
 
@@ -46,8 +46,8 @@ def showImplications(classA, classB):
     return render_template("implications.html", implications=implications, clsA=A, clsB=B)
 
 
-@app.route('/_recolor')
-def recolor():
+@app.route('/_recolorSingleSelected')
+def recolorSingleSelected():
     cls = m[request.args.get('selectedClass', None)]
     result = {}
     for other in m.classes:
@@ -61,6 +61,18 @@ def recolor():
             elif cls.doesNotImply(other) and other.doesNotImply(cls):
                 result[other.name] = "incomparable"
             else: result[other.name] = "other"
+    return jsonify(result)
+
+@app.route('/_recolorPairSelected')
+def recolorPairSelected():
+    selectedClasses = request.args.get('selectedClass', None).split(",")
+    A, B = m[selectedClasses[0]], m[selectedClasses[1]]
+    result = {}
+    for C in m.classes:
+        if (A.implies(C) and (C).implies(B)) or (B.implies(C) and C.implies(A)):
+            result[C.name] = "between"
+        else:
+            result[C.name] = "other"
     return jsonify(result)
 
 if __name__ == '__main__':

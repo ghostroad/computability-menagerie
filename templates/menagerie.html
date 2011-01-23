@@ -9,7 +9,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
   <script type="text/javascript">
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-    $CARDINALITY_CATEGORY = {{ cardinalityAndCategory|tojson|safe }};
+    $CATEGORY = {{ category|tojson|safe }};
     $MEASURE = {{ measure|tojson|safe }};
   </script>
   <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
@@ -64,18 +64,41 @@
   <hr/>
   </div>
 
-  <div id="key" style="display: none;">
+  <div id="keys" style="display: none;">
     <hr/>
-    <div id="singleClassRecoloringKey">
+    <div id="singleRecoloringKey" class="key" style="display: none;">
 	<table>
-	  <tr><td>{{ svgellipse("properlyAbove") }}</td><td>Known to be a proper superclass of the selected class.</td></tr>
-	  <tr><td>{{ svgellipse("above") }}</td><td>Known to be a superclass of the selected class. Other inclusion unknown.</td></tr>
-	  <tr><td>{{ svgellipse("properlyBelow") }}</td><td>Known to be a proper subclass of the selected class.</td></tr>
-	  <tr><td>{{ svgellipse("below") }}</td><td>Known to be a subclass of the selected class. Other inclusion unknown.</td></tr>
-	  <tr><td>{{ svgellipse("incomparable") }}</td><td>Known to be incomparable to the selected class.</td></tr>
-	  <tr><td>{{ svgellipse("other") }}</td><td>Everything else.</td></tr>
+	  <tr><td>{{ svgellipse("properlyAbove") }}</td><td>Proper superclass of the selected class</td></tr>
+	  <tr><td>{{ svgellipse("above") }}</td><td>Superclass of the selected class, other inclusion unknown</td></tr>
+	  <tr><td>{{ svgellipse("properlyBelow") }}</td><td>Proper subclass of the selected class</td></tr>
+	  <tr><td>{{ svgellipse("below") }}</td><td>Subclass of the selected class, other inclusion unknown</td></tr>
+	  <tr><td>{{ svgellipse("incomparable") }}</td><td>Incomparable to the selected class</td></tr>
+	  <tr><td>{{ svgellipse("other") }}</td><td>Everything else</td></tr>
 	</table>
     </div>
+    <div id="measureKey" class="key" style="display: none;">
+	<table>
+	  <tr><td>{{ svgellipse("level4") }}</td><td>Measure 1</td></tr>
+	  <tr><td>{{ svgellipse("level3") }}</td><td>Hdim 1, measure 0</td></tr>
+	  <tr><td>{{ svgellipse("level2") }}</td><td>Pdim 0, hdim 1</td></tr>
+	  <tr><td>{{ svgellipse("level1") }}</td><td>Uncountable, pdim 0</td></tr>
+	  <tr><td>{{ svgellipse("level0") }}</td><td>Countable</td></tr>
+	</table>
+    </div>
+    <div id="categoryKey" class="key" style="display: none;">
+	<table>
+	  <tr><td>{{ svgellipse("uncountableComeager") }}</td><td>Comeager</td></tr>
+	  <tr><td>{{ svgellipse("uncountableMeager") }}</td><td>Uncountable and meager</td></tr>
+	  <tr><td>{{ svgellipse("countable") }}</td><td>Countable</td></tr>
+	</table>
+    </div>
+    <div id="pairRecoloringKey" class="key" style="display: none;">
+	<table>
+	  <tr><td>{{ svgellipse("between") }}</td><td>Between the selected classes</td></tr>
+	  <tr><td>{{ svgellipse("other") }}</td><td>Everything else</td></tr>
+	</table>
+    </div>
+
     <hr/>
   </div>
 
