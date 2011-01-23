@@ -9,12 +9,17 @@
   <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
   <script type="text/javascript">
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    $CARDINALITY_CATEGORY = {{ cardinalityAndCategory|tojson|safe }};
   </script>
   <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
 </head>
 
 {% macro svgbox(className) -%}
-  <svg height="10pt" viewBox="0.00 0.00 16.00 10.00" width="16pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="{{ className }}"><polygon points="0,0 16,0 16,10 0,10" stroke="black"/></g></svg>
+  <svg height="10pt" viewBox="0.00 0.00 16.00 10.00" width="16pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="{{ className }}"><rect x="0" y="0" width="16" height="10" stroke="black"/></g></svg>
+{%- endmacro %}
+
+{% macro svgellipse(className) -%}
+  <svg height="20pt" viewBox="0.00 0.00 62.00 32.00" width="40pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="{{ className }}"><ellipse cx="30" cy="15" rx="30" ry="15"/></g></svg>
 {%- endmacro %}
 
 <body>
@@ -28,30 +33,41 @@
 	<td><input type="button" id="viewSubgraph" onclick="viewSubgraph();" value="View subgraph"/></td>
 	<td><input type="button" id="unselectAll" onclick="unselectAll();" value="Unselect all"/></td>
 	<td>&nbsp;</td>
-	<td><a class="notALink" id="toggleHelp"><span>Help</span></a></td>
+	<td><a class="notALink" id="toggleHelp"><span>Show/hide help</span></a></td>
+	<td>&nbsp;</td>
+	<td><a class="notALink" id="toggleKey"><span>Show/hide key</span></a></td>
       </tr>
     </table>
   </div>
-  <div id="help">
+  <div id="help" style="display: none;">
+  <hr/>
     <ul>
       <li>Select/unselect classes by clicking on them. Selected classes are shown in {{ svgbox("selected") }}.</li>
       <li>Double-click on a class to see its properties in detail (opens a new tab). Alternatively, hover over the class to see a short summary.</li>
-      <li>When a single class is selected, the graph is recolored to indicate how other classes relate to the selected class:
-	<table>
-	  <tr><td>{{ svgbox("properlyAbove") }}</td><td>Known to be a proper superclass of the selected class.</td></tr>
-	  <tr><td>{{ svgbox("above") }}</td><td>Known to be a superclass of the selected class. Other inclusion unknown.</td></tr>
-	  <tr><td>{{ svgbox("properlyBelow") }}</td><td>Known to be a proper subclass of the selected class.</td></tr>
-	  <tr><td>{{ svgbox("below") }}</td><td>Known to be a subclass of the selected class. Other inclusion unknown.</td></tr>
-	  <tr><td>{{ svgbox("incomparable") }}</td><td>Known to be incomparable with the selected class.</td></tr>
-	  <tr><td>{{ svgbox("other") }}</td><td>Everything else.</td></tr>
-	</table>
-      </li>
+      <li>When a single class is selected, the graph is recolored to indicate how other classes relate to the selected class.</li>
       <li>Select a pair of classes, then click "Show implications" to see the implications between them (opens a new tab/window).</li>
       <li>Select a group of classes, then click "View subgraph" to generate a subgraph consisting only of the selected classes.</li>
       <li>Bookmark the page to save your settings.</li>
     </ul>
-  </div>
   <hr/>
+  </div>
+
+  <div id="key" style="display: none;">
+    <hr/>
+    <div id="singleClassRecoloringKey">
+	<table>
+	  <tr><td>{{ svgellipse("properlyAbove") }}</td><td>Known to be a proper superclass of the selected class.</td></tr>
+	  <tr><td>{{ svgellipse("above") }}</td><td>Known to be a superclass of the selected class. Other inclusion unknown.</td></tr>
+	  <tr><td>{{ svgellipse("properlyBelow") }}</td><td>Known to be a proper subclass of the selected class.</td></tr>
+	  <tr><td>{{ svgellipse("below") }}</td><td>Known to be a subclass of the selected class. Other inclusion unknown.</td></tr>
+	  <tr><td>{{ svgellipse("incomparable") }}</td><td>Known to be incomparable with the selected class.</td></tr>
+	  <tr><td>{{ svgellipse("other") }}</td><td>Everything else.</td></tr>
+	</table>
+    </div>
+    <hr/>
+  </div>
+
+
   <div id="graph">
   {{ graph | safe }}
   </div>
@@ -68,6 +84,52 @@
     </div>
   {% endfor %}
 
-  
+  <svg height="0pt" width="0pt" id="paintServers" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g>
+      <defs>
+	<pattern id="abovePattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
+	  <g class="properlyAbove">
+	    <rect x="0" y="0" width="10" height="80"/>
+	  </g>
+	  <g class="selected">
+	    <rect x="10" y="0" width="10" height="80"/>
+	  </g>
+	</pattern>
+	<pattern id="belowPattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
+	  <g class="properlyBelow">
+	    <rect x="0" y="0" width="10" height="80"/>
+	  </g>
+	  <g class="selected">
+	    <rect x="10" y="0" width="10" height="80"/>
+	  </g>
+	</pattern>
+	<pattern id="uncountableUnknownPattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
+	  <g class="uncountableMeager">
+	    <rect x="0" y="0" width="10" height="80"/>
+	  </g>
+	  <g class="uncountableComeager">
+	    <rect x="10" y="0" width="10" height="80"/>
+	  </g>
+	</pattern>
+	<pattern id="unknownMeagerPattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
+	  <g class="countable">
+	    <rect x="0" y="0" width="10" height="80"/>
+	  </g>
+	  <g class="uncountableMeager">
+	    <rect x="10" y="0" width="10" height="80"/>
+	  </g>
+	</pattern>
+	<pattern id="unknownUnknownPattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
+	  <g class="uncountableComeager">
+	    <rect x="0" y="0" width="10" height="80"/>
+	  </g>
+	  <g class="countable">
+	    <rect x="10" y="0" width="10" height="80"/>
+	  </g>
+	</pattern>
+      </defs>
+    </g>
+    </svg>
+
 </body>
 </html>

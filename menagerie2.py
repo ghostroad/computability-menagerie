@@ -424,7 +424,7 @@ class LatexWriter:
 class DotRenderer:
     def __init__(self, menagerie):
         self.menagerie = menagerie
-    def render(self, showOnly = [], showWeakOpenImplications = False, showStrongOpenImplications = False, displayLongNames = False):
+    def render(self, showOnly = [], displayLongNames = False):
         if showOnly: 
             classes = set([self.menagerie[name] for name in showOnly])
         else: classes = set(self.menagerie.classes)
@@ -434,39 +434,11 @@ class DotRenderer:
         if self.menagerie.errors: graph.set_bgcolor("pink")
         self.__addClasses(graph, displayLongNames, classes)
         self.__addEdges(graph, classes)
-        if showWeakOpenImplications or showStrongOpenImplications: self.__addOpenImplications(graph, showWeakOpenImplications, showStrongOpenImplications, classes)
         return graph
 
-    def __addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications, classes):
-        imp, nonimp = self.menagerie.implicationsMatrix, self.menagerie.nonimplicationsMatrix
-        idCounter = 0
-        for a, b in permutations(classes, 2):
-            if a.implicationUnknown(b):
-                strong = weak = True
-                for c in classes:
-                    if (c is not a) and (c is not b):
-                        if imp[c.index][a.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): weak = False
-                        if imp[b.index][c.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): weak = False
-                        if imp[a.index][c.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): strong = False
-                        if imp[c.index][b.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): strong = False
-                if weak and showWeakOpenImplications:
-                    edge = Edge(a.name, b.name)
-                    edge.set_color("red")
-                    edge.set_style("dashed")
-                    edge.set_id('"weak-{0}"'.format(idCounter))
-                    idCounter += 1
-                    graph.add_edge(edge)
-                if strong and showStrongOpenImplications:
-                    edge = Edge(a.name, b.name)
-                    edge.set_color("green")
-                    edge.set_style("dashed")
-                    edge.set_id('"strong-{0}"'.format(idCounter))
-                    idCounter += 1
-                    graph.add_edge(edge)
-                        
     def __addClasses(self, graph, displayLongNames, classes):
         for cls in classes:
-            node = self.__createNodeFor(cls)
+            node = self.createNodeFor(cls)
             if displayLongNames and cls.longName: 
                 node.set_label("\\n".join(textwrap.wrap(cls.longName, 12)))
             graph.add_node(node)
@@ -481,10 +453,23 @@ class DotRenderer:
                     graph.add_edge(Edge(cls.name, dest.name))
 
 
-    def __createNodeFor(self, cls):
+    def createNodeFor(self, cls):
         node = Node(cls.name)
         node.set_id('"' + cls.name + '"')
         node.set_fontsize(12)
+        node.set_color("black")
+        node.set_style("filled")
+        node.set_color("lightgrey")
+	return node
+
+class DotCommandLineRenderer(DotRenderer):
+    def render(self, showOnly = [], showWeakOpenImplications = False, showStrongOpenImplications = False, displayLongNames = False):
+        graph = super(DotCommandLineRenderer, self).render(showOnly, displayLongNames)
+        if showWeakOpenImplications or showStrongOpenImplications: self.__addOpenImplications(graph, showWeakOpenImplications, showStrongOpenImplications, classes)
+        return graph
+
+    def createNodeFor(self, cls):
+        node = super(DotCommandLineRenderer, self).createNodeFor(cls)
         if cls.category == MEAGER:
             node.set_style("filled")
             if cls.cardinality == COUNTABLE:
@@ -515,3 +500,31 @@ class DotRenderer:
         node.set_fillcolor("#" + ['CCCCCC','00FF00','00FFFF','0000FF'][k])
         
 	return node
+
+    def __addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications, classes):
+        imp, nonimp = self.menagerie.implicationsMatrix, self.menagerie.nonimplicationsMatrix
+        idCounter = 0
+        for a, b in permutations(classes, 2):
+            if a.implicationUnknown(b):
+                strong = weak = True
+                for c in classes:
+                    if (c is not a) and (c is not b):
+                        if imp[c.index][a.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): weak = False
+                        if imp[b.index][c.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): weak = False
+                        if imp[a.index][c.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): strong = False
+                        if imp[c.index][b.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): strong = False
+                if weak and showWeakOpenImplications:
+                    edge = Edge(a.name, b.name)
+                    edge.set_color("red")
+                    edge.set_style("dashed")
+                    edge.set_id('"weak-{0}"'.format(idCounter))
+                    idCounter += 1
+                    graph.add_edge(edge)
+                if strong and showStrongOpenImplications:
+                    edge = Edge(a.name, b.name)
+                    edge.set_color("green")
+                    edge.set_style("dashed")
+                    edge.set_id('"strong-{0}"'.format(idCounter))
+                    idCounter += 1
+                    graph.add_edge(edge)
+                        

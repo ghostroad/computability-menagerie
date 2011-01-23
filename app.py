@@ -1,38 +1,25 @@
 from flask import Flask, jsonify, request, render_template, make_response
 from menagerie2 import *
 from svgutils import *
-import os
+from os import getenv
 
 m = Menagerie()
 parser = MenagerieParser(m)
-parser.readFromFile(os.getenv("MENAGERIE_DATABASE_FILE") or "database.txt")
+parser.readFromFile(getenv("MENAGERIE_DATABASE_FILE") or "database.txt")
 Deductions().apply(m)
+cardinalityAndCategory = Coloring(m).buildCardinalityAndCategoryMap()
 
 app = Flask(__name__)
-
-class UnknownImplication:
-    def __init__(self, src, dest):
-        self.src = src
-        self.dest = dest
-    def write(self, out):
-        out.beginFact(self)
-        out.endFact()
-    def writeSummary(self, out):
-        out.writeString("It is not known whether ")
-        out.writeClass(self.src)
-        out.writeImplication()
-        out.writeClass(self.dest)
-        out.writeString(".")
 
 @app.route('/')
 def displayMenagerie():
     classesParam = request.args.get("classes", None)
     classNames = classesParam and classesParam.split(",") or []
-    g = DotRenderer(m).render(showOnly = classNames, displayLongNames=True, showWeakOpenImplications = False, showStrongOpenImplications = False)
+    g = DotRenderer(m).render(showOnly = classNames, displayLongNames=True)
     processedSvg = SVGPostProcessor().process(g)
     
     classes = classNames and [m[className] for className in classNames] or m.classes
-    response = make_response(render_template("menagerie.html", graph = processedSvg.toxml(), classes = classes))
+    response = make_response(render_template("menagerie.html", graph = processedSvg.toxml(), classes = classes, cardinalityAndCategory = cardinalityAndCategory))
     response.headers["Content-Type"] = "application/xhtml+xml"
     return response
 

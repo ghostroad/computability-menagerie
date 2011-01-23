@@ -15,6 +15,7 @@ $(document).ready(function(){
   
   $('#help').hide();
   $('#toggleHelp').click( function() { $('#help').toggle(400); } );
+  $('#toggleKey').click( function() { $('#key').toggle(400); } );
 
   nodes = $('g[class="node"]');
   weakEdges = $('g[id|="weak"]');
@@ -28,7 +29,6 @@ $(document).ready(function(){
   showWeakOpenCheckbox = $('#showWeakOpen')[0];
   showStrongOpenCheckbox = $('#showStrongOpen')[0];
 
-//  handleOpenImplicationPreferences();
   disableButtonsIfAppropriate();
 
   nodes.each(function(i, node) {

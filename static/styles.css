@@ -1,29 +1,53 @@
-.selected ellipse, .selected polygon {
+.selected ellipse, .selected rect {
     fill: gold;
 }
 
-.properlyAbove ellipse, .properlyAbove polygon {
-    fill: darkred;
+.properlyAbove ellipse, .properlyAbove rect {
+    fill: #FFADAD;
 }
 
-.above ellipse, .above polygon {
-    fill: red;
+.above ellipse {
+    fill: url(#abovePattern);
 }
 
-.properlyBelow ellipse, .properlyBelow polygon {
-    fill: darkblue;
+.properlyBelow ellipse, .properlyBelow rect {
+    fill: #ADADFF;
 }
 
-.below ellipse, .below polygon {
-    fill: blue;
+.below ellipse {
+    fill: url(#belowPattern);
 }
 
-.incomparable ellipse, .incomparable polygon {
-    fill: purple;
+.incomparable ellipse {
+    fill: #B280B2;
 }
 
-.other ellipse, .other polygon {
+.other ellipse {
     fill: gray;
+}
+
+.countable ellipse {
+    fill: gray;
+}
+
+.uncountableMeager ellipse {
+    fill: lightblue;
+}
+
+.uncountableComeager ellipse {
+    fill: lightgreen;
+}
+
+.uncountableUnknown ellipse {
+    fill: url(#uncountableUnknownPattern)
+}
+
+.unknownMeager ellipse {
+    fill: url(#unknownMeagerPattern)
+}
+
+.unknownUnknown ellipse {
+    fill: url(#unknownUnknownPattern)
 }
 
 g text {
