@@ -10,6 +10,7 @@
   <script type="text/javascript">
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     $CARDINALITY_CATEGORY = {{ cardinalityAndCategory|tojson|safe }};
+    $MEASURE = {{ measure|tojson|safe }};
   </script>
   <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
 </head>
@@ -20,6 +21,17 @@
 
 {% macro svgellipse(className) -%}
   <svg height="20pt" viewBox="0.00 0.00 62.00 32.00" width="40pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="{{ className }}"><ellipse cx="30" cy="15" rx="30" ry="15"/></g></svg>
+{%- endmacro %}
+
+{% macro stripePattern(patternName, classA, classB) -%}
+  <pattern id="{{ patternName }}" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
+    <g class="{{ classA }}">
+      <rect x="0" y="0" width="10" height="80"/>
+    </g>
+    <g class="{{ classB }}">
+      <rect x="10" y="0" width="10" height="80"/>
+    </g>
+  </pattern>
 {%- endmacro %}
 
 <body>
@@ -87,46 +99,23 @@
   <svg height="0pt" width="0pt" id="paintServers" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
       <defs>
-	<pattern id="abovePattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
-	  <g class="properlyAbove">
-	    <rect x="0" y="0" width="10" height="80"/>
-	  </g>
-	  <g class="selected">
-	    <rect x="10" y="0" width="10" height="80"/>
-	  </g>
-	</pattern>
-	<pattern id="belowPattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
-	  <g class="properlyBelow">
-	    <rect x="0" y="0" width="10" height="80"/>
-	  </g>
-	  <g class="selected">
-	    <rect x="10" y="0" width="10" height="80"/>
-	  </g>
-	</pattern>
-	<pattern id="uncountableUnknownPattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
-	  <g class="uncountableMeager">
-	    <rect x="0" y="0" width="10" height="80"/>
-	  </g>
-	  <g class="uncountableComeager">
-	    <rect x="10" y="0" width="10" height="80"/>
-	  </g>
-	</pattern>
-	<pattern id="unknownMeagerPattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
-	  <g class="countable">
-	    <rect x="0" y="0" width="10" height="80"/>
-	  </g>
-	  <g class="uncountableMeager">
-	    <rect x="10" y="0" width="10" height="80"/>
-	  </g>
-	</pattern>
-	<pattern id="unknownUnknownPattern" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse">
-	  <g class="uncountableComeager">
-	    <rect x="0" y="0" width="10" height="80"/>
-	  </g>
-	  <g class="countable">
-	    <rect x="10" y="0" width="10" height="80"/>
-	  </g>
-	</pattern>
+	{{ stripePattern("abovePattern", "properlyAbove", "selected") }}
+	{{ stripePattern("belowPattern", "properlyBelow", "selected") }}
+	{{ stripePattern("uncountableUnknownPattern", "uncountableMeager", "uncountableComeager") }}
+	{{ stripePattern("unknownMeagerPattern", "countable", "uncountableMeager") }}
+	{{ stripePattern("unknownUnknownPattern", "countable", "uncountableComeager") }}
+
+	{{ stripePattern("level3-4", "level3", "level4") }}
+	{{ stripePattern("level2-3", "level2", "level3") }}
+	{{ stripePattern("level2-4", "level2", "level4") }}
+	{{ stripePattern("level1-2", "level1", "level2") }}
+	{{ stripePattern("level0-3", "level0", "level3") }}
+	{{ stripePattern("level1-4", "level1", "level4") }}
+	{{ stripePattern("level0-1", "level0", "level1") }}
+	{{ stripePattern("level0-2", "level0", "level2") }}
+	{{ stripePattern("level0-3", "level0", "level3") }}
+	{{ stripePattern("level0-4", "level0", "level4") }}
+
       </defs>
     </g>
     </svg>

@@ -39,9 +39,29 @@ class Coloring:
                                                   (UNCOUNTABLE, None): "uncountableUnknown", 
                                                   (None, MEAGER): "unknownMeager", 
                                                   (None, None): "unknownUnknown"}
+        self.measureLookupTable = {(COUNTABLE,   0, 0, 0) : "level0",
+                                   (UNCOUNTABLE, 0, 0, 0) : "level1",
+                                   (UNCOUNTABLE, 1, 0, 0) : "level2",
+                                   (UNCOUNTABLE, 1, 1, 0) : "level3",
+                                   (UNCOUNTABLE, 1, 1, 1) : "level4",
+                                   (UNCOUNTABLE, 1, 1, None) : "level3-4",
+                                   (UNCOUNTABLE, 1, None, 0) : "level2-3",
+                                   (UNCOUNTABLE, 1, None, None) : "level2-4",
+                                   (UNCOUNTABLE, None, 0, 0) : "level1-2",
+                                   (UNCOUNTABLE, None, None, 0) : "level0-3",
+                                   (UNCOUNTABLE, None, None, None) : "level1-4",
+                                   (None, 0, 0, 0) : "level0-1",
+                                   (None, None, 0, 0) : "level0-2",
+                                   (None, None, None, 0) : "level0-3",
+                                   (None, None, None, None) : "level0-4" }
 
-    def buildCardinalityAndCategoryMap(self):
-        result = {}
+    def buildPropertiesMaps(self):
+        cardinalityAndCategory = {}
+        measure = {}
         for cls in self.menagerie.classes:
-            result[cls.name] = self.cardinalityAndCategoryLookupTable[(cls.cardinality.propertyValue, cls.category.propertyValue)]
-        return result
+            cardinalityAndCategory[cls.name] = self.cardinalityAndCategoryLookupTable[(cls.cardinality.propertyValue, 
+                                                                                       cls.category.propertyValue)]
+            measure[cls.name] = self.measureLookupTable[(cls.cardinality.propertyValue, cls.pdim.propertyValue, 
+                                               cls.hdim.propertyValue, cls.measure.propertyValue)]
+            
+        return cardinalityAndCategory, measure
