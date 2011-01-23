@@ -136,7 +136,7 @@ class TestMenagerie(unittest.TestCase):
         parser = MenagerieParser(m)
         parser.readFromFile("database.txt")
         Deductions().apply(m)
-        graph = DotRenderer(m).render(showOnly = ["LowSchnorr", "LowKurtz", "BBmin", "BB1G", "BNLFO", "NotHigh", "CET", "BN2G", "BN3G", "NotPAinZP"], displayLongNames=True, showWeakOpenImplications=True, showStrongOpenImplications=True)
+        graph = DotRenderer(m).render(showOnly = ["LowSchnorr", "LowKurtz", "BBmin", "BB1G", "BNLFO", "NotHigh", "CET", "BN2G", "BN3G", "NotPAinZP"], displayLongNames=True)
         processedSvg = SVGPostProcessor().process(graph)
         self.assertTrue("<g class=\"node\" id=\"BN2G\">\n<ellipse" in processedSvg.toxml())
 
