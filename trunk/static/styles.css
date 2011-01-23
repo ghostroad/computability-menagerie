@@ -108,6 +108,9 @@
     fill: gray;
 }
 
+.between ellipse {
+    fill: lightcoral;
+}
 
 .selected ellipse, .selected rect {
     fill: gold;
