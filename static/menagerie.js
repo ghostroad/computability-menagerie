@@ -13,7 +13,6 @@ var recolored = false;
 $(document).ready(function(){
   if (!window.Touch) hovertipInit();
   
-  $('#help').hide();
   $('#toggleHelp').click( function() { $('#help').toggle(400); } );
   $('#toggleKey').click( function() { $('#key').toggle(400); } );
 
@@ -21,7 +20,6 @@ $(document).ready(function(){
   weakEdges = $('g[id|="weak"]');
   strongEdges = $('g[id|="strong"]');
 		     
-		      
   showClassDetailsButton = $('#showClassDetails input')[0];
   if (window.Touch) $('#showClassDetails').show();
   showImplicationsButton = $('#showImplications')[0];
@@ -32,6 +30,7 @@ $(document).ready(function(){
   disableButtonsIfAppropriate();
 
   nodes.each(function(i, node) {
+    $(node).addClass($CARDINALITY_CATEGORY[node.id]);
     node.selected = false; 
     node.toggleSelected = function() {
       if (!this.selected) {
@@ -57,6 +56,7 @@ function disableButtonsIfAppropriate() {
       showImplicationsButton.disabled = (numSelected != 2);
       showClassDetailsButton.disabled = (numSelected != 1);
 }
+
 function recolorIfNecessary() {
     if (numSelected == 1) {
 	nodes.each(function() {
@@ -74,7 +74,7 @@ function recolorIfNecessary() {
 function restoreColor() {
     if (recolored) {
 	nodes.each(function() {
-		       $(this).removeClass('above properlyAbove below properlyBelow incomparable other');	  
+		       $(this).removeClass('above properlyAbove below properlyBelow incomparable other');
 		   });
 	recolored = false;
     }

@@ -1,5 +1,25 @@
-.selected ellipse, .selected rect {
-    fill: gold;
+.countable ellipse {
+    fill: gray;
+}
+
+.uncountableMeager ellipse {
+    fill: lightblue;
+}
+
+.uncountableComeager ellipse {
+    fill: lightgreen;
+}
+
+.uncountableUnknown ellipse {
+    fill: url(#uncountableUnknownPattern)
+}
+
+.unknownMeager ellipse {
+    fill: url(#unknownMeagerPattern)
+}
+
+.unknownUnknown ellipse {
+    fill: url(#unknownUnknownPattern)
 }
 
 .properlyAbove ellipse, .properlyAbove rect {
@@ -26,29 +46,11 @@
     fill: gray;
 }
 
-.countable ellipse {
-    fill: gray;
+
+.selected ellipse, .selected rect {
+    fill: gold;
 }
 
-.uncountableMeager ellipse {
-    fill: lightblue;
-}
-
-.uncountableComeager ellipse {
-    fill: lightgreen;
-}
-
-.uncountableUnknown ellipse {
-    fill: url(#uncountableUnknownPattern)
-}
-
-.unknownMeager ellipse {
-    fill: url(#unknownMeagerPattern)
-}
-
-.unknownUnknown ellipse {
-    fill: url(#unknownUnknownPattern)
-}
 
 g text {
     pointer-events: none;
