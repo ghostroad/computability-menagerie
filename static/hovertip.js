@@ -82,7 +82,7 @@ hovertipShowUnderMouse = function(el, event) {
 						'position':'absolute',
 						'top': (hovertipMouseY + 20) + 'px',
 						'left': (hovertipMouseX + 20) + 'px'})
-				  .show().load($SCRIPT_ROOT + '/_properties/' + nodeId);
+				  .show().html("Loading...").load($SCRIPT_ROOT + '/_properties/' + nodeId);
 			      el.owner = nodeId;
 			  }, el.ht.config.showDelay);
     }
