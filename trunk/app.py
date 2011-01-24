@@ -5,7 +5,7 @@ from os import getenv
 
 m = Menagerie()
 parser = MenagerieParser(m)
-parser.readFromFile(getenv("MENAGERIE_DATABASE_FILE") or "database.txt")
+parser.readFromFile(getenv("MENAGERIE_DATABASE_FILE") or "bn1g.txt")
 Deductions().apply(m)
 category, measure = Coloring(m).buildPropertiesMaps()
 

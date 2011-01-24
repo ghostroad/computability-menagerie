@@ -1,25 +1,25 @@
-.countable ellipse {
+.countable ellipse, .countable rect {
     fill: gray;
 }
 
-.uncountableMeager ellipse {
-    fill: lightblue;
+.uncountableMeager ellipse, .uncountableMeager rect {
+    fill: #66FFFF;
 }
 
-.uncountableComeager ellipse {
-    fill: lightgreen;
+.uncountableComeager ellipse, .uncountableComeager rect {
+    fill: #00FF00;
 }
 
 .uncountableUnknown ellipse {
-    fill: url(#uncountableUnknownPattern)
+    fill: url(#uncountableUnknown)
 }
 
 .unknownMeager ellipse {
-    fill: url(#unknownMeagerPattern)
+    fill: url(#unknownMeager)
 }
 
 .unknownUnknown ellipse {
-    fill: url(#unknownUnknownPattern)
+    fill: url(#unknownUnknown)
 }
 
 .level0 ellipse, .level0 rect {
@@ -89,7 +89,7 @@
 }
 
 .above ellipse {
-    fill: url(#abovePattern);
+    fill: url(#above);
 }
 
 .properlyBelow ellipse, .properlyBelow rect {
@@ -97,7 +97,7 @@
 }
 
 .below ellipse {
-    fill: url(#belowPattern);
+    fill: url(#below);
 }
 
 .incomparable ellipse {
@@ -165,3 +165,11 @@ a.notALink:hover {
     margin-top: 0px;
 }
 
+#keys {
+    position:fixed;
+    bottom:10px;
+    right:10px;
+    font-size: 10px;
+    background-color: beige;
+    border: 2px black solid;
+}

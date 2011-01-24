@@ -213,4 +213,3 @@ function unselectAll() {
 	       }); 
     currentColoring.handleSelect();
 }
-
