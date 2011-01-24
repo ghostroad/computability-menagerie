@@ -9,6 +9,4 @@ Error page
 Write tests to make sure node styling doesn't break
 Labels should be Tex?
 What to do when graph has cycles
-Trivial justifications need to be handled correctly
-LatexWriter
 

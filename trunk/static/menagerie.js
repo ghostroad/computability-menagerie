@@ -79,7 +79,7 @@ var SingleSelectedMode = {
 		 );
     },
     "handleSelect" : function() {
-	if (numSelected == 1) return;
+	if (numSelected == 1) { SingleSelectedMode.apply(); }
 	if (numSelected == 2) { PairSelectedMode.apply(); }
 	else {
 	    nodes.removeClass(SINGLE_SELECTED_CLASSES);
@@ -106,7 +106,7 @@ var PairSelectedMode = {
     },
 
     "handleSelect" : function() {
-	if (numSelected == 2) return;
+	if (numSelected == 2) { PairSelectedMode.apply(); }
 	if (numSelected == 1) { SingleSelectedMode.apply(); }
 	else {
 	    nodes.removeClass(PAIR_SELECTED_CLASSES);
