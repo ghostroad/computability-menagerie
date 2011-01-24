@@ -134,18 +134,7 @@
   {{ graph | safe }}
   </div>
 
-  {% for cls in classes %}
-    <div target="{{ cls.name }}" class="hovertip">
-       <table>
-	 <tr><td>{% if cls.cardinality.known() %} {{cls.cardinality.prettyPropertyValue()}} {% else %} cardinality unknown {% endif %}</td></tr>
-	 <tr><td>{% if cls.category.known() %} {{cls.category.prettyPropertyValue()}} {% else %} category unknown {% endif %}</td></tr>
-	 <tr><td>measure {% if cls.measure.known() %} {{ cls.measure.propertyValue }} {% else %} unknown {% endif %}</td></tr>
-	 <tr><td>hdim {% if cls.hdim.known() %} {{ cls.hdim.propertyValue }} {% else %} unknown {% endif %}</td></tr>
-	 <tr><td>pdim {% if cls.pdim.known() %} {{ cls.pdim.propertyValue }} {% else %} unknown {% endif %}</td></tr>
-	 <tr><td><a class="notALink" onclick="window.open('{{ url_for('showClassDetails', className=cls.name) }}');"><span> Details</span> </a></td></tr>
-       </table>
-    </div>
-  {% endfor %}
+  <div class="hovertip"></div>
 
   <svg height="0pt" width="0pt" id="paintServers" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
