@@ -75,8 +75,9 @@
       </tr>
     </table>
   </div>
-  <div id="help" style="display: none;">
   <hr/>
+  <div id="help" style="display: none;">
+
     <ul>
       <li>Select/unselect classes by clicking on them.</li>
       <li>Switch between coloring by "measure" (Hausdorff dimension, packing dimension and Lebesgue measure) and category using the dropdown.</li>
@@ -129,10 +130,18 @@
     </div>
   </div>
 
-
-  <div id="graph">
-  {{ graph | safe }}
-  </div>
+  <table>
+    <tr>
+      <td>
+	<div id="graph" style="width:{{ graph.attributes.width.value}}">
+	  {{ graph.toxml() | safe }}
+	</div>
+      </td>
+      <td>
+	<div id="space"></div>
+      </td>
+    </tr>
+  </table>
 
   <div class="hovertip"></div>
 
