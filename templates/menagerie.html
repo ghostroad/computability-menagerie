@@ -20,7 +20,7 @@
 {%- endmacro %}
 
 {% macro svgellipse(className) -%}
-  <svg height="20pt" viewBox="0.00 0.00 62.00 32.00" width="40pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="{{ className }}"><ellipse cx="30" cy="15" rx="30" ry="15"/></g></svg>
+  <svg height="22pt" viewBox="0.00 0.00 42.00 22.00" width="42pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="{{ className }}"><ellipse cx="20" cy="10" rx="20" ry="10"/></g></svg>
 {%- endmacro %}
 
 {% macro stripePattern(patternName, classA, classB) -%}
@@ -68,7 +68,6 @@
   </div>
 
   <div id="keys" style="display: none;">
-    <hr/>
     <div id="singleRecoloringKey" class="key" style="display: none;">
 	<table>
 	  <tr><td>{{ svgellipse("properlyAbove") }}</td><td>Proper superclass of the selected class</td></tr>
@@ -101,14 +100,13 @@
 	  <tr><td>{{ svgellipse("other") }}</td><td>Everything else</td></tr>
 	</table>
     </div>
-
-    <hr/>
   </div>
 
 
   <div id="graph">
   {{ graph | safe }}
   </div>
+
   {% for cls in classes %}
     <div target="{{ cls.name }}" class="hovertip">
        <table>
@@ -125,11 +123,11 @@
   <svg height="0pt" width="0pt" id="paintServers" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
       <defs>
-	{{ stripePattern("abovePattern", "properlyAbove", "selected") }}
-	{{ stripePattern("belowPattern", "properlyBelow", "selected") }}
-	{{ stripePattern("uncountableUnknownPattern", "uncountableMeager", "uncountableComeager") }}
-	{{ stripePattern("unknownMeagerPattern", "countable", "uncountableMeager") }}
-	{{ stripePattern("unknownUnknownPattern", "countable", "uncountableComeager") }}
+	{{ stripePattern("above", "properlyAbove", "selected") }}
+	{{ stripePattern("below", "properlyBelow", "selected") }}
+	{{ stripePattern("uncountableUnknown", "uncountableMeager", "uncountableComeager") }}
+	{{ stripePattern("unknownMeager", "countable", "uncountableMeager") }}
+	{{ stripePattern("unknownUnknown", "countable", "uncountableComeager") }}
 
 	{{ stripePattern("level3-4", "level3", "level4") }}
 	{{ stripePattern("level2-3", "level2", "level3") }}
