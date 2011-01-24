@@ -52,7 +52,7 @@
 {%- endmacro %}
 
 {% macro stripePattern(patternName, classA, classB) -%}
-<pattern id="{{ patternName }}" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse"><g class="{{ classA }}"><rect x="0" y="0" width="10" height="80"/></g><g class="{{ classB }}"><rect x="10" y="0" width="10" height="80"/></g></pattern>
+<pattern id="{{ patternName }}" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><g class="{{ classA }}"><rect x="0" y="0" width="10" height="80"/></g><g class="{{ classB }}"><rect x="10" y="0" width="10" height="80"/></g></pattern>
 {%- endmacro %}
 
 <body>
