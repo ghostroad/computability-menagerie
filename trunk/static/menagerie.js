@@ -23,6 +23,11 @@ function recolorIfAppropriate() {
     else if (numSelected == 2) PairSelectedMode.apply();
 }
 
+function activateKey(keyId) {
+    $('#keys .key').hide();
+    $(keyId).show();
+}
+
 var CategoryMode = {
     "coloringMap" : $CATEGORY,
     "handleSelect" : recolorIfAppropriate,
@@ -31,6 +36,7 @@ var CategoryMode = {
 	currentColoring = CategoryMode;
 	currentSizeColoring = CategoryMode;
 	nodes.removeClass(MEASURE_CLASSES).addClass(function() {return $CATEGORY[this.id];});
+	activateKey('#categoryKey');
     },
     "switchToOtherSizeModeSilently" : function() {
 	window.location.hash = "measure";	
@@ -49,6 +55,7 @@ var MeasureMode = {
 	currentColoring = MeasureMode;
 	currentSizeColoring = MeasureMode;
 	nodes.removeClass(CATEGORY_CLASSES).addClass(function() {return $MEASURE[this.id];});
+	activateKey('#measureKey');
     },
     "switchToOtherSizeModeSilently" : function() {
 	window.location.hash = "category";	
@@ -66,6 +73,7 @@ var SingleSelectedMode = {
 		      if (numSelected == 1) {
 			  nodes.removeClass(PAIR_SELECTED_CLASSES).addClass(function() { return data[this.id]; });
 			  currentColoring = SingleSelectedMode;
+			  activateKey('#singleRecoloringKey');
 		      }
 		  }
 		 );
@@ -91,6 +99,7 @@ var PairSelectedMode = {
 		      if (numSelected == 2) {
 			  nodes.removeClass(SINGLE_SELECTED_CLASSES).addClass(function() { return data[this.id]; });
 			  currentColoring = PairSelectedMode;
+			  activateKey('#pairRecoloringKey');
 		      }
 		  }
 		 );
@@ -151,8 +160,10 @@ $(document).ready(function(){
 function detectCurrentColoring() {
     var hash = window.location.hash;
     if (hash == "#measure") {
+	$('#coloringModeSelector')[0].value = 'measure';
 	MeasureMode.apply();
     } else {
+	$('#coloringModeSelector')[0].value = 'category';
 	CategoryMode.apply();
     }
 }
@@ -201,20 +212,5 @@ function unselectAll() {
 		   if (node.selected) { node.toggleSelected(); }
 	       }); 
     currentColoring.handleSelect();
-}
-
-function handleOpenImplicationPreferences() {
-    var hash = window.location.hash;
-    var showWeakOpen;
-    var showStrongOpen;
-    if (hash) {
-	var split = hash.substring(1).split('-');
-	showWeakOpen = split[0] == 'true';
-	showStrongOpen = split[1] == 'true';
-    }
-    showWeakOpenCheckbox.checked = showWeakOpen;
-    showStrongOpenCheckbox.checked = showStrongOpen;
-    updateStrongOpen();
-    updateWeakOpen();
 }
 
