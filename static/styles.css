@@ -69,3 +69,9 @@ div#graph{
     background-color: beige;
     border: 2px black solid;
 }
+
+#controls td {
+    background-color: #E0E0EB;
+    padding-left: 5px;
+    padding-right: 5px;
+}
