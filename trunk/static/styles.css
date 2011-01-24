@@ -45,6 +45,7 @@ div#space{
 }
 
 div#graph{
+    padding-top: 50px;
     padding-bottom:150px;
 }
 
@@ -68,6 +69,13 @@ div#graph{
     font-size: 10px;
     background-color: beige;
     border: 2px black solid;
+}
+
+div#controls {
+    position:fixed;
+    top: 10px;
+    left: 10px;
+    background-color: beige;
 }
 
 #controls td {
