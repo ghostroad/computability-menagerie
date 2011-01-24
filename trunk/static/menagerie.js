@@ -7,9 +7,7 @@ var currentSizeColoring;
 var currentColoring;
 var CATEGORY_CLASSES = "countable uncountableMeager uncountableComeager uncountableUnknown unknownMeager unknownUnknown";
 var MEASURE_CLASSES = "level0 level1 level2 level3 level4 level3-4 level2-3 level2-4 level1-2 level0-3 level1-4 level0-1 level0-2 level0-3 level0-4";
-var SINGLE_SELECTED_CLASSES = "above properlyAbove below properlyBelow incomparable other";
-var PAIR_SELECTED_CLASSES = "between other";
-
+var RECOLORING_CLASSES = "above properlyAbove below properlyBelow incomparable other between";
 function getSelectedClasses() {
     var selected = [];
     nodes.each(function() {
@@ -71,7 +69,7 @@ var SingleSelectedMode = {
 	$.getJSON($SCRIPT_ROOT + '/_recolorSingleSelected', { selectedClass: '' + getSelectedClasses() }, 
 		  function(data) {
 		      if (numSelected == 1) {
-			  nodes.removeClass(PAIR_SELECTED_CLASSES).addClass(function() { return data[this.id]; });
+			  nodes.removeClass(RECOLORING_CLASSES).addClass(function() { return data[this.id]; });
 			  currentColoring = SingleSelectedMode;
 			  activateKey('#singleRecoloringKey');
 		      }
@@ -80,9 +78,9 @@ var SingleSelectedMode = {
     },
     "handleSelect" : function() {
 	if (numSelected == 1) { SingleSelectedMode.apply(); }
-	if (numSelected == 2) { PairSelectedMode.apply(); }
+	else if (numSelected == 2) { PairSelectedMode.apply(); }
 	else {
-	    nodes.removeClass(SINGLE_SELECTED_CLASSES);
+	    nodes.removeClass(RECOLORING_CLASSES);
 	    currentSizeColoring.apply();
 	}
     },
@@ -97,7 +95,7 @@ var PairSelectedMode = {
 	$.getJSON($SCRIPT_ROOT + '/_recolorPairSelected', { selectedClass: '' + getSelectedClasses() }, 
 		  function(data) {
 		      if (numSelected == 2) {
-			  nodes.removeClass(SINGLE_SELECTED_CLASSES).addClass(function() { return data[this.id]; });
+			  nodes.removeClass(RECOLORING_CLASSES).addClass(function() { return data[this.id]; });
 			  currentColoring = PairSelectedMode;
 			  activateKey('#pairRecoloringKey');
 		      }
@@ -107,9 +105,9 @@ var PairSelectedMode = {
 
     "handleSelect" : function() {
 	if (numSelected == 2) { PairSelectedMode.apply(); }
-	if (numSelected == 1) { SingleSelectedMode.apply(); }
+	else if (numSelected == 1) { SingleSelectedMode.apply(); }
 	else {
-	    nodes.removeClass(PAIR_SELECTED_CLASSES);
+	    nodes.removeClass(RECOLORING_CLASSES);
 	    currentSizeColoring.apply();
 	}
     },
