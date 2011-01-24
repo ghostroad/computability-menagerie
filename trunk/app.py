@@ -5,7 +5,7 @@ from os import getenv
 
 m = Menagerie()
 parser = MenagerieParser(m)
-parser.readFromFile(getenv("MENAGERIE_DATABASE_FILE") or "bn1g.txt")
+parser.readFromFile(getenv("MENAGERIE_DATABASE_FILE") or "database.txt")
 Deductions().apply(m)
 category, measure = Coloring(m).buildPropertiesMaps()
 
@@ -74,6 +74,10 @@ def recolorPairSelected():
         else:
             result[C.name] = "other"
     return jsonify(result)
+
+@app.route('/_properties/<className>')
+def properties(className):
+    return render_template("properties.html", cls = m[className])
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
