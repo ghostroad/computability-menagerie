@@ -38,12 +38,12 @@
   </style>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.4.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
   <script type="text/javascript">
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     $CATEGORY = {{ category|tojson|safe }};
     $MEASURE = {{ measure|tojson|safe }};
   </script>
+  <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
 </head>
 
@@ -62,14 +62,17 @@
 	  <table id="controls">
 	    <tr>
 	      <td><span id="numSelected">0</span> selected</td>
+	      {% if excludedClasses %}
+	      <td><a class="notALink" id="toggleExcluded"><span>{{ excludedClasses|length }} excluded</span></a></td>
+	      {% endif %}
 	      <td><input type="button" id="showImplications" onclick="showImplications();" value="Show implications"/></td>
 	      <td id="showClassDetails" style="display:none"><input type="button" onclick="showClassDetailsClicked();" value="Show class details"/></td>
 	      <td><input type="button" id="viewSubgraph" onclick="viewSubgraph();" value="View subgraph"/></td>
 	      <td><input type="button" id="excludeSelected" onclick="excludeSelected();" value="Exclude selected classes"/></td>
 	      <td><input type="button" id="unselectAll" onclick="unselectAll();" value="Unselect all"/></td>
 	      <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
-	      <td><a class="notALink" id="toggleHelp"><span>Help</span></a></td>
-	      <td><a class="notALink" id="toggleKey"><span>Key</span></a></td>
+	      <td><a class="notALink" id="toggleHelp" title="click to toggle"><span>Help</span></a></td>
+	      <td><a class="notALink" id="toggleKey" title="click to toggle"><span>Key</span></a></td>
 
 	    </tr>
 	  </table>
@@ -88,6 +91,15 @@
 	    </ul>
 	  </div>
       </td></tr>
+      {% if excludedClasses %}
+      <tr id="excludedClasses">
+	<td>
+	  <div>
+	    {{ excludedClasses|join(", ")|safe }}
+	  </div>
+	</td>
+      </tr>
+      {% endif %}
     </table>
   </div>
 
@@ -153,7 +165,6 @@
 	{{ stripePattern("uncountableUnknown", "uncountableMeager", "uncountableComeager") }}
 	{{ stripePattern("unknownMeager", "countable", "uncountableMeager") }}
 	{{ stripePattern("unknownUnknown", "countable", "uncountableComeager") }}
-
 	{{ stripePattern("level3-4", "level3", "level4") }}
 	{{ stripePattern("level2-3", "level2", "level3") }}
 	{{ stripePattern("level2-4", "level2", "level4") }}
@@ -164,10 +175,8 @@
 	{{ stripePattern("level0-2", "level0", "level2") }}
 	{{ stripePattern("level0-3", "level0", "level3") }}
 	{{ stripePattern("level0-4", "level0", "level4") }}
-
       </defs>
     </g>
-    </svg>
-
+  </svg>
 </body>
 </html>

@@ -83,3 +83,8 @@ div#controlPanel {
     padding-left: 5px;
     padding-right: 5px;
 }
+
+#excludedClasses div {
+    width: 895px;
+    padding: 10px;
+}
