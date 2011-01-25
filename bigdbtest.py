@@ -9,7 +9,7 @@ class TestMenagerieWithLargeDB(unittest.TestCase):
         parser = MenagerieParser(m)
         parser.readFromFile("bn1g.txt")
         Deductions().apply(m)
-        print DotRenderer(m).render(showWeakOpenImplications=True, showStrongOpenImplications=False).to_string()
+        print DotCommandLineRenderer(m).render(showWeakOpenImplications=True, showStrongOpenImplications=False).to_string()
 
 if __name__ == "__main__":
     unittest.main()

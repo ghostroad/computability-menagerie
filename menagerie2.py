@@ -367,9 +367,14 @@ class TextWriter:
     def writeLine(self, str):
         self.result.append(self.__currIndent() + str)
 
+class HtmlClassDecorator:
+    def decorate(self, cls):
+        return '<span class="className">' + (cls.longName or cls.name) + '</span>'
+
 class HtmlWriter:
     def __init__(self):
         self.result = []
+        self.classDecorator = HtmlClassDecorator()
     def write(self, item):
         self.result.append("<ul>")
         item.write(self)
@@ -386,7 +391,7 @@ class HtmlWriter:
     def writeString(self, str):
         self.result.append(str)
     def writeClass(self, cls):
-        self.result.append('<span class="className">' + (cls.longName or cls.name) + '</span>');
+        self.result.append(self.classDecorator.decorate(cls));
     def writeImplication(self):
         self.result.append(" $\\rightarrow$ ")
     def writeNonImplication(self):
@@ -421,31 +426,28 @@ class LatexWriter:
         self.result.append(str + "\n")
 
 
-class DotRenderer:
-    def __init__(self, menagerie):
+class DotRenderer(object):
+    def __init__(self, menagerie, classes = []):
         self.menagerie = menagerie
-    def render(self, showOnly = [], displayLongNames = False):
-        if showOnly: 
-            classes = set([self.menagerie[name] for name in showOnly])
-        else: classes = set(self.menagerie.classes)
-
+        self.classes = set(classes or self.menagerie.classes)
+    def render(self, displayLongNames = False):
         graph = Dot(rankdir = "BT")
         graph.set_name("\"The Computability Menagerie\"")
         if self.menagerie.errors: graph.set_bgcolor("pink")
-        self.__addClasses(graph, displayLongNames, classes)
-        self.__addEdges(graph, classes)
+        self.__addClasses(graph, displayLongNames)
+        self.__addEdges(graph)
         return graph
 
-    def __addClasses(self, graph, displayLongNames, classes):
-        for cls in classes:
+    def __addClasses(self, graph, displayLongNames):
+        for cls in self.classes:
             node = self.createNodeFor(cls)
             if displayLongNames and cls.longName: 
                 node.set_label("\\n".join(textwrap.wrap(cls.longName, 12)))
             graph.add_node(node)
 
-    def __addEdges(self, graph, classes):
-        for cls in classes:
-            implied = classes.intersection(imp.dest for imp in cls.implications)
+    def __addEdges(self, graph):
+        for cls in self.classes:
+            implied = self.classes.intersection(imp.dest for imp in cls.implications)
             for dest in implied:
                 for other in implied:
                     if (other is not dest) and other.implies(dest): break
@@ -463,9 +465,10 @@ class DotRenderer:
 	return node
 
 class DotCommandLineRenderer(DotRenderer):
-    def render(self, showOnly = [], showWeakOpenImplications = False, showStrongOpenImplications = False, displayLongNames = False):
-        graph = super(DotCommandLineRenderer, self).render(showOnly, displayLongNames)
-        if showWeakOpenImplications or showStrongOpenImplications: self.__addOpenImplications(graph, showWeakOpenImplications, showStrongOpenImplications, classes)
+    def render(self, showWeakOpenImplications = False, showStrongOpenImplications = False, displayLongNames = False):
+        graph = super(DotCommandLineRenderer, self).render(displayLongNames)
+        if showWeakOpenImplications or showStrongOpenImplications: self.__addOpenImplications(graph, showWeakOpenImplications, 
+                                                                                              showStrongOpenImplications)
         return graph
 
     def createNodeFor(self, cls):
@@ -501,13 +504,13 @@ class DotCommandLineRenderer(DotRenderer):
         
 	return node
 
-    def __addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications, classes):
+    def __addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications):
         imp, nonimp = self.menagerie.implicationsMatrix, self.menagerie.nonimplicationsMatrix
         idCounter = 0
-        for a, b in permutations(classes, 2):
+        for a, b in permutations(self.classes, 2):
             if a.implicationUnknown(b):
                 strong = weak = True
-                for c in classes:
+                for c in self.classes:
                     if (c is not a) and (c is not b):
                         if imp[c.index][a.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): weak = False
                         if imp[b.index][c.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): weak = False
