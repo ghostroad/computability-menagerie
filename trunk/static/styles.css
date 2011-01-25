@@ -36,10 +36,6 @@ a.notALink:hover {
     text-decoration: underline;
 }
 
-#help {
-    font-size: 12px;
-}
-
 div#space{
     width:300px;
 }
@@ -84,7 +80,11 @@ div#controlPanel {
     padding-right: 5px;
 }
 
-#excludedClasses div {
-    width: 895px;
+div#help {
+    width: 843px;
+    padding-right: 10px;
+}
+div#excludedClasses {
+    width: 843px;
     padding: 10px;
 }

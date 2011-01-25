@@ -38,70 +38,64 @@
   </style>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.4.js') }}"></script>
-  <script type="text/javascript">
-    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-    $CATEGORY = {{ category|tojson|safe }};
-    $MEASURE = {{ measure|tojson|safe }};
-  </script>
-  <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
-</head>
+   <script type="text/javascript">
+     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+     $CATEGORY = {{ category|tojson|safe }};
+     $MEASURE = {{ measure|tojson|safe }};
+   </script>
+   <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
+   <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
+ </head>
 
-{% macro svgellipse(className) -%}
-<svg height="22pt" viewBox="0.00 0.00 42.00 22.00" width="42pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="{{ className }}"><ellipse cx="20" cy="10" rx="20" ry="10"/></g></svg>
-{%- endmacro %}
+ {% macro svgellipse(className) -%}
+ <svg height="22pt" viewBox="0.00 0.00 42.00 22.00" width="42pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="{{ className }}"><ellipse cx="20" cy="10" rx="20" ry="10"/></g></svg>
+ {%- endmacro %}
 
-{% macro stripePattern(patternName, classA, classB) -%}
-<pattern id="{{ patternName }}" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><g class="{{ classA }}"><rect x="0" y="0" width="10" height="80"/></g><g class="{{ classB }}"><rect x="10" y="0" width="10" height="80"/></g></pattern>
-{%- endmacro %}
+ {% macro stripePattern(patternName, classA, classB) -%}
+ <pattern id="{{ patternName }}" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><g class="{{ classA }}"><rect x="0" y="0" width="10" height="80"/></g><g class="{{ classB }}"><rect x="10" y="0" width="10" height="80"/></g></pattern>
+ {%- endmacro %}
 
-<body>
-  <div id="controlPanel">
-    <table>
-      <tr><td>
-	  <table id="controls">
-	    <tr>
-	      <td><span id="numSelected">0</span> selected</td>
-	      {% if excludedClasses %}
-	      <td><a class="notALink" id="toggleExcluded"><span>{{ excludedClasses|length }} excluded</span></a></td>
-	      {% endif %}
-	      <td><input type="button" id="showImplications" onclick="showImplications();" value="Show implications"/></td>
-	      <td id="showClassDetails" style="display:none"><input type="button" onclick="showClassDetailsClicked();" value="Show class details"/></td>
-	      <td><input type="button" id="viewSubgraph" onclick="viewSubgraph();" value="View subgraph"/></td>
-	      <td><input type="button" id="excludeSelected" onclick="excludeSelected();" value="Exclude selected classes"/></td>
-	      <td><input type="button" id="unselectAll" onclick="unselectAll();" value="Unselect all"/></td>
-	      <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
-	      <td><a class="notALink" id="toggleHelp" title="click to toggle"><span>Help</span></a></td>
-	      <td><a class="notALink" id="toggleKey" title="click to toggle"><span>Key</span></a></td>
+ <body>
+   <div id="controlPanel">
+     <div id="controls">
+       <table>
+	 <tr>
+	   <td><span id="numSelected">0</span> selected</td>
+	   {% if excludedClasses %}
+	   <td><a class="notALink" id="toggleExcluded"><span>{{ excludedClasses|length }} excluded</span></a></td>
+	   {% endif %}
+	   <td><input type="button" id="showImplications" onclick="showImplications();" value="Show implications"/></td>
+	   <td id="showClassDetails" style="display:none"><input type="button" onclick="showClassDetailsClicked();" value="Show class details"/></td>
+	   <td><input type="button" id="viewSubgraph" onclick="viewSubgraph();" value="View subgraph"/></td>
+	   <td><input type="button" id="excludeSelected" onclick="excludeSelected();" value="Exclude selected classes"/></td>
+	   <td><input type="button" id="unselectAll" onclick="unselectAll();" value="Unselect all"/></td>
+	   <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
+	   <td><a class="notALink" id="toggleHelp" title="click to toggle"><span>Help</span></a></td>
+	   <td><a class="notALink" id="toggleKey" title="click to toggle"><span>Key</span></a></td>
 
-	    </tr>
-	  </table>
-      </td></tr>
-      <tr id="help" style="display: none;"><td>
-	  <div>
-	    <ul>
-	      <li>Select/unselect classes by clicking on them.</li>
-	      <li>Switch between coloring by "measure" (Hausdorff dimension, packing dimension and Lebesgue measure) and category using the dropdown.</li>
-	      <li>Double-click on a class to see its properties in detail (opens a new tab). Alternatively, hover over the class to see a short summary.</li>
-	      <li>When a single class is selected, the graph is recolored to indicate how other classes relate to the selected class.</li>
-	      <li>When a pair of classes is selected, classes that are intermediate between them are highlighted.</li>
-	      <li>Select a pair of classes, then click "Show implications" to see the implications between them (opens a new tab/window).</li>
-	      <li>Select a group of classes, then click "View subgraph" to generate a subgraph consisting only of the selected classes.</li>
-	      <li>Bookmark the page to save your settings.</li>
-	    </ul>
-	  </div>
-      </td></tr>
-      {% if excludedClasses %}
-      <tr id="excludedClasses">
-	<td>
-	  <div>
-	    {{ excludedClasses|join(", ")|safe }}
-	  </div>
-	</td>
-      </tr>
-      {% endif %}
-    </table>
-  </div>
+	 </tr>
+       </table>
+     </div>
+
+     <div id="help" style="display: none;">
+       <ul>
+	 <li>Select/unselect classes by clicking on them.</li>
+	 <li>Switch between coloring by "measure" (Hausdorff dimension, packing dimension and Lebesgue measure) and category using the dropdown.</li>
+	 <li>Double-click on a class to see its properties in detail (opens a new tab). Alternatively, hover over the class to see a short summary.</li>
+	 <li>When a single class is selected, the graph is recolored to indicate how other classes relate to the selected class. This is some more text to see if the wrapping works as I mean it to.</li>
+	 <li>When a pair of classes is selected, classes that are intermediate between them are highlighted.</li>
+	 <li>Select a pair of classes, then click "Show implications" to see the implications between them (opens a new tab/window).</li>
+	 <li>Select a group of classes, then click "View subgraph" to generate a subgraph consisting only of the selected classes.</li>
+	 <li>Bookmark the page to save your settings.</li>
+       </ul>
+     </div>
+
+     {% if excludedClasses %}
+     <div id="excludedClasses">
+       {{ excludedClasses|join(", ")|safe }}
+     </div>
+     {% endif %}
+   </div>
 
   <div id="keys" style="display: none;">
     <div id="singleRecoloringKey" class="key" style="display: none;">
