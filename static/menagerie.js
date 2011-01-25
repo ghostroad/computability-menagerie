@@ -9,7 +9,7 @@ var currentSizeColoring;
 var currentColoring;
 var CATEGORY_CLASSES = "countable uncountableMeager uncountableComeager uncountableUnknown unknownMeager unknownUnknown";
 var MEASURE_CLASSES = "level0 level1 level2 level3 level4 level3-4 level2-3 level2-4 level1-2 level0-3 level1-4 level0-1 level0-2 level0-3 level0-4";
-var RECOLORING_CLASSES = "above properlyAbove below properlyBelow incomparable other between";
+var RECOLORING_CLASSES = "above eqAbove below eqBelow inc aboveInc belowInc eqInc other between";
 function getSelectedClasses() {
     var selected = [];
     nodes.each(function() {

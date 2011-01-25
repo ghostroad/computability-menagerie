@@ -5,7 +5,7 @@ from os import getenv
 
 m = Menagerie()
 parser = MenagerieParser(m)
-parser.readFromFile(getenv("MENAGERIE_DATABASE_FILE") or "database.txt")
+parser.readFromFile(getenv("MENAGERIE_DATABASE_FILE") or "bn1g.txt")
 Deductions().apply(m)
 category, measure = Coloring(m).buildPropertiesMaps()
 
@@ -54,14 +54,16 @@ def recolorSingleSelected():
     for other in m.classes:
         if other is not cls:
             if cls.implies(other): 
-                if other.doesNotImply(cls): result[other.name] = "properlyAbove"
-                else: result[other.name] = "above"
-            elif other.implies(cls):
-                if cls.doesNotImply(other): result[other.name] = "properlyBelow"
-                else: result[other.name] = "below"
-            elif cls.doesNotImply(other) and other.doesNotImply(cls):
-                result[other.name] = "incomparable"
-            else: result[other.name] = "other"
+                if other.doesNotImply(cls): result[other.name] = "above"
+                else: result[other.name] = "eqAbove"
+            elif cls.doesNotImply(other): 
+                if other.implies(cls): result[other.name] = "below"
+                elif other.doesNotImply(cls): result[other.name] = "inc"
+                else: result[other.name] = "belowInc"
+            else:
+                if other.implies(cls): result[other.name] = "eqBelow"
+                elif other.doesNotImply(cls): result[other.name] = "aboveInc"
+                else: result[other.name] = "eqInc"
     return jsonify(result)
 
 @app.route('/_recolorPairSelected')

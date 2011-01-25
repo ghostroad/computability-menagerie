@@ -12,6 +12,7 @@
     .uncountableUnknown ellipse {fill: url(#uncountableUnknown)}
     .unknownMeager ellipse {fill: url(#unknownMeager)}
     .unknownUnknown ellipse {fill: url(#unknownUnknown)}
+
     .level0 ellipse, .level0 rect {fill: gray;}
     .level1 ellipse, .level1 rect {fill: #66FFCC;}
     .level2 ellipse, .level2 rect {fill: #6699FF}
@@ -27,11 +28,16 @@
     .level0-2 ellipse {fill: url(#level0-2)}
     .level0-3 ellipse {fill: url(#level0-3)}
     .level0-4 ellipse {fill: url(#level0-4)}
-    .properlyAbove ellipse, .properlyAbove rect {fill: #FFADAD;}
-    .above ellipse {fill: url(#above);}
-    .properlyBelow ellipse, .properlyBelow rect {fill: #ADADFF;}
-    .below ellipse {fill: url(#below);}
-    .incomparable ellipse {fill: #B280B2;}
+
+    .above ellipse, .above rect {fill: #FFADAD;}
+    .eqAbove ellipse {fill: url(#eqAbove);}
+    .below ellipse, .below rect {fill: #ADADFF;}
+    .eqBelow ellipse {fill: url(#eqBelow);}
+    .inc ellipse, .inc rect {fill: lightgray;}
+    .belowInc ellipse {fill: url(#belowInc);}
+    .aboveInc ellipse {fill: url(#aboveInc);}
+    .eqInc ellipse {fill: url(#eqInc);}
+
     .other ellipse {fill: gray;}
     .between ellipse {fill: lightcoral;}
     .selected ellipse, .selected rect {fill: gold;}
@@ -105,13 +111,11 @@
     <div id="singleRecoloringKey" class="key" style="display: none;">
 	<table>
 	  <tr><td>{{ svgellipse("selected") }}</td><td>Selected</td></tr>
-	  <tr><td>{{ svgellipse("properlyAbove") }}</td><td>Proper superclass of the selected class</td></tr>
-	  <tr><td>{{ svgellipse("above") }}</td><td>Superclass of the selected class, <br/>other inclusion unknown</td></tr>
-	  <tr><td>{{ svgellipse("properlyBelow") }}</td><td>Proper subclass of the selected class</td></tr>
-	  <tr><td>{{ svgellipse("below") }}</td><td>Subclass of the selected class, <br/>other inclusion unknown</td></tr>
-	  <tr><td>{{ svgellipse("incomparable") }}</td><td>Incomparable to the selected class</td></tr>
-	  <tr><td>{{ svgellipse("other") }}</td><td>Everything else</td></tr>
+	  <tr><td>{{ svgellipse("above") }}</td><td>Proper superclass of the selected class</td></tr>
+	  <tr><td>{{ svgellipse("below") }}</td><td>Proper subclass of the selected class</td></tr>
+	  <tr><td>{{ svgellipse("inc") }}</td><td>Incomparable to the selected class</td></tr>
 	</table>
+	Stripes indicate one or more unknown implications. Colors alternate between the possibilities.
     </div>
     <div id="measureKey" class="key" style="display: none;">
 	<table>
@@ -122,6 +126,7 @@
 	  <tr><td>{{ svgellipse("level1") }}</td><td>Uncountable, <br/>packing dimension 0</td></tr>
 	  <tr><td>{{ svgellipse("level0") }}</td><td>Countable</td></tr>
 	</table>
+	Stripes indicate unknown measure information. Colors alternate between the possible extremes.
     </div>
     <div id="categoryKey" class="key" style="display: none;">
 	<table>
@@ -130,6 +135,7 @@
 	  <tr><td>{{ svgellipse("uncountableMeager") }}</td><td>Uncountable and meager</td></tr>
 	  <tr><td>{{ svgellipse("countable") }}</td><td>Countable</td></tr>
 	</table>
+	Stripes indicate unknown measure information. Colors alternate between the possible extremes.
     </div>
     <div id="pairRecoloringKey" class="key" style="display: none;">
 	<table>
@@ -158,8 +164,12 @@
   <svg height="0pt" width="0pt" id="paintServers" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
       <defs>
-	{{ stripePattern("above", "properlyAbove", "selected") }}
-	{{ stripePattern("below", "properlyBelow", "selected") }}
+	{{ stripePattern("eqAbove", "above", "selected") }}
+	{{ stripePattern("eqBelow", "below", "selected") }}
+	{{ stripePattern("aboveInc", "above", "inc") }}
+	{{ stripePattern("belowInc", "below", "inc") }}
+	{{ stripePattern("eqInc", "selected", "inc") }}
+
 	{{ stripePattern("uncountableUnknown", "uncountableMeager", "uncountableComeager") }}
 	{{ stripePattern("unknownMeager", "countable", "uncountableMeager") }}
 	{{ stripePattern("unknownUnknown", "countable", "uncountableComeager") }}
