@@ -120,8 +120,8 @@ var PairSelectedMode = {
 $(document).ready(function(){
 		      if (!window.Touch) hovertipInit();
   
-		      $('#toggleHelp').click( function() { $('#help').toggle(400); } );
-		      $('#toggleKey').click( function() { $('#keys').toggle(400); } );
+		      $('#toggleHelp').click( function() { $('#help').toggle(); } );
+		      $('#toggleKey').click( function() { $('#keys').toggle(); } );
 
 		      nodes = $('g[class="node"]');
 		     

@@ -71,7 +71,7 @@ div#graph{
     border: 2px black solid;
 }
 
-div#controls {
+div#controlPanel {
     position:fixed;
     top: 10px;
     left: 10px;
