@@ -16,7 +16,7 @@ def displayMenagerie():
     classesParam = request.args.get("classes", None)
     classes = classesParam and [m[clsName] for clsName in classesParam.split(",")] or m.classes
     decorator = HtmlClassDecorator()
-    excludedClasses = [decorator.decorate(cls) for cls in set(m.classes).difference(classes)]
+    excludedClasses = sorted([decorator.decorate(cls) for cls in set(m.classes).difference(classes)])
     g = DotRenderer(m, classes).render(displayLongNames=True)
     processedSvg = SVGPostProcessor().process(g)
     
