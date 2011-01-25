@@ -14,11 +14,13 @@ app = Flask(__name__)
 @app.route('/')
 def displayMenagerie():
     classesParam = request.args.get("classes", None)
-    classes = classesParam and [m[clsName] for clsName in classesParam.split(",")] or []
+    classes = classesParam and [m[clsName] for clsName in classesParam.split(",")] or m.classes
+    decorator = HtmlClassDecorator()
+    excludedClasses = [decorator.decorate(cls) for cls in set(m.classes).difference(classes)]
     g = DotRenderer(m, classes).render(displayLongNames=True)
     processedSvg = SVGPostProcessor().process(g)
     
-    response = make_response(render_template("menagerie.html", graph = processedSvg, category = category, measure = measure))
+    response = make_response(render_template("menagerie.html", graph = processedSvg, category = category, measure = measure, excludedClasses = excludedClasses))
     response.headers["Content-Type"] = "application/xhtml+xml"
     return response
 

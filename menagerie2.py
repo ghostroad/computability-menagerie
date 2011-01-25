@@ -393,9 +393,9 @@ class HtmlWriter:
     def writeClass(self, cls):
         self.result.append(self.classDecorator.decorate(cls));
     def writeImplication(self):
-        self.result.append(" $\\rightarrow$ ")
+        self.result.append(" $\\Rightarrow$ ")
     def writeNonImplication(self):
-        self.result.append(" $\\nrightarrow$ ")
+        self.result.append(" $\\nRightarrow$ ")
     def writeLine(self, str):
         self.result.append("<li>{0}</li>".format(str))
     
