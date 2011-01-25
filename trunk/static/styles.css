@@ -66,6 +66,7 @@ div#graph{
 }
 
 #keys {
+    max-width: 200px;
     padding: 8px;
     position:fixed;
     bottom:10px;
@@ -105,6 +106,8 @@ div#help ul {
 }
 
 div#excludedClasses {
+    overflow: auto;
+    max-height: 500px;
     width: 200px;
     padding: 10px;
     border: 2px beige solid ;
