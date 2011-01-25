@@ -1,6 +1,7 @@
 var nodes;
 var showClassDetailsButton;
 var showImplicationsButton;
+var excludeSelectedButton;
 var viewSubgraphButton;
 var numSelected = 0;
 var currentSizeColoring;
@@ -13,7 +14,7 @@ function getSelectedClasses() {
     nodes.each(function() {
 	       if (this.selected) selected.push(this.id);
 	       });
-    return selected;
+    return selected.join();
 }
 
 function recolorIfAppropriate() {
@@ -66,7 +67,7 @@ var MeasureMode = {
 
 var SingleSelectedMode = {
     "apply" : function() {
-	$.getJSON($SCRIPT_ROOT + '/_recolorSingleSelected', { selectedClass: '' + getSelectedClasses() }, 
+	$.getJSON($SCRIPT_ROOT + '/_recolorSingleSelected', { selectedClass: getSelectedClasses() }, 
 		  function(data) {
 		      if (numSelected == 1) {
 			  nodes.removeClass(RECOLORING_CLASSES).addClass(function() { return data[this.id]; });
@@ -92,7 +93,7 @@ var SingleSelectedMode = {
 
 var PairSelectedMode = {
     "apply" : function() {
-	$.getJSON($SCRIPT_ROOT + '/_recolorPairSelected', { selectedClass: '' + getSelectedClasses() }, 
+	$.getJSON($SCRIPT_ROOT + '/_recolorPairSelected', { selectedClass: getSelectedClasses() }, 
 		  function(data) {
 		      if (numSelected == 2) {
 			  nodes.removeClass(RECOLORING_CLASSES).addClass(function() { return data[this.id]; });
@@ -129,6 +130,7 @@ $(document).ready(function(){
 		      if (window.Touch) $('#showClassDetails').show();
 		      showImplicationsButton = $('#showImplications')[0];
 		      viewSubgraphButton = $('#viewSubgraph')[0];
+		      excludeSelectedButton = $('#excludeSelected')[0];
 
 		      disableButtonsIfAppropriate();
 		      detectCurrentColoring();
@@ -167,15 +169,16 @@ function detectCurrentColoring() {
 }
 
 function disableButtonsIfAppropriate() {
-      viewSubgraphButton.disabled = (numSelected < 2);
-      showImplicationsButton.disabled = (numSelected != 2);
-      showClassDetailsButton.disabled = (numSelected != 1);
+    viewSubgraphButton.disabled = (numSelected < 2);
+    showImplicationsButton.disabled = (numSelected != 2);
+    showClassDetailsButton.disabled = (numSelected != 1);
+    excludeSelectedButton.disabled = (numSelected == 0 || (nodes.length - numSelected) < 2);
 }
 
-function disableButtons() {
-    showClassDetailsButton.disabled = true;
-    showImplicationsButton.disabled = true;
-    viewSubgraphButton.disabled = true;
+function excludeSelected() {
+    var unselected = [];
+    nodes.each(function() { if (!this.selected) unselected.push(this.id); });
+    window.location = $SCRIPT_ROOT + '?classes=' + unselected.join();
 }
 
 function showClassDetails(node) {
@@ -197,11 +200,7 @@ function showImplications() {
 }
 
 function viewSubgraph() {
-    var selected = [];
-    nodes.each(function(i, node) {
-		   if (node.selected) { selected.push(node.id); };
-	       });
-    var url = $SCRIPT_ROOT + '?classes=' + selected;
+    var url = $SCRIPT_ROOT + '?classes=' + getSelectedClasses();
     window.location = url;
 }
 

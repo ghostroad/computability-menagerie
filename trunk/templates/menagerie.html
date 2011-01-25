@@ -65,10 +65,12 @@
 	      <td><input type="button" id="showImplications" onclick="showImplications();" value="Show implications"/></td>
 	      <td id="showClassDetails" style="display:none"><input type="button" onclick="showClassDetailsClicked();" value="Show class details"/></td>
 	      <td><input type="button" id="viewSubgraph" onclick="viewSubgraph();" value="View subgraph"/></td>
+	      <td><input type="button" id="excludeSelected" onclick="excludeSelected();" value="Exclude selected classes"/></td>
 	      <td><input type="button" id="unselectAll" onclick="unselectAll();" value="Unselect all"/></td>
-	      <td><a class="notALink" id="toggleHelp"><span>Show/hide help</span></a></td>
-	      <td><a class="notALink" id="toggleKey"><span>Show/hide key</span></a></td>
-	      <td>Color by: <select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Measure</option><option value="category">Category</option></select></td>
+	      <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
+	      <td><a class="notALink" id="toggleHelp"><span>Help</span></a></td>
+	      <td><a class="notALink" id="toggleKey"><span>Key</span></a></td>
+
 	    </tr>
 	  </table>
       </td></tr>
