@@ -460,10 +460,11 @@ class DotRenderer(object):
     def createNodeFor(self, cls):
         node = Node(cls.name)
         node.set_id('"' + cls.name + '"')
-        node.set_fontsize(12)
+        node.set_fontsize(10)
         node.set_color("black")
         node.set_style("filled")
         node.set_color("lightgrey")
+        node.set_margin("0.0825,0.0412")
 	return node
 
 class DotCommandLineRenderer(DotRenderer):
