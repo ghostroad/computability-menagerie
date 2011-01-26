@@ -2,8 +2,6 @@ Rename svgutils.py
 Add buttons to make graph smaller and larger
 Email yvonne and john heim
 Put title and credits
-See list of classes that have been excluded and also be able to click on them and go back
-If two classes selected, highlight things that are possibly intermediate, known to be intermediate, everything else grey
 Make server reload database.txt if it changes
 Error page
 Write tests to make sure node styling doesn't break
