@@ -38,8 +38,10 @@
     .aboveInc ellipse {fill: url(#aboveInc);}
     .eqInc ellipse {fill: url(#eqInc);}
 
-    .other ellipse {fill: gray;}
-    .between ellipse {fill: lightcoral;}
+    .notBetw ellipse, .notBetw rect {fill: gray;}
+    .betw ellipse, .betw rect {fill: lightcoral;}
+    .possiblyBetw ellipse {fill: url(#possiblyBetw);
+}
     .selected ellipse, .selected rect {fill: gold;}
   </style>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
@@ -135,14 +137,15 @@
 	  <tr><td>{{ svgellipse("uncountableMeager") }}</td><td>Uncountable and meager</td></tr>
 	  <tr><td>{{ svgellipse("countable") }}</td><td>Countable</td></tr>
 	</table>
-	Stripes indicate unknown measure information. Colors alternate between the possible extremes.
+	Stripes indicate unknown category information. Colors alternate between the possible extremes.
     </div>
     <div id="pairRecoloringKey" class="key" style="display: none;">
 	<table>
 	  <tr><td>{{ svgellipse("selected") }}</td><td>Selected</td></tr>
-	  <tr><td>{{ svgellipse("between") }}</td><td>Between the selected classes</td></tr>
-	  <tr><td>{{ svgellipse("other") }}</td><td>Everything else</td></tr>
+	  <tr><td>{{ svgellipse("betw") }}</td><td>Intermediate</td></tr>
+	  <tr><td>{{ svgellipse("notBetw") }}</td><td>Not intermediate</td></tr>
 	</table>
+	  Stripes indicate unknown implications.
     </div>
   </div>
 
@@ -169,7 +172,7 @@
 	{{ stripePattern("aboveInc", "above", "inc") }}
 	{{ stripePattern("belowInc", "below", "inc") }}
 	{{ stripePattern("eqInc", "selected", "inc") }}
-
+	{{ stripePattern("possiblyBetw", "betw", "notBetw") }}
 	{{ stripePattern("uncountableUnknown", "uncountableMeager", "uncountableComeager") }}
 	{{ stripePattern("unknownMeager", "countable", "uncountableMeager") }}
 	{{ stripePattern("unknownUnknown", "countable", "uncountableComeager") }}
@@ -183,8 +186,29 @@
 	{{ stripePattern("level0-2", "level0", "level2") }}
 	{{ stripePattern("level0-3", "level0", "level3") }}
 	{{ stripePattern("level0-4", "level0", "level4") }}
+	
+
       </defs>
     </g>
   </svg>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
