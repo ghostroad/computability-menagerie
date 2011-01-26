@@ -1,4 +1,4 @@
-Rename svgutils.py
+Add ability to hover over selected and see what's been selected
 Add buttons to make graph smaller and larger
 Email yvonne and john heim
 Make server reload database.txt if it changes
