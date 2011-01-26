@@ -151,7 +151,7 @@ $(document).ready(function(){
 		      nodes = $('g[class="node"]');
 		     
 		      showClassDetailsButton = $('#showClassDetails input');
-		      if (window.Touch) $('#showClassDetails').show();
+		      if (window.Touch) $('#showClassDetailsTd').show();
 		      showImplicationsButton = $('#showImplications');
 		      viewSubgraphButton = $('#viewSubgraph');
 		      excludeSelectedButton = $('#excludeSelected');
