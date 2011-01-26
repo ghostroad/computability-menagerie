@@ -218,6 +218,8 @@ class ClassNode:
         return self.menagerie.nonimplicationsMatrix[self.index][other.index]
     def implicationUnknown(self, other):
         return not (self.implies(other) or self.doesNotImply(other))
+    def incomparableTo(self, other):
+        return self.doesNotImply(other) and other.doesNotImply(self)
     def __repr__(self):
         return self.name
 

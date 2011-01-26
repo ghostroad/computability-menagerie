@@ -70,17 +70,41 @@ def recolorSingleSelected():
 def recolorPairSelected():
     selectedClasses = request.args.get('selectedClass', None).split(",")
     A, B = m[selectedClasses[0]], m[selectedClasses[1]]
-    result = {}
-    for C in m.classes:
-        if (A.implies(C) and (C).implies(B)) or (B.implies(C) and C.implies(A)):
-            result[C.name] = "between"
+    if A.implies(B): return jsonify(buildMap(A, B))
+    elif A.doesNotImply(B):
+        if B.doesNotImply(A):
+            return jsonify(dict((cls.name, "notBetw") for cls in m.classes))
+        else: return jsonify(buildMap(B, A))
+    else:
+        if B.doesNotImply(A): return jsonify(buildMap(A, B))
+        elif B.implies(A): return jsonify(buildMap(A, B))
         else:
-            result[C.name] = "other"
-    return jsonify(result)
+            result = {}
+            for C in m.classes:
+                if C.incomparableTo(A) or C.incomparableTo(B) or (C.doesNotImply(A) and C.doesNotImply(B)) or (A.doesNotImply(C) and B.doesNotImply(C)): result[C.name] = "notBetw"
+                else: result[C.name] = "possiblyBetw"
+            return jsonify(result)
 
 @app.route('/_properties/<className>')
 def properties(className):
     return render_template("properties.html", cls = m[className])
 
+
+def buildMap(A, B):
+    result = {}
+    for C in m.classes:
+        if (A.implies(C) and (C).implies(B)):
+            result[C.name] = "betw"
+        elif A.doesNotImply(C) or C.doesNotImply(B):
+            result[C.name] = "notBetw"
+        else:
+            result[C.name] = "possiblyBetw"
+    return result
+    
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+
+
+    
+
