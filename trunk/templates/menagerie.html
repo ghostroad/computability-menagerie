@@ -40,8 +40,7 @@
 
     .notBetw ellipse, .notBetw rect {fill: gray;}
     .betw ellipse, .betw rect {fill: lightcoral;}
-    .possiblyBetw ellipse {fill: url(#possiblyBetw);
-}
+    .possiblyBetw ellipse {fill: url(#possiblyBetw);}
     .selected ellipse, .selected rect {fill: gold;}
   </style>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
@@ -85,7 +84,11 @@
      </div>
 
      <div id="help" style="display: none;">
+       <h3>The Computability Menagerie</h3>
+        <p>Curated and implemented by <a href="http://www.math.wisc.edu/~jmiller">Joseph S. Miller</a>, with web programming by <a href="http://www.math.wisc.edu/~khan">Mushfeq Khan</a>.</p>
+	<p>The coloring of classes contains a great deal of information about their properties and their relations to other classes. We recommend enabling the color key (click "Key"). The coloring changes depending on how many classes are selected and the key changes accordingly. Here are a few things to try:</p>
        <ul>
+	 
 	 <li>Select/unselect classes by clicking on them.</li>
 	 <li>Switch between coloring by "measure" (Hausdorff dimension, packing dimension and Lebesgue measure) and category using the dropdown.</li>
 	 <li>Double-click on a class to see its properties in detail (opens a new tab). Alternatively, hover over the class to see a short summary.</li>
@@ -93,8 +96,10 @@
 	 <li>When a pair of classes is selected, classes that are intermediate between them are highlighted.</li>
 	 <li>Select a pair of classes, then click "Show implications" to see the implications between them (opens a new tab/window).</li>
 	 <li>Select a group of classes, then click "View subgraph" to generate a subgraph consisting only of the selected classes.</li>
+	 <li>Select a group of classes, then click "Exclude selected" to remove those classes from the graph.</li>
 	 <li>Bookmark the page to save your settings.</li>
        </ul>
+       <p>Finally, click "Help" to toggle this window.</p>
      </div>
 
      {% if excludedClasses %}
@@ -113,9 +118,9 @@
     <div id="singleRecoloringKey" class="key" style="display: none;">
 	<table>
 	  <tr><td>{{ svgellipse("selected") }}</td><td>Selected</td></tr>
-	  <tr><td>{{ svgellipse("above") }}</td><td>Superclass of the selected class</td></tr>
-	  <tr><td>{{ svgellipse("below") }}</td><td>Subclass of the selected class</td></tr>
-	  <tr><td>{{ svgellipse("inc") }}</td><td>Incomparable to the selected class</td></tr>
+	  <tr><td>{{ svgellipse("above") }}</td><td>Superclass of selected class</td></tr>
+	  <tr><td>{{ svgellipse("below") }}</td><td>Subclass of selected class</td></tr>
+	  <tr><td>{{ svgellipse("inc") }}</td><td>Incomparable to selected class</td></tr>
 	</table>
 	Stripes indicate one or more unknown implications. Colors alternate between the possibilities.
     </div>

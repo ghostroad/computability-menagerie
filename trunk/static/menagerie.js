@@ -10,6 +10,7 @@ var currentColoring;
 var CATEGORY_CLASSES = "countable uncountableMeager uncountableComeager uncountableUnknown unknownMeager unknownUnknown";
 var MEASURE_CLASSES = "level0 level1 level2 level3 level4 level3-4 level2-3 level2-4 level1-2 level0-3 level1-4 level0-1 level0-2 level0-3 level0-4";
 var RECOLORING_CLASSES = "above eqAbove below eqBelow inc aboveInc belowInc eqInc notBetw betw possiblyBetw";
+
 function getSelectedClasses() {
     var selected = [];
     nodes.each(function() {
@@ -66,18 +67,7 @@ var MeasureMode = {
     }
 };
 
-var SingleSelectedMode = {
-    "apply" : function() {
-	$.getJSON($SCRIPT_ROOT + '/_recolorSingleSelected', { selectedClass: getSelectedClasses() }, 
-		  function(data) {
-		      if (numSelected == 1) {
-			  nodes.removeClass(RECOLORING_CLASSES).addClass(function() { return data[this.id]; });
-			  currentColoring = SingleSelectedMode;
-			  activateKey('#singleRecoloringKey');
-		      }
-		  }
-		 );
-    },
+var RecoloringMode = {
     "handleSelect" : function() {
 	if (numSelected == 1) { SingleSelectedMode.apply(); }
 	else if (numSelected == 2) { PairSelectedMode.apply(); }
@@ -92,6 +82,22 @@ var SingleSelectedMode = {
     }
 };
 
+var SingleSelectedMode = {
+    "apply" : function() {
+	$.getJSON($SCRIPT_ROOT + '/_recolorSingleSelected', { selectedClass: getSelectedClasses() }, 
+		  function(data) {
+		      if (numSelected == 1) {
+			  nodes.removeClass(RECOLORING_CLASSES).addClass(function() { return data[this.id]; });
+			  currentColoring = SingleSelectedMode;
+			  activateKey('#singleRecoloringKey');
+		      }
+		  }
+		 );
+    }
+};
+
+$.extend(SingleSelectedMode, RecoloringMode);
+
 var PairSelectedMode = {
     "apply" : function() {
 	$.getJSON($SCRIPT_ROOT + '/_recolorPairSelected', { selectedClass: getSelectedClasses() }, 
@@ -103,21 +109,11 @@ var PairSelectedMode = {
 		      }
 		  }
 		 );
-    },
-
-    "handleSelect" : function() {
-	if (numSelected == 2) { PairSelectedMode.apply(); }
-	else if (numSelected == 1) { SingleSelectedMode.apply(); }
-	else {
-	    nodes.removeClass(RECOLORING_CLASSES);
-	    currentSizeColoring.apply();
-	}
-    },
-
-    "handleSizeColoringToggle" : function() {
-	currentSizeColoring.switchToOtherSizeModeSilently();
     }
 };
+
+$.extend(PairSelectedMode, RecoloringMode);
+
 
 function showExcludedClasses() {
     excludedClassesDiv.showing = window.setTimeout(function() {
