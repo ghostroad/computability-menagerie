@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template, make_response
 from menagerie2 import *
-from svgutils import *
+from apputils import *
 from os import getenv
 
 m = Menagerie()
@@ -70,14 +70,14 @@ def recolorSingleSelected():
 def recolorPairSelected():
     selectedClasses = request.args.get('selectedClass', None).split(",")
     A, B = m[selectedClasses[0]], m[selectedClasses[1]]
-    if A.implies(B): return jsonify(buildMap(A, B))
+    if A.implies(B): return jsonify(buildMap(m, A, B))
     elif A.doesNotImply(B):
         if B.doesNotImply(A):
             return jsonify(dict((cls.name, "notBetw") for cls in m.classes))
-        else: return jsonify(buildMap(B, A))
+        else: return jsonify(buildMap(m, B, A))
     else:
-        if B.doesNotImply(A): return jsonify(buildMap(A, B))
-        elif B.implies(A): return jsonify(buildMap(A, B))
+        if B.doesNotImply(A): return jsonify(buildMap(m, A, B))
+        elif B.implies(A): return jsonify(buildMap(m, A, B))
         else:
             result = {}
             for C in m.classes:
@@ -88,19 +88,6 @@ def recolorPairSelected():
 @app.route('/_properties/<className>')
 def properties(className):
     return render_template("properties.html", cls = m[className])
-
-
-def buildMap(A, B):
-    result = {}
-    for C in m.classes:
-        if (A.implies(C) and (C).implies(B)):
-            result[C.name] = "betw"
-        elif A.doesNotImply(C) or C.doesNotImply(B):
-            result[C.name] = "notBetw"
-        else:
-            result[C.name] = "possiblyBetw"
-    return result
-    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

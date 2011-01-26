@@ -98,6 +98,7 @@ select {
 div#help {
     width: 653px;
     padding-right: 10px;
+    padding-left:10px;
 }
 
 div#help ul {

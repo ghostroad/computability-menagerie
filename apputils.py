@@ -65,3 +65,17 @@ class Coloring:
                                                cls.hdim.propertyValue, cls.measure.propertyValue)]
             
         return cardinalityAndCategory, measure
+
+
+def buildMap(menagerie, A, B):
+    result = {}
+    for C in menagerie.classes:
+        if (A.implies(C) and (C).implies(B)):
+            result[C.name] = "betw"
+        elif A.doesNotImply(C) or C.doesNotImply(B):
+            result[C.name] = "notBetw"
+        else:
+            result[C.name] = "possiblyBetw"
+    return result
+    
+
