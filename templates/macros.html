@@ -1,0 +1,11 @@
+{% macro svgellipse(className) -%}
+<svg height="22pt" viewBox="0.00 0.00 42.00 22.00" width="42pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="{{ className }}"><ellipse cx="20" cy="10" rx="20" ry="10"/></g></svg>
+{%- endmacro %}
+
+{% macro stripePattern(patternName, classA, classB) -%}
+<pattern id="{{ patternName }}" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><g class="{{ classA }}"><rect x="0" y="0" width="10" height="80"/></g><g class="{{ classB }}"><rect x="10" y="0" width="10" height="80"/></g></pattern>
+{%- endmacro %}
+
+{% macro button(id, label, onclick="") -%}
+<span class="button" id="{{ id }}" {% if onclick %} onclick="{{ onclick }}" {% endif %}><span>{{ label }}</span></span>
+{%- endmacro %}

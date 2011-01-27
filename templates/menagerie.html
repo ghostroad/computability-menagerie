@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+  {% from 'macros.html' import svgellipse, stripePattern, button %}
   <title>The Computability Menagerie</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"/>
   <!-- SVG node styling. This needs to be inline for Firefox -->
@@ -54,30 +55,22 @@
    <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
  </head>
 
- {% macro svgellipse(className) -%}
- <svg height="22pt" viewBox="0.00 0.00 42.00 22.00" width="42pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="{{ className }}"><ellipse cx="20" cy="10" rx="20" ry="10"/></g></svg>
- {%- endmacro %}
-
- {% macro stripePattern(patternName, classA, classB) -%}
- <pattern id="{{ patternName }}" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><g class="{{ classA }}"><rect x="0" y="0" width="10" height="80"/></g><g class="{{ classB }}"><rect x="10" y="0" width="10" height="80"/></g></pattern>
- {%- endmacro %}
-
  <body>
    <div id="controlPanel">
      <div id="controls">
        <table>
 	 <tr>
-	   <td><span id="numSelected">0</span> selected{% if excludedClasses %}, <a class="notALink" id="excludedClassesLink"><span>{{ excludedClasses|length }} excluded</span></a>
+	   <td><span id="numSelected">0</span> selected{% if excludedClasses %}, <span class="button" id="excludedClassesLink"><span>{{ excludedClasses|length }} excluded</span></span>
 	   {% endif %}
 	   </td>
-	   <td><a class="notALink" id="showImplications"><span>Show implications</span></a></td>
-	   <td id="showClassDetailsTd" style="display:none"><a class="notALink" id="showClassDetails"><span>Show class details</span></a></td>
-	   <td><a class="notALink" id="viewSubgraph"><span>View subgraph</span></a></td>
-	   <td><a class="notALink" id="excludeSelected"><span>Exclude selected</span></a></td>
-	   <td><a class="notALink" id="unselectAll" onclick="unselectAll();"><span>Deselect all</span></a></td>
+	   <td>{{ button("showImplications", "Show implications") }}</td>
+	   <td id="showClassDetailsTd" style="display:none">{{ button("showClassDetails", "Show class details") }}</td>
+	   <td>{{ button("viewSubgraph", "View subgraph") }}</td>
+	   <td>{{ button("excludeSelected", "Exclude selected") }}</td>
+	   <td>{{ button("unselectAll", "Deselect All", onclick="unselectAll();") }}</td>
 	   <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
-	   <td><a class="notALink" id="toggleHelp" title="click to toggle"><span>Help</span></a></td>
-	   <td><a class="notALink" id="toggleKey" title="click to toggle"><span>Key</span></a></td>
+	   <td>{{ button("toggleHelp", "Help") }}</td>
+	   <td>{{ button("toggleKey", "Key") }}</td>
 
 	 </tr>
        </table>

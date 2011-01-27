@@ -1,3 +1,6 @@
+Convert notALinks to spans (not anchors)
+Add ability to highlight implications that may not be strict
+Implement Joe's suggestion.
 Add ability to hover over selected and see what's been selected
 Add buttons to make graph smaller and larger
 Email yvonne and john heim

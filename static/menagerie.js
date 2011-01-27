@@ -1,6 +1,7 @@
 var nodes;
 var showClassDetailsButton;
 var showImplicationsButton;
+var weakArrows;
 var excludeSelectedButton;
 var viewSubgraphButton;
 var excludedClassesDiv;
@@ -114,28 +115,38 @@ var PairSelectedMode = {
 
 $.extend(PairSelectedMode, RecoloringMode);
 
-
 function showExcludedClasses() {
     excludedClassesDiv.showing = window.setTimeout(function() {
 						       excludedClassesDiv.css({ 'position': 'absolute', 'top': '35px', left: '0px'}).show();
 						   }, 300);
 }
 
-function postponeHidingExcludedClasses() {
-    if (excludedClassesDiv.hiding) {
-	window.clearTimeout(excludedClassesDiv.hiding);
-	excludedClassesDiv.hiding = null;
+function postponeHidingDiv(div) {
+    if (div.hiding) {
+	window.clearTimeout(div.hiding);
+	div.hiding = null;
     }
 }
 
-function hideExcludedClasses() {
-    if (excludedClassesDiv.showing) {
-	window.clearTimeout(excludedClassesDiv.showing);
-	excludedClassesDiv.showing = null;
+function hideDiv(div) {
+    if (div.showing) {
+	window.clearTimeout(div.showing);
+	div.showing = null;
     }
-    excludedClassesDiv.hiding = window.setTimeout(function() {
-						      excludedClassesDiv.hide();
-						  }, 300);
+    div.hiding = window.setTimeout(function() {
+				       div.hide();
+				   }, 300);
+}
+
+function toggleWeakArrowHighlight() {
+    if (weakArrows.highlighted) {
+	weakArrows.removeClass("highlightArrow");
+	weakArrows.highlighted = false;
+    }
+    else {
+	weakArrows.addClass("highlightArrow");
+	weakArrows.highlighted = true;
+    }
 }
 
 $(document).ready(function(){
@@ -145,10 +156,13 @@ $(document).ready(function(){
 		      $('#toggleHelp').click( function() { $('#help').toggle(); } );
 		      $('#toggleKey').click( function() { $('#keys').toggle(); } );
 
-		      $('#excludedClassesLink').hover(showExcludedClasses, hideExcludedClasses);
-		      excludedClassesDiv.hover(postponeHidingExcludedClasses, hideExcludedClasses);
+		      $('#excludedClassesLink').hover(showExcludedClasses, function() { hideDiv(excludedClassesDiv); });
+		      excludedClassesDiv.hover(function() { postponeHidingDiv(excludedClassesDiv); }, function() { hideDiv(excludedClassesDiv); });
 
 		      nodes = $('g[class="node"]');
+		      weakArrows = $('g[id|="weak"]');
+		      
+		      toggleWeakArrowHighlight();
 		     
 		      showClassDetailsButton = $('#showClassDetails input');
 		      if (window.Touch) $('#showClassDetailsTd').show();

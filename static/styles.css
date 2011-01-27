@@ -21,26 +21,25 @@ g.node:hover {
    font-size: 20px;
 }
 
-a.notALink {
+span.button {
     color: darkblue;
     text-decoration: underline; 
 }
 
-a.notALink.disabled {
-    color: gray;
-}
-
-a.notALink.disabled:hover {
-    color: gray;
-}
-
-a.notALink span {
+span.button span {
     pointer-events: none;
 }
 
-a.notALink:hover {
-    color: red;
-    text-decoration: underline;
+span.button.disabled {
+    color: gray;
+}
+
+span.button.disabled:hover {
+    color:gray;
+}
+
+span.button:hover {
+    color:red;
 }
 
 div#space{
@@ -123,4 +122,12 @@ div#excludedClasses ul {
     list-style: none;
     padding-left: 1em;
     text-indent: -1em;
+}
+
+g.highlightArrow path, g.highlightArrow polygon {
+    stroke:red;
+}
+
+g.highlightArrow polygon {
+    fill:red;
 }

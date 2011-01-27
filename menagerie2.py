@@ -454,7 +454,9 @@ class DotRenderer(object):
                 for other in implied:
                     if (other is not dest) and other.implies(dest): break
                 else:
-                    graph.add_edge(Edge(cls.name, dest.name))
+                    edge = Edge(cls.name, dest.name)
+                    if not dest.doesNotImply(cls): edge.set_id("weak-\\E")
+                    graph.add_edge(edge)
 
 
     def createNodeFor(self, cls):
