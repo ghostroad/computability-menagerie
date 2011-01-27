@@ -1,5 +1,5 @@
 from xml.dom import minidom
-from menagerie2 import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER
+from menagerie2 import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER, HtmlClassDecorator
 
 class UnknownImplication:
     def __init__(self, src, dest):
@@ -33,12 +33,12 @@ class SVGPostProcessor:
 class Coloring:
     def __init__(self, menagerie):
         self.menagerie = menagerie
-        self.cardinalityAndCategoryLookupTable = {(COUNTABLE, MEAGER): "countable", 
-                                                  (UNCOUNTABLE, MEAGER): "uncountableMeager", 
-                                                  (UNCOUNTABLE, COMEAGER): "uncountableComeager",
-                                                  (UNCOUNTABLE, None): "uncountableUnknown", 
-                                                  (None, MEAGER): "unknownMeager", 
-                                                  (None, None): "unknownUnknown"}
+        self.categoryLookupTable = {(COUNTABLE, MEAGER): "countable", 
+                                    (UNCOUNTABLE, MEAGER): "uncountableMeager", 
+                                    (UNCOUNTABLE, COMEAGER): "uncountableComeager",
+                                    (UNCOUNTABLE, None): "uncountableUnknown", 
+                                    (None, MEAGER): "unknownMeager", 
+                                    (None, None): "unknownUnknown"}
         self.measureLookupTable = {(COUNTABLE,   0, 0, 0) : "level0",
                                    (UNCOUNTABLE, 0, 0, 0) : "level1",
                                    (UNCOUNTABLE, 1, 0, 0) : "level2",
@@ -55,16 +55,16 @@ class Coloring:
                                    (None, None, None, 0) : "level0-3",
                                    (None, None, None, None) : "level0-4" }
 
-    def buildPropertiesMaps(self):
-        cardinalityAndCategory = {}
-        measure = {}
+    def buildPropertiesMap(self):
+        properties = {}
+        decorator = HtmlClassDecorator()
         for cls in self.menagerie.classes:
-            cardinalityAndCategory[cls.name] = self.cardinalityAndCategoryLookupTable[(cls.cardinality.propertyValue, 
-                                                                                       cls.category.propertyValue)]
-            measure[cls.name] = self.measureLookupTable[(cls.cardinality.propertyValue, cls.pdim.propertyValue, 
+            category = self.categoryLookupTable[(cls.cardinality.propertyValue, 
+                                                 cls.category.propertyValue)]
+            measure = self.measureLookupTable[(cls.cardinality.propertyValue, cls.pdim.propertyValue, 
                                                cls.hdim.propertyValue, cls.measure.propertyValue)]
-            
-        return cardinalityAndCategory, measure
+            properties[cls.name] = (category, measure, decorator.decorate(cls))
+        return properties
 
 
 def buildMap(menagerie, A, B):

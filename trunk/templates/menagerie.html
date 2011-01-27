@@ -46,10 +46,10 @@
   </style>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.4.js') }}"></script>
-   <script type="text/javascript">
+   <script type="text/javascript"><![CDATA[
      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-     $CATEGORY = {{ category|tojson|safe }};
-     $MEASURE = {{ measure|tojson|safe }};
+     $PROPERTIES = {{ propertiesMap|tojson|safe }};
+]]>
    </script>
    <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
    <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
@@ -60,7 +60,7 @@
      <div id="controls">
        <table>
 	 <tr>
-	   <td><span id="numSelected">0</span> selected{% if excludedClasses %}, {{ button("excludedClassesLink", excludedClasses|length ~ " excluded") }} {% endif %}
+	   <td>{{ button("numSelectedLink", '<span id="numSelected">0</span> selected'|safe) }}{% if excludedClasses %}, {{ button("excludedClassesLink", excludedClasses|length ~ " excluded") }} {% endif %}
 	   </td>
 	   <td>{{ button("showImplications", "Show implications") }}</td>
 	   <td id="showClassDetailsTd" style="display:none">{{ button("showClassDetails", "Show class details") }}</td>
@@ -95,7 +95,7 @@
      </div>
 
      {% if excludedClasses %}
-     <div id="excludedClasses" style="display: none;">
+     <div id="excludedClasses" class="classList" style="display: none;">
        <a href="{{ url_for('displayMenagerie') }}">Restore excluded classes:</a>
        <ul>
        {% for cls in excludedClasses %}
@@ -104,6 +104,11 @@
        </ul>
      </div>
      {% endif %}
+
+     <div id="selectedClasses" class="classList" style="display: none;">
+       Selected classes
+     </div>
+
    </div>
 
   <div id="keys" style="display: none;">
