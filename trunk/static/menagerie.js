@@ -116,13 +116,13 @@ $.extend(PairSelectedMode, RecoloringMode);
 
 function showExcludedClasses() {
     excludedClassesDiv.showing = window.setTimeout(function() {
-						       excludedClassesDiv.css({ 'position': 'absolute', 'top': '35px', left: '0px'}).show();
+						       excludedClassesDiv.show();
 						   }, 300);
 }
 
 function showSelectedClasses() {
     selectedClassesDiv.showing = window.setTimeout(function() {
-						       selectedClassesDiv.css({ 'position': 'absolute', 'top': '35px', left: '0px'})
+						       selectedClassesDiv
 							   .html(function() {
 								     var items = [];
 								     nodes.each(function() {
