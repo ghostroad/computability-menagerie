@@ -60,8 +60,7 @@
      <div id="controls">
        <table>
 	 <tr>
-	   <td><span id="numSelected">0</span> selected{% if excludedClasses %}, <span class="button" id="excludedClassesLink"><span>{{ excludedClasses|length }} excluded</span></span>
-	   {% endif %}
+	   <td><span id="numSelected">0</span> selected{% if excludedClasses %}, {{ button("excludedClassesLink", excludedClasses|length ~ " excluded") }} {% endif %}
 	   </td>
 	   <td>{{ button("showImplications", "Show implications") }}</td>
 	   <td id="showClassDetailsTd" style="display:none">{{ button("showClassDetails", "Show class details") }}</td>
