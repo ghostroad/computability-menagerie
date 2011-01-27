@@ -1,6 +1,5 @@
 var nodes;
-var showClassDetailsButton;
-var showImplicationsButton;
+var showProofsButton;
 var weakArrows;
 var excludeSelectedButton;
 var numSelectedLink;
@@ -171,11 +170,9 @@ $(document).ready(function(){
 
 		      $('#toggleHelp').click( function() { $('#help').toggle(); } );
 		      $('#toggleKey').click( function() { $('#keys').toggle(); } );
-		      showClassDetailsButton = $('#showClassDetails input');
-		      if (window.Touch) $('#showClassDetailsTd').show();
-		      showImplicationsButton = $('#showImplications');
-		      viewSubgraphButton = $('#viewSubgraph');
-		      excludeSelectedButton = $('#excludeSelected');
+		      showProofsButton = $('#showProofs').click(showProofs);
+		      viewSubgraphButton = $('#viewSubgraph').click(viewSubgraph);
+		      excludeSelectedButton = $('#excludeSelected').click(excludeSelected);
 
 		      excludedClassesDiv = $('#excludedClasses');
 		      $('#excludedClassesLink').hover(showExcludedClasses, function() { hideDiv(excludedClassesDiv); });
@@ -226,17 +223,16 @@ function detectCurrentColoring() {
 
 function disableButtonsIfAppropriate() {
     enable(numSelected > 1, viewSubgraphButton, viewSubgraph); 
-    enable(numSelected == 2, showImplicationsButton, showImplications);
-    enable(numSelected == 1, showClassDetailsButton, showClassDetails);
+    enable(numSelected == 2 || numSelected == 1, showProofsButton, showProofs);
     enable(numSelected > 0 && numSelected <= nodes.length - 2, excludeSelectedButton, excludeSelected);
     enable(numSelected > 0, numSelectedLink, function() { });
 }
 
 function enable(condition, anchor, action) {
     if (condition) { 
-	anchor.click(action).removeClass("disabled");    
+	anchor.removeClass("disabled");    
     } else {
-	anchor.unbind('click').addClass("disabled");
+	anchor.addClass("disabled");
     }
 }
 
@@ -246,22 +242,16 @@ function excludeSelected() {
     window.location = $SCRIPT_ROOT + '?classes=' + unselected.join();
 }
 
-function showClassDetails(node) {
-    window.open($SCRIPT_ROOT + '/showClassDetails/' + node);
-}
-
-function showClassDetailsClicked() {
-    nodes.each( function() {
-		     if (this.selected) showClassDetails(this.id);
-		} );
-}
-
-function showImplications() {
-    var url = $SCRIPT_ROOT + '/showImplications';
+function showProofs() {
+    var url = $SCRIPT_ROOT + '/showProofs';
     nodes.each(function(i, node) {
 		   if (node.selected) url += '/'+node.id;
 	       });
     window.open(url);
+}
+
+function showClassDetails(nodeId) {
+    window.open($SCRIPT_ROOT + '/showProofs/' + nodeId);
 }
 
 function viewSubgraph() {

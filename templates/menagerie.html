@@ -62,8 +62,7 @@
 	 <tr>
 	   <td>{{ button("numSelectedLink", '<span id="numSelected">0</span> selected'|safe) }}{% if excludedClasses %}, {{ button("excludedClassesLink", excludedClasses|length ~ " excluded") }} {% endif %}
 	   </td>
-	   <td>{{ button("showImplications", "Show implications") }}</td>
-	   <td id="showClassDetailsTd" style="display:none">{{ button("showClassDetails", "Show class details") }}</td>
+	   <td>{{ button("showProofs", "View proofs") }}</td>
 	   <td>{{ button("viewSubgraph", "View subgraph") }}</td>
 	   <td>{{ button("excludeSelected", "Exclude selected") }}</td>
 	   <td>{{ button("unselectAll", "Deselect All", onclick="unselectAll();") }}</td>
