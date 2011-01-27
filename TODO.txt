@@ -1,11 +1,22 @@
-Convert notALinks to spans (not anchors)
+* Needs a title, make it always visible
+* Figuring out coloring
+* Make nonstrict implications black dashed lines
+* Add bounded by shift-complex
+* Bounds no shift-complex
+* Change show implications to show proofs
+* Error page
+* Email yvonne and john heim
+* Restore weak and strong open implications
+* Add a gateway page and a link to the home page, add a link to the database
+
+
+Make things easier to install and provide instructions
+Put checkboxes next to restore classes
+Make the content of the hover appear in the key
+
 Add ability to highlight implications that may not be strict
-Implement Joe's suggestion.
-Add ability to hover over selected and see what's been selected
-Add buttons to make graph smaller and larger
-Email yvonne and john heim
 Make server reload database.txt if it changes
-Error page
+
 Write tests to make sure node styling doesn't break
 Labels should be Tex?
 What to do when graph has cycles
