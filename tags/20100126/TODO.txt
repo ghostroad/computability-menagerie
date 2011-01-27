@@ -1,0 +1,9 @@
+Add ability to hover over selected and see what's been selected
+Add buttons to make graph smaller and larger
+Email yvonne and john heim
+Make server reload database.txt if it changes
+Error page
+Write tests to make sure node styling doesn't break
+Labels should be Tex?
+What to do when graph has cycles
+

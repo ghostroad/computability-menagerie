@@ -1,0 +1,461 @@
+#
+# Computability Menagerie Database
+#
+
+#
+#
+# Bjoern Kjos-Hanssen       JFig                                2002-2003
+# Joe Miller                Graphviz, DOT language, Python      2008
+#
+#
+# File Format:
+#
+# Comment: # (obviously)
+# Semicolons are optional
+# Inclusion: a -> b
+# Non-inclusion: a -/> b
+# Strict inclusion: a ->> b
+# Cardinality, Category: a [is] countable (or uncountable, comeager, meager)
+# Packing dimension, Hausdorff dimension, Measure: PD(a) = 1 (or HD, M)
+#
+
+#
+# The files discussed herein are stored under
+# http://www.math.hawaii.edu/~bjoern/Computability_Menagerie/
+#
+# 2009.08.12 (Bjoern)
+# 1. Manually translated most notions and implications from bn1g.fig (a JFig file) to Computability_Menagerie_Database.txt
+# Ignored specific examples (such as Stephan's minimal degree) and long obscure names.
+# 2. Ran the command: python menagerie.py Computability_Menagerie_Database.txt > Computability_Menagerie.dot
+# 3. Opened Computability_Menagerie.dot in Graphviz and exported it as Computability_Menagerie.svg
+#
+
+# Abbreviations: 
+# ZP = ZeroPrime
+# Is = Comma
+# SNC = strongly non-computable; a function a.e. different from each computable function
+
+# Bjoern's acronym              # Joe's acronym                             # Definition
+# ArrayComp                     .
+# BB1GforCompForcing            .
+# BB2G                          .   
+# BB2G                          .
+# BB2R
+# BB3R
+# BBDeltaTwo1G                  .
+# BBhasSMC                                                                  # bounded by somebody that has a strong minimal cover 
+# BBisSMC                                                                   # bounded by somebody that is a strong minimal cover
+# BddArrayComp                  .
+# BIF                                                                       # biimmune-free
+# BN1G
+# BN1GandBN1R
+# BN1R
+# BN1RNot2R                     .                                           # bounds no 1R that are not 2R
+# BN1T
+# BN2G
+# BN2R
+# BN3G
+# BN3R                          .
+# BNBN1G                                                                    # every nonzero thing you bound, bounds a 1-generic
+# BNCE                                                                      # bounds non nonzero ce degree
+# BNDeltaTwo                    #BNNRD2
+# BNDeltaTwo                                                                # nonzero, of course
+# BNDeltaTwo1G
+# BNDeltaTwo1Rand
+# BNDNCBNcompbddDNC             .                                           # bounds no DNC that bounds no recursively bounded DNC
+# BNGH1
+# BNGH1
+# BNKummerComplex   
+# BNLFO                         # BNNRLFO                                   # boudns no nonrecursive low for Omega
+# BNmin                         # BNM                                       # bounds no minimal degree
+# BNHIF                         # BNNRHIF                                   # bounds no (nonzero) HIF degree
+# BNPPD                                                                     # bounds no real of positive packing dimension
+# BNPHD                                                                     # bounds no real of positive Hausdorff dimension
+# BNpCohesive
+# BNRamsey22Complete            # notSRT22                                  # well, not quite the same
+# BNSMC
+# BNSNC
+# BNSR                                                                      # bounds no Schnorr random
+# BNVSA                                                                     # very strong array...
+# BNVSAcomp                     .
+# BNW1R
+# BNW2G
+# BNW2T                                                                     # bounds no weakly 2-typical
+# BOGL1
+# BOGL2                         .
+# BOHIFStyleJump                                                            # bounds only degrees g with g''=g'+0''
+# BOnonGL1                                                                  # bounds only non-GL_1's... except for 0
+# BOomegaCE                                                                 # (bounds only \omega-c.e.)
+# CAR                                                                       # completely autoreducible
+# CET                           # cetrace
+# CETBelowZP
+# CompioAutored
+# CompiottAutored                                                           # "computably" infinitely often tt-autoreducible in some sense
+# DeltaTwo                      # Delta2
+# DeltaTwoAndArrayComp
+# DeltaTwoAndNotHigh
+# EHIF                                                                      # (effectively hyperimmune)-free?
+# EIandHIF                                                                  # computes no set that is simultaneously EI and HI
+# HHIF                          .
+# HHIFZP
+# HIF
+# HIFandNotPA
+# HIFZeroDouble
+# HIFZP
+# JumpHHIFZP                    .
+# JumpHIFZP
+# JumpHIFZP
+# JumpNotDNCinZP
+# JumpNotDNCInZP
+# JumpNotPAInZP                 .
+# JumpTraceable                 .
+# Low                           # low                    
+# Low1Rand                      # lowML
+# Low1RIsDNC
+# Low1RIsSNC                    .
+# Low1RIsSNC
+# Low1RIsWDNC
+# LowDeltaTwo1RandIs1Rand
+# LowDeltaTwo1RandIsWDNC        .
+# LowKurtz                      # lowKurtz
+# LowOmegaIsBI                                                              # Chaitin's \Omega is bi-immune...
+# LowOmegaIsSchnorr
+# LowPi02Classes                                                            # computes no member of any special Pi02 class
+# LowSchnorr                    # rectrace
+# LowSeparation                                                             # does not separate any rec. insep. r.e. classes unless a rec. set does #?
+# LowSRIsSNC                    .
+# LowSRIsWDNC
+# NotAboveZP                    # incomp
+# NotCohesive
+# NotCuppingProperty            .
+# NotDNC                        # nonDNC
+# NotDNCinZP                    # non2DNC
+# NotHigh
+# NotJockusch                                                               # meaning not high and not PA
+# NotPA                         # nonPA
+# NotPAinZP                     # non2PA
+# OmegaLow                      # lowOmega
+# PartialArrayComp                                                          # there is a fixed omega-ce function dominating all partial comp. in g functions
+# SHIF                                                                      # strongly HIF, same as SHHIF apparently
+# SuperLow                      # superlow
+# Trahtenbrot
+# ttMiller                                                                  # an analogue of characterization of nonDNC from PhD thesis, for tt-reducibility
+# Unseparating                                                              # same as LowSeparation, but with "does not separate ALL". #?
+# ZPRelB1R                                                                  # 0' bounds something 1-random in "you"
+# ZPRelDNC
+# ZPRelSNC
+# ZPRelWDNC                                                                 # means 0' is	WDNC in "you"
+
+
+# (Mostly) Joe's implications, from "database" file
+
+CET ->> NotDNC
+NotDNC -> BNPHD # strict?
+CET ->> BNPPD   # Downey and Greenberg
+BNPPD ->> BNPHD
+
+
+
+#
+# Some strict implications
+#
+
+SuperLow ->> Low			# well known
+Low ->> DeltaTwo				# well known
+Low ->> NotAboveZP				# well known
+Low1Rand ->> OmegaLow
+Low1Rand ->> SuperLow
+Low1Rand ->> NotDNC
+LowSchnorr ->> LowKurtz
+LowKurtz ->> NotDNC
+LowKurtz ->> HIF
+HIF ->> BNLFO			# Miller, Nies (HIF + Low for Omega = REC)
+OmegaLow ->> BNHIF		# Miller, Nies
+BNLFO ->> BN2R
+DeltaTwo ->> BNHIF
+HIF ->> NotDNCinZP
+NotDNC ->> NotDNCinZP
+NotDNCinZP ->> BN2R
+NotDNC ->> BN1R
+DeltaTwo ->> NotDNCinZP
+HIF ->> BNDeltaTwo
+HIF ->> BN1G
+BB2R ->> BNDeltaTwo
+BNmin ->> NotPA
+BB2R ->> BNmin
+BB2R ->> OmegaLow
+BN1G ->> BN2R
+BN1R ->> BN2R
+BN1R ->> NotPA
+BNDeltaTwo ->> NotAboveZP
+BNLFO ->> NotAboveZP
+BN1G ->> NotAboveZP
+OmegaLow ->> NotAboveZP
+NotPA ->> NotAboveZP
+BNHIF ->> NotPAinZP
+BN2R ->> NotPAinZP
+NotAboveZP ->> NotPAinZP
+
+#
+# Size properties
+#
+
+CET is uncountable
+
+BNPPD is meager
+NotDNC is comeager
+PD(BNPPD)=0 
+PD(NotDNC)=1
+
+M(BN1R)=0
+
+HD(BN1R)=1
+HD(BNPHD)=0
+
+
+DeltaTwo is countable			# well known
+NotDNC is comeager
+BNmin is comeager
+BNHIF is comeager
+BNDeltaTwo is comeager
+BN1G is meager
+OmegaLow is meager
+BNLFO is comeager
+LowSchnorr is uncountable
+
+M(BB2R) = 1
+M(BN2R) = 0
+HD(NotDNCinZP) = 0
+HD(BN1R) = 1
+HD(BN1G) = 1
+HD(BNLFO) = 1
+PD(LowSchnorr) = 0			# uniformly list n possibilities for first 2^n bytes; compress
+                            # Miller? (unpublished): direct construction of a HIF with effective PD 1 (delayed splitting;
+                            # see Downey, Greenberg) with NotDNC added in by having long waits between fat sections
+PD(LowKurtz) = 1
+
+Low1Rand -/> BNDeltaTwo			# there is a Low for random > 0 (must be Delta_2)
+SuperLow -/> NotPA              # use the (super)Low basis theorem
+HIF -/> NotPA                   # use the hyperimmune-free basis theorem
+OmegaLow -/> NotPA              # use the Low for Omega basis theorem
+Low1Rand -/> BNmin				# there is a c.e. Low for random > 0 (computes a minimal)
+Low1Rand -/> BN1G				# there is a c.e. Low for random > 0 (computes a 1-generic)
+LowSchnorr -/> BNmin			# standard construction of a minimal degree makes it recursively traceable
+BN1G -/> BNDeltaTwo				# consider a Delta_2 minimal degree
+SuperLow -/> OmegaLow           # there is a SuperLow 1-random but DeltaTwo + OmegaLow = Low1Rand
+Low1Rand -/> BNLFO              # obv (consider any Low for random > 0)
+DeltaTwo -/> NotAboveZP			# obv (0')
+LowSchnorr -/> BNHIF            # every recursively traceable is HIF
+
+BNmin -/> BNDeltaTwo			# the 1-generic degrees are closed downward in the Delta_2 [Hau86]
+                                # consider a HIF 1-random; by a result of Demuth, the non-recursive degrees beLow are all
+                                # 1-random, hence not minimal
+BNmin -/> BNHIF
+
+Low -> BOGL1				# obvious
+BOGL1 -> NotAboveZP			# obvious
+OmegaLow -> BOGL1			# by a result of F. Stephan: if X is Delta_2 and Y-random, then Y is GL_1
+
+#
+# Bjoern's implications, from "bn1g.fig" file
+#
+
+ArrayComp -> HIFZP
+ArrayComp -> ZPRelSNC
+BB1GforCompForcing -> LowSeparation
+BB2G -> BB1GforCompForcing
+BB2G -> BNBN1G
+BB2G -> BNHIF
+BB2G -> BNSMC
+BB2G -> BNSNC
+BB2G -> BOnonGL1
+BB2G -> JumpNotDNCInZP
+BB2G -> LowPi02Classes
+BB2R -> ArrayComp
+BB2R -> BNBN1G                                                             # this is K-H's impression of Martin's paper
+BB2R -> BNDeltaTwo
+BB2R -> JumpNotPAInZP
+BB2R -> OmegaLow
+BB2R -> Unseparating
+BB3R -> BB2R
+BB3R -> NotJockusch
+BBDeltaTwo1G -> BB1GforCompForcing
+BBDeltaTwo1G -> BNSNC
+BBDeltaTwo1G -> Low
+BBhasSMC -> BBisSMC
+BBhasSMC -> NotCuppingProperty
+BBisSMC -> ArrayComp
+BBisSMC -> NotPA
+BddArrayComp -> ArrayComp
+BIF -> BNSNC
+BIF -> CompiottAutored
+BN1G -> ArrayComp
+BN1G -> BN2R                                                               #impression of Martin's paper, again
+BN1G -> BNDeltaTwo1G
+BN1GandBN1R -> BN1G
+BN1GandBN1R -> BN1R
+BN1R -> BN2R
+BN1R -> NotPA
+BN1T -> BN1R
+BN1T -> BNW2T
+BN2G -> HIFZeroDouble
+BNBN1G -> BNmin
+BNDeltaTwo -> BNCE
+BNDeltaTwo1G -> BNCE
+BNDNCBNcompbddDNC ->   NotAboveZP
+BNGH1 ->                    NotAboveZP
+BNKummerComplex -> BNVSA
+BNmin -> BNCE
+BNmin -> BNGH1
+BNmin -> notPA # Slaman and Groszek
+BNCE ->              NotAboveZP
+BNpCohesive -> BNRamsey22
+BNpCohesive -> NotCohesive
+BNRamsey22 -> NotPAinZP
+BNSMC -> BNmin
+BNSNC -> BNSR                                                              # Warning, BNSNC looks a lot like BNSR. But will make it BNSNC
+BNSNC -> NotDNC
+BNSR -> BN1R
+BNSR -> NotJockusch
+BNVSA -> ArrayComp
+BNVSA -> BddArrayComp
+BNVSAcomp -> BNVSA
+BNVSAcomp -> HIFandNotPA
+BNVSAcomp -> NotJockusch
+BNW1R -> BN1GandBN1R
+BNW1R -> BN1T                                                              # since W1R is the same as W1T
+BNW1R -> BNSR
+BNW1R -> HIFandNotPA
+BNW2G -> BN2G
+BNW2T -> BN2R
+BNW2T -> HIFZP
+BOGL1 -> BNW2G
+BOGL1 -> BOGL2
+BOGL1 -> HIFZP                                                      # Kjos-Hanssen, 2-Nov-2003, unpublished
+BOGL2 -> BN3G
+BOGL2 -> BNGH1
+BOHIFStyleJump -> BOGL2
+BOHIFStyleJump -> NotHigh
+BOnonGL1 -> BN2R
+BOomegaCE -> BddArrayComp
+BOomegaCE -> DeltaTwoAndArrayComp
+BOomegaCE -> DeltaTwoAndNotHigh
+CAR -> CompioAutored
+CET -> ArrayComp
+CET -> BBhasSMC                                                            # in fact CET implies hasSMC, but that may not be downward closed
+CET -> BN1T
+CET -> BNKummerComplex
+CET -> Low1RIsSNC # nice!
+CET -> LowOmegaIsSchnorr
+CET -> NotDNC
+CET -> NotDNC
+CETBelowZP -> BOomegaCE
+CompiottAutored -> BNW1R
+CompiottAutored -> CompioAutored
+CompiottAutored -> Trahtenbrot
+DeltaTwo -> HIFZP
+DeltaTwoAndArrayComp -> ArrayComp
+DeltaTwoAndArrayComp -> DeltaTwo
+DeltaTwoAndNotHigh -> DeltaTwo
+DeltaTwoAndNotHigh -> HHIF
+DeltaTwoAndNotHigh -> JumpNotDNCinZP
+DeltaTwoAndNotHigh -> NotHigh
+EHIF ->                     NotAboveZP
+EIandHIF -> BNDNCBNcompbddDNC
+EIandHIF -> EHIF
+HHIF -> HHIFZP
+HHIF -> HIFZP
+HHIF -> SHIF
+HHIFZP -> HIFZeroDouble
+HIF -> BN1G
+HIF -> BNDeltaTwo
+HIF -> BOHIFStyleJump
+HIF -> EIandHIF
+HIF -> HHIF
+HIF -> LowSRIsWDNC
+HIFandNotPA -> HIF
+HIFZeroDouble -> BN3G
+HIFZP -> ZPRelWDNC
+JumpHHIFZP -> NotHigh
+JumpHHIFZP -> HHIFZP
+JumpHIFZP -> BN3R
+JumpHIFZP -> BOGL1
+JumpHIFZP -> HIFZP
+JumpHIFZP -> JumpHHIFZP
+JumpNotDNCInZP -> BN2R
+JumpNotDNCInZP -> JumpNotPAInZP
+JumpNotDNCInZP -> SHIF
+JumpNotPAInZP -> BNpCohesive
+JumpTraceable -> CET
+JumpTraceable -> Low1RIsDNC
+Low -> DeltaTwo
+Low -> DeltaTwoAndNotHigh
+Low -> JumpHIFZP
+Low1Rand -> JumpTraceable
+Low1Rand -> LowDeltaTwo1RandIs1Rand
+Low1Rand -> SuperLow
+Low1RIsDNC -> Low1RIsSNC                                           # should make SNC into SNC, probably
+Low1RIsDNC -> ZPRelDNC
+Low1RIsSNC -> BN1R
+Low1RIsSNC -> Low1RIsWDNC
+Low1RIsWDNC -> ArrayComp
+Low1RIsWDNC -> BN2R                                                      # niceish
+LowDeltaTwo1RandIsWDNC -> BNDeltaTwo1Rand
+LowKurtz -> BNW1R
+LowOmegaIsBI -> BNRamsey22
+LowOmegaIsSchnorr -> BddArrayComp
+LowOmegaIsSchnorr -> LowOmegaIsBI
+LowPi02Classes -> BNDeltaTwo
+LowPi02Classes -> LowSeparation
+LowSchnorr -> BNSNC
+LowSchnorr -> BNVSAcomp
+LowSchnorr -> CET
+LowSchnorr -> LowKurtz 
+LowSchnorr -> LowOmegaIsSchnorr
+LowSchnorr -> LowSRIsSNC
+LowSchnorrIsWDNC -> BNDeltaTwo1G                                         # couldn't seem to strengthen this...
+LowSeparation -> NotDNC
+LowSeparation -> Unseparating
+LowSRIsSNC -> BNSR
+LowSRIsSNC -> Low1RIsSNC
+LowSRIsSNC -> LowSRIsWDNC
+LowSRIsWDNC -> Low1RIsWDNC
+NotAboveZP -> NotPAinZP
+NotCohesive -> NotHigh
+NotCuppingProperty -> ArrayComp
+NotCuppingProperty -> NotPA
+NotDNC -> BN1R
+NotDNC -> EIandHIF
+NotDNC -> LowOmegaIsBI
+NotHigh -> BNGH1
+NotHigh -> EHIF
+NotJockusch -> NotHigh
+NotJockusch -> NotPA
+notPA ->                    NotAboveZP
+OmegaLow -> BN1RThatAreNot2R
+OmegaLow -> LowOmegaIsSchnorr
+OmegaLow -> PartialArrayComp
+OmegaLow -> ZPRelB1R
+PartialArrayComp -> ArrayComp
+PartialArrayComp -> BOGL1
+SHIF -> NotCohesive
+SuperLow -> BOomegaCE
+SuperLow -> Low
+Trahtenbrot -> BN1GandBN1R                                                     # something about relatively nonrecursive columns?
+ttMiller -> BNHIF
+ttMiller -> BNSNC
+ttMiller -> LowPi02Classes
+Unseparating -> BNCE
+Unseparating -> notPA
+ZPRelB1R -> ZPRelDNC
+ZPRelDNC -> BOGL1
+ZPRelDNC -> ZPRelSNC
+ZPRelSNC -> BOGL2
+ZPRelSNC -> ZPRelWDNC
+ZPRelWDNC -> BNW2G
+Low1Rand -> CETBelowZP
+BNDeltaTwo1Rand -> NotAboveZP
+Low1RIsWDNC -> LowDeltaTwo1RandIsWDNC
+NotDNC -> BNDNCBNcompbddDNC
+BN2R -> BN3R
+BN1R -> BNDeltaTwo1Rand

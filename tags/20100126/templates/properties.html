@@ -1,0 +1,8 @@
+<table>
+  <tr><td>{% if cls.cardinality.known() %} {{cls.cardinality.prettyPropertyValue()}} {% else %} cardinality unknown {% endif %}</td></tr>
+  <tr><td>{% if cls.category.known() %} {{cls.category.prettyPropertyValue()}} {% else %} category unknown {% endif %}</td></tr>
+  <tr><td>measure {% if cls.measure.known() %} {{ cls.measure.propertyValue }} {% else %} unknown {% endif %}</td></tr>
+  <tr><td>hdim {% if cls.hdim.known() %} {{ cls.hdim.propertyValue }} {% else %} unknown {% endif %}</td></tr>
+  <tr><td>pdim {% if cls.pdim.known() %} {{ cls.pdim.propertyValue }} {% else %} unknown {% endif %}</td></tr>
+  <tr><td><a class="notALink" onclick="window.open('{{ url_for('showClassDetails', className=cls.name) }}');"><span> Details</span> </a></td></tr>
+</table>
