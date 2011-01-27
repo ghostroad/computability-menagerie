@@ -121,10 +121,7 @@ div.classList ul {
     text-indent: -1em;
 }
 
-g.highlightArrow path, g.highlightArrow polygon {
-    stroke:red;
+g.highlightArrow path {
+    stroke-dasharray: 5,5;
 }
 
-g.highlightArrow polygon {
-    fill:red;
-}

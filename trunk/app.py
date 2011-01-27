@@ -24,7 +24,7 @@ def displayMenagerie():
     response.headers["Content-Type"] = "application/xhtml+xml"
     return response
 
-@app.route('/showClassDetails/<className>')
+@app.route('/showProofs/<className>')
 def showClassDetails(className):
     cls = m[className]
     properties = {"cls" : cls}
@@ -33,7 +33,7 @@ def showClassDetails(className):
         properties[attr] = HtmlWriter().write(prop)
     return render_template("classDetail.html", **properties)
 
-@app.route('/showImplications/<classA>/<classB>')
+@app.route('/showProofs/<classA>/<classB>')
 def showImplications(classA, classB):
     A = m[classA]
     B = m[classB]
