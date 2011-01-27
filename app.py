@@ -7,7 +7,7 @@ m = Menagerie()
 parser = MenagerieParser(m)
 parser.readFromFile(getenv("MENAGERIE_DATABASE_FILE") or "database.txt")
 Deductions().apply(m)
-category, measure = Coloring(m).buildPropertiesMaps()
+propertiesMap = Coloring(m).buildPropertiesMap()
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def displayMenagerie():
     g = DotRenderer(m, classes).render(displayLongNames=True)
     processedSvg = SVGPostProcessor().process(g)
     
-    response = make_response(render_template("menagerie.html", graph = processedSvg, category = category, measure = measure, excludedClasses = excludedClasses))
+    response = make_response(render_template("menagerie.html", graph = processedSvg, propertiesMap = propertiesMap, excludedClasses = excludedClasses))
     response.headers["Content-Type"] = "application/xhtml+xml"
     return response
 
