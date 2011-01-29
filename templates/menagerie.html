@@ -102,7 +102,7 @@
 
      {% if excludedClasses %}
      <div id="excludedClasses" class="classList" style="display: none;">
-       <div style="margin-bottom: 10px;">{{ button("restoreChecked", "Restore all excluded classes", onclick="restoreAll();")}}</div>
+       <div style="margin-bottom: 10px;">{{ button("restoreAll", "Restore all excluded classes", onclick="restoreAll();")}}</div>
        <ul>
        {% for cls in excludedClasses %}
        <li><input type="checkbox" class="excludedClassCheckbox" onclick="enableRestoreChecked();" value="{{cls.name}}"/> {{ cls|decorate|safe }}</li>
