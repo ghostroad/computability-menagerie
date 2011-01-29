@@ -109,4 +109,4 @@ function hovertipInit() {
 		     function() {
 			 hovertipHideLater(hovertipDiv);
 		     });
- }
+}
