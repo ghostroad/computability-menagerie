@@ -63,11 +63,11 @@
      <div id="controls">
        <table>
 	 <tr>
-	   <td>{{ button("numSelectedLink", '<span id="numSelected">0</span> selected'|safe) }}{% if excludedClasses %}, {{ button("excludedClassesLink", excludedClasses|length ~ " excluded") }} {% endif %}
+	   <td>{{ button("numSelectedLink", '<span id="numSelected">0</span> selected'|safe, disabled=True) }}{% if excludedClasses %}, {{ button("excludedClassesLink", excludedClasses|length ~ " excluded") }} {% endif %}
 	   </td>
-	   <td>{{ button("showProofs", "View proofs") }}</td>
-	   <td>{{ button("viewSubgraph", "View subgraph") }}</td>
-	   <td>{{ button("excludeSelected", "Exclude selected") }}</td>
+	   <td>{{ button("showProofs", "View proofs", onclick="showProofs();", disabled=True) }}</td>
+	   <td>{{ button("viewSubgraph", "View subgraph", onclick="viewSubgraph();", disabled=True) }}</td>
+	   <td>{{ button("excludeSelected", "Exclude selected", onclick="excludeSelected();", disabled=True) }}</td>
 	   <td>{{ button("unselectAll", "Deselect All", onclick="unselectAll();") }}</td>
 	   <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
 	   <td>{{ button("openImplications", "Open implications", onclick="toggleOpenImplications();") }}</td>
@@ -97,12 +97,13 @@
 
      {% if excludedClasses %}
      <div id="excludedClasses" class="classList" style="display: none;">
-       <a href="{{ url_for('displayMenagerie') }}">Restore excluded classes:</a>
        <ul>
        {% for cls in excludedClasses %}
-       <li>{{ cls|decorate|safe }}</li>
+       <li><input type="checkbox" class="excludedClassCheckbox" onclick="enableRestoreChecked();" value="{{cls.name}}"/> {{ cls|decorate|safe }}</li>
        {% endfor %}
        </ul>
+       <br/>
+        {{ button("restoreChecked", "Restore checked classes", onclick="restoreChecked();", disabled=True)}}
      </div>
      {% endif %}
 

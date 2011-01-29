@@ -17,6 +17,7 @@ var selectedClassesDiv;
 var numSelected = 0;
 var currentSizeColoring;
 var currentColoring;
+var restoreCheckedClassesButton;
 var CATEGORY_CLASSES = "countable uncountableMeager uncountableComeager uncountableUnknown unknownMeager unknownUnknown";
 var MEASURE_CLASSES = "level0 level1 level2 level3 level4 level3-4 level2-3 level2-4 level1-2 level0-3 level1-4 level0-1 level0-2 level0-3 level0-4";
 var RECOLORING_CLASSES = "above eqAbove below eqBelow inc aboveInc belowInc eqInc notBetw betw possiblyBetw";
@@ -156,7 +157,7 @@ function hideDiv(div) {
     }
     div.hiding = window.setTimeout(function() {
 				       div.hide();
-				   }, 300);
+				   }, 500);
 }
 
 function toggleNonstrictArrowHighlight() {
@@ -198,9 +199,11 @@ $(document).ready(function(){
 						      updateHash("showKey", "false") : updateHash("showKey", "true");
 						 $('#keys').toggle(); 
 					      });
-		      showProofsButton = $('#showProofs').click(showProofs);
-		      viewSubgraphButton = $('#viewSubgraph').click(viewSubgraph);
-		      excludeSelectedButton = $('#excludeSelected').click(excludeSelected);
+
+		      showProofsButton = $('#showProofs');
+		      viewSubgraphButton = $('#viewSubgraph');
+		      excludeSelectedButton = $('#excludeSelected');
+		      restoreCheckedClassesButton = $('#restoreChecked');
 
 		      excludedClassesDiv = $('#excludedClasses');
 		      $('#excludedClassesLink').hover(showExcludedClasses, function() { hideDiv(excludedClassesDiv); });
@@ -213,7 +216,6 @@ $(document).ready(function(){
 		      selectedClassesDiv.hover(function() { postponeHidingDiv(selectedClassesDiv); },
 					       function() { hideDiv(selectedClassesDiv);});	      
 
-		      disableButtonsIfAppropriate();
 		      readAndApplySettings();
 		      toggleNonstrictArrowHighlight();
 
@@ -310,4 +312,21 @@ function unselectAll() {
 		   if (node.selected) { node.toggleSelected(); }
 	       }); 
     currentColoring.handleSelect();
+}
+
+function enableRestoreChecked() {
+    var checkedBoxes = $('#excludedClasses :checkbox:checked');
+    if (checkedBoxes.length > 0) restoreCheckedClassesButton.removeClass("disabled"); else restoreCheckedClassesButton.addClass("disabled");
+}
+
+function restoreChecked() {
+    var classesToDisplay = [];
+    $('#excludedClasses :checkbox:checked').each(function() {
+						     classesToDisplay.push(this.value);
+						 });
+    nodes.each(function() {
+		   classesToDisplay.push(this.id);
+	       });
+    var url = $SCRIPT_ROOT + '?classes=' + classesToDisplay + window.location.hash;
+    window.location = url;
 }
