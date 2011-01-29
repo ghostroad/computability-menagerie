@@ -187,7 +187,8 @@ LowSchnorr -/> BOGL1
 
 BBmin -> BN1R				"If $A\oplus B$ is 1-random then $A$ and $B$ are Turing incomparable"
 BBmin -> BN1G				"If $A\oplus B$ is 1-generic then $A$ and $B$ are Turing incomparable"
-HD(BBmin) = 1				"In [Greenberg and Miller 2010, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of minimal degree and effective Hausdorff dimension 1. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) Hausdorff dimension 1 [Kjos-Hanssen]"
+PD(BBmin) = 1				"In [Downey and Greenberg 2008, Turing degreed of reals of positive effective packing dimension], it is shown that there is an $X$ of minimal degree and effective packing dimension 1. In fact, this partially relativizes to allow $X$ to have effective packing dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) packing dimension 1."
+HD(BN1R) = 1				"In [Greenberg and Miller 2011, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of effective Hausdorff dimension 1 that computes no 1-random. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of reals that bound no 1-random has (classical) Hausdorff dimension 1"
 BBmin -/> NotHigh			"There is a high minimal degree by Cooper's jump inversion theorem for minimal degrees"
 
 BBmin -/> BNmin				"Consider any minimal degree"
