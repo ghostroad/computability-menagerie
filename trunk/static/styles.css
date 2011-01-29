@@ -48,19 +48,19 @@ div#graph{
     padding-bottom:150px;
 }
 
-.hovertip {
+div.hovertip {
     position: relative;
     display: none; /* in case javascript is disabled */
     width: 120px;
-    border: 2px #82AE47 solid ;
-    background-color: #A2D959;
+    border: 2px beige solid ;
+    background-color: #E0E0EB;
     font-size: 12px;
     z-index: 100;
     margin-left: 0px;
     margin-top: 0px;
 }
 
-#keys {
+div#keys {
     max-width: 200px;
     padding: 8px;
     position:fixed;
@@ -81,7 +81,7 @@ div#controlPanel {
 
 div#title {
     padding: 5px;
-    background-color: #FFFF66;
+    background-color: #FDEBC9;
     border-left: 2px beige solid ;
     border-top: 2px beige solid;
     border-right: 2px beige solid;
@@ -89,9 +89,10 @@ div#title {
 
 div#title .appName {
     font-size: 18px;
+    padding-right: 0.5em;
 }
 
-#controls td {
+div#controls td {
     background-color: #E0E0EB;
     padding-left: 5px;
     padding-right: 5px;
@@ -103,7 +104,7 @@ select {
 }
 
 div#help {
-    width: 642px;
+    width: 600px;
     padding-right: 10px;
     padding-left:10px;
 }

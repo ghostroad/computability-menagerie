@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, render_template, make_response
 from menagerie2 import *
 from apputils import *
+from time import sleep
 from os import getenv
 
 m = Menagerie()
@@ -15,8 +16,7 @@ app = Flask(__name__)
 def displayMenagerie():
     classesParam = request.args.get("classes", None)
     classes = classesParam and [m[clsName] for clsName in classesParam.split(",")] or m.classes
-    decorator = HtmlClassDecorator()
-    excludedClasses = sorted([decorator.decorate(cls) for cls in set(m.classes).difference(classes)])
+    excludedClasses = sorted(set(m.classes).difference(classes), cmp = lambda x, y: cmp(x.displayName(), y.displayName()))
     g = DotRenderer(m, classes).render(displayLongNames=True)
     processedSvg = SVGPostProcessor().process(g)
     
@@ -88,6 +88,10 @@ def recolorPairSelected():
 @app.route('/_properties/<className>')
 def properties(className):
     return render_template("properties.html", cls = m[className])
+
+@app.template_filter('decorate')
+def decorate(cls):
+    return classDecorator.decorate(cls)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

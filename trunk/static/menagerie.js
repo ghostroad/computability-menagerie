@@ -1,6 +1,6 @@
 var nodes;
 var showProofsButton;
-var weakArrows;
+var nonstrictArrows;
 var excludeSelectedButton;
 var numSelectedLink;
 var viewSubgraphButton;
@@ -152,21 +152,26 @@ function hideDiv(div) {
 }
 
 function toggleWeakArrowHighlight() {
-    if (weakArrows.highlighted) {
-	weakArrows.removeClass("highlightArrow");
-	weakArrows.highlighted = false;
+    if (nonstrictArrows.highlighted) {
+	nonstrictArrows.removeClass("highlightArrow");
+	nonstrictArrows.highlighted = false;
     }
     else {
-	weakArrows.addClass("highlightArrow");
-	weakArrows.highlighted = true;
+	nonstrictArrows.addClass("highlightArrow");
+	nonstrictArrows.highlighted = true;
     }
+}
+
+function toggleOpenImplications() {
+    
+
 }
 
 $(document).ready(function(){
 		      if (!window.Touch) hovertipInit();
 
 		      nodes = $('g[class="node"]');
-		      weakArrows = $('g[id|="weak"]');
+		      nonstrictArrows = $('g[id|="nonstrict"]');
 
 		      $('#toggleHelp').click( function() { $('#help').toggle(); } );
 		      $('#toggleKey').click( function() { $('#keys').toggle(); } );
@@ -176,13 +181,13 @@ $(document).ready(function(){
 
 		      excludedClassesDiv = $('#excludedClasses');
 		      $('#excludedClassesLink').hover(showExcludedClasses, function() { hideDiv(excludedClassesDiv); });
-		      excludedClassesDiv.hover(function() { postponeHidingDiv(excludedClassesDiv); }, 
-					       function() { hideDiv(excludedClassesDiv);});		      
+		      excludedClassesDiv.hover(function() { postponeHidingDiv(excludedClassesDiv); },
+					       function() { hideDiv(excludedClassesDiv);});	      
 		      selectedClassesDiv = $('#selectedClasses');
 		      numSelectedLink = $('#numSelectedLink');
 		      numSelectedLink.hover(showSelectedClasses, function() {hideDiv(selectedClassesDiv); });
-		      selectedClassesDiv.hover(function() { postponeHidingDiv(selectedClassesDiv); }, 
-					       function() { hideDiv(selectedClassesDiv);});		      
+		      selectedClassesDiv.hover(function() { postponeHidingDiv(selectedClassesDiv); },
+					       function() { hideDiv(selectedClassesDiv);});	      
 
 		      disableButtonsIfAppropriate();
 		      detectCurrentColoring();
