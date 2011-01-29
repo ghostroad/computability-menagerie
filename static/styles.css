@@ -22,6 +22,10 @@ g.node:hover {
    font-size: 20px;
 }
 
+div.justifications {
+    font-size: 14px;
+}
+
 span.button {
     color: darkblue;
     text-decoration: underline; 
