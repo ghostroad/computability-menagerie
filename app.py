@@ -66,7 +66,7 @@ def recolor():
                 if possiblyBelow: color = "eqAbove"
                 else: color = "above"
             elif below:
-                if possiblyAbove: color = "eqAbove"
+                if possiblyAbove: color = "eqBelow"
                 else: color = "below"
             elif possiblyAbove:
                 if possiblyBelow:
