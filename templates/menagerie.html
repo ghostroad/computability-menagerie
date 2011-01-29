@@ -51,13 +51,15 @@
   </style>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.4.js') }}"></script>
-   <script type="text/javascript"><![CDATA[
+  <script type="text/javascript"><![CDATA[
      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
      $PROPERTIES = {{ propertiesMap|tojson|safe }};
+     $SHOW_OPEN = '{{ "true" if showOpen else "false" }}';
+     $CLASSES = '{{ classesParam }}';
 ]]>
-   </script>
-   <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
-   <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
+  </script>
+  <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
  </head>
 
  <body>
@@ -75,7 +77,7 @@
 	   <td>{{ button("excludeSelected", "Exclude selected", onclick="excludeSelected();", disabled=True) }}</td>
 	   <td>{{ button("unselectAll", "Deselect All", onclick="unselectAll();") }}</td>
 	   <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
-	   <td>{{ button("openImplications", "Toggle open implications", onclick="toggleOpenImplications();") }}</td>
+	   <td>{{ button("openImplications", "Suppress open implications" if showOpen else "Display open implications" , onclick="toggleOpenImplications();") }}</td>
 	   <td>{{ button("toggleHelp", "Help") }}</td>
 	   <td>{{ button("toggleKey", "Key") }}</td>
 

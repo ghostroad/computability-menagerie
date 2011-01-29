@@ -1,4 +1,3 @@
-* Turn "toggle implications" into a hard link
 * Add bounded by shift-complex
 * Bounds no shift-complex
 * Error page

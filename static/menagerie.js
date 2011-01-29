@@ -1,6 +1,5 @@
 var settings = {
     "coloring" : "measure",
-    "showOpen" : "false",
     "showKey"  : "false",
     "showHelp" : "false"
 };
@@ -8,7 +7,6 @@ var settings = {
 var nodes;
 var showProofsButton;
 var nonstrictArrows;
-var openArrows;
 var excludeSelectedButton;
 var numSelectedLink;
 var viewSubgraphButton;
@@ -151,13 +149,10 @@ function toggleNonstrictArrowHighlight() {
 }
 
 function toggleOpenImplications() {
-    if (settings["showOpen"] == "false") {
-	openArrows.show();
-	updateHash("showOpen", "true");
-    } else {
-	openArrows.hide();
-	updateHash("showOpen", "false");
-    }
+    var parameters = {};
+    if ($CLASSES) parameters["classes"] = $CLASSES;
+    ($SHOW_OPEN=="true") ? parameters["showOpen"] = "false" : parameters["showOpen"] = "true";
+    window.location = buildGraphUrl(parameters);
 }
 
 $(document).ready(function(){
@@ -165,7 +160,6 @@ $(document).ready(function(){
 
 		      nodes = $('g[class="node"]');
 		      nonstrictArrows = $('g[id|="nonstrict"]');
-		      openArrows = $('g[id|="strong"],g[id|="weak"]'); 
 
 		      $('#toggleHelp,#dismissHelp').click( function() { 
 						  settings["showHelp"] == "true" ? 
@@ -234,7 +228,6 @@ function readAndApplySettings() {
 	$('#coloringModeSelector').val("measure");
 	MeasureMode.apply();
     }
-    if (settings["showOpen"] == "false") openArrows.hide();
     if (settings["showKey"] == "true") $('#keys').show();
     if (settings["showHelp"] == "true") $('#help').show();
 }
@@ -266,7 +259,7 @@ function enable(condition, anchor, action) {
 function excludeSelected() {
     var unselected = [];
     nodes.each(function() { if (!this.selected) unselected.push(this.id); });
-    window.location = $SCRIPT_ROOT + '?classes=' + unselected.join() + window.location.hash;
+    window.location = buildGraphUrl({"classes" : unselected.join()});
 }
 
 function showProofs() {
@@ -282,8 +275,7 @@ function showClassDetails(nodeId) {
 }
 
 function viewSubgraph() {
-    var url = $SCRIPT_ROOT + '?classes=' + getSelectedClasses() + window.location.hash;
-    window.location = url;
+    window.location = buildGraphUrl({"classes" : getSelectedClasses()});
 }
 
 function unselectAll() {
@@ -299,18 +291,27 @@ function enableRestoreChecked() {
 }
 
 function restoreChecked() {
-    var classesToDisplay = [];
-    $('#excludedClasses :checkbox:checked').each(function() {
-						     classesToDisplay.push(this.value);
-						 });
-    nodes.each(function() {
-		   classesToDisplay.push(this.id);
-	       });
-    var url = $SCRIPT_ROOT + '?classes=' + classesToDisplay + window.location.hash;
-    window.location = url;
+    var checkedBoxes = $('#excludedClasses :checkbox:checked');
+    if (checkedBoxes.length == $('#excludedClasses :checkbox').length) {
+	window.location = buildGraphUrl({});
+    } else {
+	var classesToDisplay = [];
+	checkedBoxes.each(function() {
+			      classesToDisplay.push(this.value);
+			  });
+	nodes.each(function() {
+		       classesToDisplay.push(this.id);
+		   });
+	window.location = buildGraphUrl({"classes" : classesToDisplay.join()});
+    }
 }
 
 function restoreAll() {
-    var url = $SCRIPT_ROOT + "/" + window.location.hash;
-    window.location = url;
+    window.location = buildGraphUrl({});
 }
+
+function buildGraphUrl(parameters) {
+    if (!('showOpen' in parameters))  parameters['showOpen'] = $SHOW_OPEN;
+    return $SCRIPT_ROOT + '/?' + $.param(parameters) + window.location.hash;
+}
+

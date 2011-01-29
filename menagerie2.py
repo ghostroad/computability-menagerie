@@ -437,13 +437,13 @@ class DotRenderer(object):
     def __init__(self, menagerie, classes = []):
         self.menagerie = menagerie
         self.classes = set(classes or self.menagerie.classes)
-    def render(self, displayLongNames = False):
+    def render(self, displayLongNames = False, showOpenImplications = False):
         graph = Dot(rankdir = "BT")
         graph.set_name("\"The Computability Menagerie\"")
         if self.menagerie.errors: graph.set_bgcolor("pink")
         self.__addClasses(graph, displayLongNames)
         self.__addEdges(graph)
-        self.__addOpenImplications(graph, True, True)
+        if showOpenImplications: self.__addOpenImplications(graph, True, True)
         return graph
 
     def __addClasses(self, graph, displayLongNames):
