@@ -1,6 +1,14 @@
+var settings = {
+    "coloring" : "measure",
+    "showOpen" : "false",
+    "showKey"  : "false",
+    "showHelp" : "false"
+};
+
 var nodes;
 var showProofsButton;
 var nonstrictArrows;
+var openArrows;
 var excludeSelectedButton;
 var numSelectedLink;
 var viewSubgraphButton;
@@ -34,14 +42,14 @@ function activateKey(keyId) {
 var CategoryMode = {
     "handleSelect" : recolorIfAppropriate,
     "apply" : function() {
-	window.location.hash = "category";
+	updateHash("coloring", "category");
 	currentColoring = CategoryMode;
 	currentSizeColoring = CategoryMode;
 	nodes.removeClass(MEASURE_CLASSES).addClass(function() {return $PROPERTIES[this.id][0];});
 	activateKey('#categoryKey');
     },
     "switchToOtherSizeModeSilently" : function() {
-	window.location.hash = "measure";	
+	updateHash("coloring", "measure");
 	currentSizeColoring = MeasureMode;
     },
     "handleSizeColoringToggle" : function() {
@@ -52,14 +60,14 @@ var CategoryMode = {
 var MeasureMode = {
     "handleSelect" : recolorIfAppropriate,
     "apply" : function() {
-	window.location.hash = "measure";
+	updateHash("coloring", "measure");
 	currentColoring = MeasureMode;
 	currentSizeColoring = MeasureMode;
 	nodes.removeClass(CATEGORY_CLASSES).addClass(function() {return $PROPERTIES[this.id][1];});
 	activateKey('#measureKey');
     },
     "switchToOtherSizeModeSilently" : function() {
-	window.location.hash = "category";	
+	updateHash("coloring", "category");
 	currentSizeColoring = CategoryMode;
     },
     "handleSizeColoringToggle" : function() {
@@ -151,7 +159,7 @@ function hideDiv(div) {
 				   }, 300);
 }
 
-function toggleWeakArrowHighlight() {
+function toggleNonstrictArrowHighlight() {
     if (nonstrictArrows.highlighted) {
 	nonstrictArrows.removeClass("highlightArrow");
 	nonstrictArrows.highlighted = false;
@@ -163,8 +171,13 @@ function toggleWeakArrowHighlight() {
 }
 
 function toggleOpenImplications() {
-    
-
+    if (settings["showOpen"] == "false") {
+	openArrows.show();
+	updateHash("showOpen", "true");
+    } else {
+	openArrows.hide();
+	updateHash("showOpen", "false");
+    }
 }
 
 $(document).ready(function(){
@@ -172,9 +185,19 @@ $(document).ready(function(){
 
 		      nodes = $('g[class="node"]');
 		      nonstrictArrows = $('g[id|="nonstrict"]');
+		      openArrows = $('g[id|="strong"],g[id|="weak"]'); 
 
-		      $('#toggleHelp').click( function() { $('#help').toggle(); } );
-		      $('#toggleKey').click( function() { $('#keys').toggle(); } );
+		      $('#toggleHelp,#dismissHelp').click( function() { 
+						  settings["showHelp"] == "true" ? 
+						      updateHash("showHelp", "false") : updateHash("showHelp", "true");
+						  $('#help').toggle();
+					      });
+
+		      $('#toggleKey').click( function() { 
+						 settings["showKey"] == "true" ? 
+						      updateHash("showKey", "false") : updateHash("showKey", "true");
+						 $('#keys').toggle(); 
+					      });
 		      showProofsButton = $('#showProofs').click(showProofs);
 		      viewSubgraphButton = $('#viewSubgraph').click(viewSubgraph);
 		      excludeSelectedButton = $('#excludeSelected').click(excludeSelected);
@@ -183,6 +206,7 @@ $(document).ready(function(){
 		      $('#excludedClassesLink').hover(showExcludedClasses, function() { hideDiv(excludedClassesDiv); });
 		      excludedClassesDiv.hover(function() { postponeHidingDiv(excludedClassesDiv); },
 					       function() { hideDiv(excludedClassesDiv);});	      
+
 		      selectedClassesDiv = $('#selectedClasses');
 		      numSelectedLink = $('#numSelectedLink');
 		      numSelectedLink.hover(showSelectedClasses, function() {hideDiv(selectedClassesDiv); });
@@ -190,8 +214,8 @@ $(document).ready(function(){
 					       function() { hideDiv(selectedClassesDiv);});	      
 
 		      disableButtonsIfAppropriate();
-		      detectCurrentColoring();
-		      toggleWeakArrowHighlight();
+		      readAndApplySettings();
+		      toggleNonstrictArrowHighlight();
 
 		      nodes.each(function(i, node) {
 				     node.selected = false; 
@@ -215,15 +239,32 @@ $(document).ready(function(){
 				 });
 		  });
 
-function detectCurrentColoring() {
+function readAndApplySettings() {
     var hash = window.location.hash;
-    if (hash == "#measure") {
-	$('#coloringModeSelector')[0].value = 'measure';
-	MeasureMode.apply();
+    var keyValuePairs = hash ? hash.substring(1).split(",") : [];
+    $(keyValuePairs).each(function() {
+			      var pieces = this.split("=");
+			      settings[pieces[0]] = pieces[1];
+			  });
+    if (settings["coloring"] == "category") {
+	$('#coloringModeSelector').val("category");
+	CategoryMode.apply(); 
     } else {
-	$('#coloringModeSelector')[0].value = 'category';
-	CategoryMode.apply();
+	$('#coloringModeSelector').val("measure");
+	MeasureMode.apply();
     }
+    if (settings["showOpen"] == "false") openArrows.hide();
+    if (settings["showKey"] == "true") $('#keys').show();
+    if (settings["showHelp"] == "true") $('#help').show();
+}
+
+function updateHash(key, value) {
+    settings[key] = value;
+    var result = [];
+    for (var v in settings) {
+	result.push(v + "=" + settings[v]);
+    }
+    window.location.hash = result.join();
 }
 
 function disableButtonsIfAppropriate() {
@@ -244,7 +285,7 @@ function enable(condition, anchor, action) {
 function excludeSelected() {
     var unselected = [];
     nodes.each(function() { if (!this.selected) unselected.push(this.id); });
-    window.location = $SCRIPT_ROOT + '?classes=' + unselected.join();
+    window.location = $SCRIPT_ROOT + '?classes=' + unselected.join() + window.location.hash;
 }
 
 function showProofs() {
@@ -260,7 +301,7 @@ function showClassDetails(nodeId) {
 }
 
 function viewSubgraph() {
-    var url = $SCRIPT_ROOT + '?classes=' + getSelectedClasses();
+    var url = $SCRIPT_ROOT + '?classes=' + getSelectedClasses() + window.location.hash;
     window.location = url;
 }
 

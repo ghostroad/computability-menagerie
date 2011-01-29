@@ -462,6 +462,8 @@ class DotRenderer(object):
                     graph.add_edge(edge)
 
     def __addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications):
+        weakEdges = {}
+        strongEdges = {}
         imp, nonimp = self.menagerie.implicationsMatrix, self.menagerie.nonimplicationsMatrix
         idCounter = 0
         for a, b in permutations(self.classes, 2):
@@ -474,19 +476,27 @@ class DotRenderer(object):
                         if imp[a.index][c.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): strong = False
                         if imp[c.index][b.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): strong = False
                 if weak and showWeakOpenImplications:
-                    edge = Edge(a.name, b.name)
-                    edge.set_color("red")
-                    edge.set_style("dashed")
-                    edge.set_id('"weak-{0}"'.format(idCounter))
-                    idCounter += 1
-                    graph.add_edge(edge)
+                    if (b.name, a.name) in weakEdges: 
+                        weakEdges[(b.name, a.name)].set_dir("both")
+                    else:
+                        edge = Edge(a.name, b.name)
+                        edge.set_color("red")
+                        edge.set_style("dashed")
+                        edge.set_id('"weak-{0}"'.format(idCounter))
+                        idCounter += 1
+                        graph.add_edge(edge)
+                        weakEdges[(a.name, b.name)] = edge
                 if strong and showStrongOpenImplications:
-                    edge = Edge(a.name, b.name)
-                    edge.set_color("green")
-                    edge.set_style("dashed")
-                    edge.set_id('"strong-{0}"'.format(idCounter))
-                    idCounter += 1
-                    graph.add_edge(edge)
+                    if (b.name, a.name) in strongEdges:
+                        strongEdges[(b.name, a.name)].set_dir("both")
+                    else:
+                        edge = Edge(a.name, b.name)
+                        edge.set_color("green")
+                        edge.set_style("dashed")
+                        edge.set_id('"strong-{0}"'.format(idCounter))
+                        idCounter += 1
+                        graph.add_edge(edge)
+                        strongEdges[(a.name, b.name)] = edge
                         
 
     def createNodeFor(self, cls):
