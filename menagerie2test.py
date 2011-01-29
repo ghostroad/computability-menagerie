@@ -14,8 +14,7 @@ class TestMenagerie(unittest.TestCase):
         self.assertTrue(m["BBmin"].implies(m["BN1R"]))
         self.assertTrue(m["BBmin"].doesNotImply(m["BNDeltaTwo"]))
         self.assertEqual("If $A\oplus B$ is 1-random then $A$ and $B$ are Turing incomparable", str(m["BBmin"].implies(m["BN1R"]).justification))
-        self.assertEqual(1, m["BBmin"].hdim)
-        self.assertEqual("In [Greenberg and Miller 2010, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of minimal degree and effective Hausdorff dimension 1. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) Hausdorff dimension 1 [Kjos-Hanssen]", str(m["BBmin"].hdim.justification))
+        self.assertEqual("The class of 3-randoms has measure one", str(m["BB3R"].measure.justification))
         self.assertTrue(m["BB2G"].category == COMEAGER)
         self.assertTrue(m["BN3G"].category == MEAGER)
         self.assertTrue(m["DeltaTwo"].cardinality == COUNTABLE)
@@ -23,7 +22,7 @@ class TestMenagerie(unittest.TestCase):
         self.assertEqual("[Nies 2002, Reals which compute little]", str(m["JumpTraceable"].cardinality.justification))
         self.assertEqual(33, len(m.classes))
         numFacts, numUnjustifiedFacts = m.numFactsAndUnjustifiedFacts();
-        self.assertEqual(113, numFacts)
+        self.assertEqual(114, numFacts)
         self.assertEqual(19, numUnjustifiedFacts)
         Deductions().apply(m)
         self.assertEquals(0, len(m.errors))
@@ -127,9 +126,9 @@ class TestMenagerie(unittest.TestCase):
         BBmin = m["BBmin"]
         BN3G = m["BN3G"]
         actual = HtmlWriter().write(BBmin.implies(BN3G))
-        self.assertTrue(str(actual).startswith("""<ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 3-generic</span><ul><li><span class="className">minimal or computable</span> $\\rightarrow$ <span class="className">bounds no 2-generic</span>"""))
+        self.assertTrue(str(actual).startswith("""<ul><li><span class="className">minimal or computable</span> $\Rightarrow$ <span class="className">bounds no 3-generic</span><ul><li><span class="className">minimal or computable</span> $\Rightarrow$ <span class="className">bounds no 2-generic</span><ul><li><span class="className">minimal or computable</span>"""))
 
-        self.assertEqual('<ul><li><span class="className">minimal or computable</span> is uncountable<ul><li>hdim(<span class="className">minimal or computable</span>) = 1<ul><li>In [Greenberg and Miller 2010, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of minimal degree and effective Hausdorff dimension 1. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) Hausdorff dimension 1 [Kjos-Hanssen]</li></ul></li></ul></li></ul>', str(HtmlWriter().write(BBmin.cardinality)))
+        self.assertEqual('<ul><li><span class="className">not DNC in 0\'</span> is uncountable<ul><li><span class="className">low for Kurtz random</span> is uncountable<ul><li>pdim(<span class="className">low for Kurtz random</span>) = 1<ul><li>UNJUSTIFIED</li></ul></li></ul></li><li><span class="className">low for Kurtz random</span> $\\Rightarrow$ <span class="className">not DNC in 0\'</span><ul><li><span class="className">low for Kurtz random</span> $\\Rightarrow$ <span class="className">hyperimmune-free</span><ul><li>[Downey, Griffiths and Reid 2004, On Kurtz randomness]</li></ul></li><li><span class="className">hyperimmune-free</span> $\\Rightarrow$ <span class="className">not DNC in 0\'</span><ul><li>UNJUSTIFIED</li></ul></li></ul></li></ul></li></ul>', str(HtmlWriter().write(m["NotDNCinZP"].cardinality)))
 
     def test_generate_dot_output(self):
         m = Menagerie()

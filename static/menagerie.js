@@ -20,7 +20,7 @@ var currentColoring;
 var restoreCheckedClassesButton;
 var CATEGORY_CLASSES = "countable uncountableMeager uncountableComeager uncountableUnknown unknownMeager unknownUnknown";
 var MEASURE_CLASSES = "level0 level1 level2 level3 level4 level3-4 level2-3 level2-4 level1-2 level0-3 level1-4 level0-1 level0-2 level0-3 level0-4";
-var RECOLORING_CLASSES = "above eqAbove below eqBelow inc aboveInc belowInc eqInc notBetw betw possiblyBetw";
+var RECOLORING_CLASSES = "above eqAbove below eqBelow inc eqComp eqInc aboveComp aboveInc belowComp belowInc comp compInc";
 
 function getSelectedClasses() {
     var selected = [];
@@ -31,8 +31,7 @@ function getSelectedClasses() {
 }
 
 function recolorIfAppropriate() {
-    if (numSelected == 1) SingleSelectedMode.apply();
-    else if (numSelected == 2) PairSelectedMode.apply();
+    if (numSelected > 0) RecoloringMode.apply();
 }
 
 function activateKey(keyId) {
@@ -77,9 +76,21 @@ var MeasureMode = {
 };
 
 var RecoloringMode = {
+    "apply" : function() {
+	var cacheSelected = getSelectedClasses();
+	$.getJSON($SCRIPT_ROOT + '/_recolor', { selectedClasses: cacheSelected }, 
+		  function(data) {
+		      if (getSelectedClasses() == cacheSelected) {
+			  nodes.removeClass(RECOLORING_CLASSES).addClass(function() { return data[this.id]; });
+			  currentColoring = RecoloringMode;
+			  activateKey('#recoloringKey');
+		      }
+		  }
+		 );
+    },
+
     "handleSelect" : function() {
-	if (numSelected == 1) { SingleSelectedMode.apply(); }
-	else if (numSelected == 2) { PairSelectedMode.apply(); }
+	if (numSelected > 0) { RecoloringMode.apply(); }
 	else {
 	    nodes.removeClass(RECOLORING_CLASSES);
 	    currentSizeColoring.apply();
@@ -90,38 +101,6 @@ var RecoloringMode = {
 	currentSizeColoring.switchToOtherSizeModeSilently();
     }
 };
-
-var SingleSelectedMode = {
-    "apply" : function() {
-	$.getJSON($SCRIPT_ROOT + '/_recolorSingleSelected', { selectedClass: getSelectedClasses() }, 
-		  function(data) {
-		      if (numSelected == 1) {
-			  nodes.removeClass(RECOLORING_CLASSES).addClass(function() { return data[this.id]; });
-			  currentColoring = SingleSelectedMode;
-			  activateKey('#singleRecoloringKey');
-		      }
-		  }
-		 );
-    }
-};
-
-$.extend(SingleSelectedMode, RecoloringMode);
-
-var PairSelectedMode = {
-    "apply" : function() {
-	$.getJSON($SCRIPT_ROOT + '/_recolorPairSelected', { selectedClass: getSelectedClasses() }, 
-		  function(data) {
-		      if (numSelected == 2) {
-			  nodes.removeClass(RECOLORING_CLASSES).addClass(function() { return data[this.id]; });
-			  currentColoring = PairSelectedMode;
-			  activateKey('#pairRecoloringKey');
-		      }
-		  }
-		 );
-    }
-};
-
-$.extend(PairSelectedMode, RecoloringMode);
 
 function showExcludedClasses() {
     excludedClassesDiv.showing = window.setTimeout(function() {

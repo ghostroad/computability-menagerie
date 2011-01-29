@@ -48,7 +48,10 @@ class Menagerie:
         self.errors = []
 
     def __getitem__(self, name):
-        return self.classMap.get(name)
+        if name in self.classMap: 
+            return self.classMap.get(name)
+        else:
+            raise KeyError("No class named {0} in the menagerie.".format(name))
 
     def addStrictImplication(self, source, dest, forwardJustification, backwardJustification):
         self.addImplication(source, dest, forwardJustification)
