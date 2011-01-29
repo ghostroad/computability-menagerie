@@ -1,23 +1,14 @@
-* Needs a title, make it always visible
+* Key should be on by default (possibly help too?)
 * Figuring out coloring
-* Make nonstrict implications black dashed lines
 * Add bounded by shift-complex
 * Bounds no shift-complex
-* Change show implications to show proofs
 * Error page
 * Email yvonne and john heim
 * Restore weak and strong open implications
 * Add a gateway page and a link to the home page, add a link to the database
-
+* Put checkboxes next to restore classes
+* Make the content of the hover appear in the key
 
 Make things easier to install and provide instructions
-Put checkboxes next to restore classes
-Make the content of the hover appear in the key
-
-Add ability to highlight implications that may not be strict
 Make server reload database.txt if it changes
-
-Write tests to make sure node styling doesn't break
-Labels should be Tex?
-What to do when graph has cycles
 

@@ -58,7 +58,7 @@
  <body>
    <div id="controlPanel">
      <div id="title">
-       <span class="appName">The Computability Menagerie</span>
+       <span class="appName">The Computability Menagerie</span><span class="credits">maintained by <a href="http://www.math.wisc.edu/~jmiller">Joseph S. Miller</a> and <a href="http://www.math.wisc.edu/~khan">Mushfeq Khan</a></span>
      </div>
      <div id="controls">
        <table>
@@ -70,6 +70,7 @@
 	   <td>{{ button("excludeSelected", "Exclude selected") }}</td>
 	   <td>{{ button("unselectAll", "Deselect All", onclick="unselectAll();") }}</td>
 	   <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
+	   <td>{{ button("openImplications", "Open implications", onclick="toggleOpenImplications();") }}</td>
 	   <td>{{ button("toggleHelp", "Help") }}</td>
 	   <td>{{ button("toggleKey", "Key") }}</td>
 
@@ -99,7 +100,7 @@
        <a href="{{ url_for('displayMenagerie') }}">Restore excluded classes:</a>
        <ul>
        {% for cls in excludedClasses %}
-       <li>{{ cls|safe }}</li>
+       <li>{{ cls|decorate|safe }}</li>
        {% endfor %}
        </ul>
      </div>

@@ -212,6 +212,8 @@ class ClassNode:
         self.measure = Property(self, "measure")
         self.hdim = Property(self, "hdim")
         self.pdim = Property(self, "pdim")
+    def displayName(self):
+        return self.longName or self.name
     def implies(self, other):
         return self.menagerie.implicationsMatrix[self.index][other.index]
     def doesNotImply(self, other):
@@ -371,7 +373,7 @@ class TextWriter:
 
 class HtmlClassDecorator:
     def decorate(self, cls):
-        return '<span class="className">' + (cls.longName or cls.name) + '</span>'
+        return '<span class="className">' + cls.displayName() + '</span>'
 
 class HtmlWriter:
     def __init__(self):
@@ -438,6 +440,7 @@ class DotRenderer(object):
         if self.menagerie.errors: graph.set_bgcolor("pink")
         self.__addClasses(graph, displayLongNames)
         self.__addEdges(graph)
+        self.__addOpenImplications(graph, True, True)
         return graph
 
     def __addClasses(self, graph, displayLongNames):
@@ -455,9 +458,36 @@ class DotRenderer(object):
                     if (other is not dest) and other.implies(dest): break
                 else:
                     edge = Edge(cls.name, dest.name)
-                    if not dest.doesNotImply(cls): edge.set_id("weak-\\E")
+                    if not dest.doesNotImply(cls): edge.set_id("nonstrict-\\E")
                     graph.add_edge(edge)
 
+    def __addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications):
+        imp, nonimp = self.menagerie.implicationsMatrix, self.menagerie.nonimplicationsMatrix
+        idCounter = 0
+        for a, b in permutations(self.classes, 2):
+            if a.implicationUnknown(b):
+                strong = weak = True
+                for c in self.classes:
+                    if (c is not a) and (c is not b):
+                        if imp[c.index][a.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): weak = False
+                        if imp[b.index][c.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): weak = False
+                        if imp[a.index][c.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): strong = False
+                        if imp[c.index][b.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): strong = False
+                if weak and showWeakOpenImplications:
+                    edge = Edge(a.name, b.name)
+                    edge.set_color("red")
+                    edge.set_style("dashed")
+                    edge.set_id('"weak-{0}"'.format(idCounter))
+                    idCounter += 1
+                    graph.add_edge(edge)
+                if strong and showStrongOpenImplications:
+                    edge = Edge(a.name, b.name)
+                    edge.set_color("green")
+                    edge.set_style("dashed")
+                    edge.set_id('"strong-{0}"'.format(idCounter))
+                    idCounter += 1
+                    graph.add_edge(edge)
+                        
 
     def createNodeFor(self, cls):
         node = Node(cls.name)
@@ -509,30 +539,3 @@ class DotCommandLineRenderer(DotRenderer):
         
 	return node
 
-    def __addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications):
-        imp, nonimp = self.menagerie.implicationsMatrix, self.menagerie.nonimplicationsMatrix
-        idCounter = 0
-        for a, b in permutations(self.classes, 2):
-            if a.implicationUnknown(b):
-                strong = weak = True
-                for c in self.classes:
-                    if (c is not a) and (c is not b):
-                        if imp[c.index][a.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): weak = False
-                        if imp[b.index][c.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): weak = False
-                        if imp[a.index][c.index] and not (imp[c.index][b.index] or nonimp[c.index][b.index]): strong = False
-                        if imp[c.index][b.index] and not (imp[a.index][c.index] or nonimp[a.index][c.index]): strong = False
-                if weak and showWeakOpenImplications:
-                    edge = Edge(a.name, b.name)
-                    edge.set_color("red")
-                    edge.set_style("dashed")
-                    edge.set_id('"weak-{0}"'.format(idCounter))
-                    idCounter += 1
-                    graph.add_edge(edge)
-                if strong and showStrongOpenImplications:
-                    edge = Edge(a.name, b.name)
-                    edge.set_color("green")
-                    edge.set_style("dashed")
-                    edge.set_id('"strong-{0}"'.format(idCounter))
-                    idCounter += 1
-                    graph.add_edge(edge)
-                        

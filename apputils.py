@@ -1,6 +1,8 @@
 from xml.dom import minidom
 from menagerie2 import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER, HtmlClassDecorator
 
+classDecorator = HtmlClassDecorator()
+
 class UnknownImplication:
     def __init__(self, src, dest):
         self.src = src

@@ -15,56 +15,6 @@
  */
 
 
-var hovertipMouseX;
-var hovertipMouseY;
-function hovertipMouseUpdate(e) {
-  var mouse = hovertipMouseXY(e);
-  hovertipMouseX = mouse[0];
-  hovertipMouseY = mouse[1];
-}
-
-// http://www.howtocreate.co.uk/tutorials/javascript/eventinfo
-function hovertipMouseXY(e) {
-  if( !e ) {
-    if( window.event ) {
-      //Internet Explorer
-      e = window.event;
-    } else {
-      //total failure, we have no way of referencing the event
-      return;
-    }
-  }
-  if( typeof( e.pageX ) == 'number' ) {
-    //most browsers
-    var xcoord = e.pageX;
-    var ycoord = e.pageY;
-  } else if( typeof( e.clientX ) == 'number' ) {
-    //Internet Explorer and older browsers
-    //other browsers provide this, but follow the pageX/Y branch
-    var xcoord = e.clientX;
-    var ycoord = e.clientY;
-    var badOldBrowser = ( window.navigator.userAgent.indexOf( 'Opera' ) + 1 ) ||
-      ( window.ScriptEngine && ScriptEngine().indexOf( 'InScript' ) + 1 ) ||
-      ( navigator.vendor == 'KDE' );
-    if( !badOldBrowser ) {
-      if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
-        //IE 4, 5 & 6 (in non-standards compliant mode)
-        xcoord += document.body.scrollLeft;
-        ycoord += document.body.scrollTop;
-      } else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
-        //IE 6 (in standards compliant mode)
-        xcoord += document.documentElement.scrollLeft;
-        ycoord += document.documentElement.scrollTop;
-      }
-    }
-  } else {
-    //total failure, we have no way of obtaining the mouse coordinates
-    return;
-  }
-  return [xcoord, ycoord];
-}
-
-
 hovertipIsVisible = function(el) {
   return el.css('display') != 'none';
 }
@@ -72,17 +22,33 @@ hovertipIsVisible = function(el) {
 // show the tooltip under the mouse.
 // Introduce a delay, so tip appears only if cursor rests on target for more than an instant.
 hovertipShowUnderMouse = function(el, event) {
-  var nodeId = event.target.parentNode.id
+  var nodeId = event.target.parentNode.id;
   if (hovertipIsVisible(el) && el.owner == nodeId) hovertipHideCancel(el);
   if (hovertipIsVisible(el) && el.owner != nodeId) el.hide();
     if (!hovertipIsVisible(el)) {
+	var viewportX = event.pageX - $(window).scrollLeft();
+	var viewportY = event.pageY - $(window).scrollTop();
+	var width = $(window).width();
+
 	el.ht.showing = // keep reference to timer
 	window.setTimeout(function() {
-			      el.ht.tip.css({
-						'position':'absolute',
-						'top': (hovertipMouseY + 20) + 'px',
-						'left': (hovertipMouseX + 20) + 'px'})
-				  .show().html("Loading...").load($SCRIPT_ROOT + '/_properties/' + nodeId);
+
+			      if ((viewportX < width - 200) || (viewportY > 200)) {
+				  el.ht.tip.css({
+						    'position':'fixed',
+						    'bottom':'auto',
+						    'left':'auto',
+						    'top': '10px',
+						    'right': '10px'});
+			      } else {
+				  el.ht.tip.css({
+						    'position':'fixed',
+						    'top' : 'auto',
+						    'right' : 'auto',
+						    'bottom': '10px',
+						    'left': '10px'});
+			      }
+				  el.ht.tip.html("Loading...").load($SCRIPT_ROOT + '/_properties/' + nodeId).show();
 			      el.owner = nodeId;
 			  }, el.ht.config.showDelay);
     }
@@ -119,7 +85,7 @@ hovertipHideLater = function(el) {
 
 function hovertipInit() {
   var hovertipConfig = {'attribute':'hovertip',
-                        'showDelay': 900,
+                        'showDelay': 600,
                         'hideDelay': 300};
   
     var hovertipDiv = $('div.hovertip');
@@ -143,5 +109,4 @@ function hovertipInit() {
 		     function() {
 			 hovertipHideLater(hovertipDiv);
 		     });
-    hoverables.mousemove(hovertipMouseUpdate);
-}
+ }
