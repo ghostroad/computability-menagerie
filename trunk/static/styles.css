@@ -131,6 +131,8 @@ div.classList {
 }
 
 div.classList ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
     margin-left: 0;
     list-style: none;
     padding-left: 1em;

@@ -6,6 +6,6 @@
 <pattern id="{{ patternName }}" x="0" y="0" width="20" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><g class="{{ classA }}"><rect x="0" y="0" width="10" height="80"/></g><g class="{{ classB }}"><rect x="10" y="0" width="10" height="80"/></g></pattern>
 {%- endmacro %}
 
-{% macro button(id, label, onclick="") -%}
-<span class="button" id="{{ id }}" {% if onclick %} onclick="{{ onclick }}" {% endif %}><span>{{ label }}</span></span>
+{% macro button(id, label, onclick="", disabled=False) -%}
+<span class="button {% if disabled %} disabled {% endif %}" id="{{ id }}" {% if onclick %} onclick="{{ onclick }}" {% endif %}><span>{{ label }}</span></span>
 {%- endmacro %}
