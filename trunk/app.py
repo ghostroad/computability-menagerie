@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request, render_template, make_response
 from menagerie2 import *
 from apputils import *
-from time import sleep
 from os import getenv
 
 m = Menagerie()
@@ -47,44 +46,40 @@ def showImplications(classA, classB):
     return render_template("implications.html", implications=implications, clsA=A, clsB=B)
 
 
-@app.route('/_recolorSingleSelected')
-def recolorSingleSelected():
-    cls = m[request.args.get('selectedClass', None)]
+@app.route('/_recolor')
+def recolor():
+    selectedClasses = [m[className] for className in request.args.get('selectedClasses', None).split(",")]
+    remaining = set(m.classes).difference(selectedClasses)
     result = {}
-    for other in m.classes:
-        if other is not cls:
-            if cls.implies(other): 
-                if other.doesNotImply(cls): result[other.name] = "above"
-                else: result[other.name] = "eqAbove"
-            elif cls.doesNotImply(other): 
-                if other.implies(cls): result[other.name] = "below"
-                elif other.doesNotImply(cls): result[other.name] = "inc"
-                else: result[other.name] = "belowInc"
+    for other in remaining:
+        color = "inc"
+        above = below = possiblyAbove = possiblyBelow = comparable = possiblyComparable = True
+        for selected in selectedClasses:
+            above = above and selected.implies(other)
+            below = below and other.implies(selected)
+            possiblyAbove = possiblyAbove and not selected.doesNotImply(other)
+            possiblyBelow = possiblyBelow and not other.doesNotImply(selected)
+            comparable = comparable and (selected.implies(other) or other.implies(selected))
+            possiblyComparable = possiblyComparable and not selected.incomparableTo(other)
+        if possiblyComparable:
+            if above:
+                if possiblyBelow: color = "eqAbove"
+                else: color = "above"
+            elif below:
+                if possiblyAbove: color = "eqAbove"
+                else: color = "below"
+            elif possiblyAbove:
+                if possiblyBelow:
+                    color = comparable and "eqComp" or "eqInc"
+                else:
+                    color = comparable and "aboveComp" or "aboveInc"
+            elif possiblyBelow:
+                color = comparable and "belowComp" or "belowInc"
             else:
-                if other.implies(cls): result[other.name] = "eqBelow"
-                elif other.doesNotImply(cls): result[other.name] = "aboveInc"
-                else: result[other.name] = "eqInc"
+                color = comparable and "comp" or "compInc"
+        result[other.name] = color
     return jsonify(result)
-
-@app.route('/_recolorPairSelected')
-def recolorPairSelected():
-    selectedClasses = request.args.get('selectedClass', None).split(",")
-    A, B = m[selectedClasses[0]], m[selectedClasses[1]]
-    if A.implies(B): return jsonify(buildMap(m, A, B))
-    elif A.doesNotImply(B):
-        if B.doesNotImply(A):
-            return jsonify(dict((cls.name, "notBetw") for cls in m.classes))
-        else: return jsonify(buildMap(m, B, A))
-    else:
-        if B.doesNotImply(A): return jsonify(buildMap(m, A, B))
-        elif B.implies(A): return jsonify(buildMap(m, A, B))
-        else:
-            result = {}
-            for C in m.classes:
-                if C.incomparableTo(A) or C.incomparableTo(B) or (C.doesNotImply(A) and C.doesNotImply(B)) or (A.doesNotImply(C) and B.doesNotImply(C)): result[C.name] = "notBetw"
-                else: result[C.name] = "possiblyBetw"
-            return jsonify(result)
-
+            
 @app.route('/_properties/<className>')
 def properties(className):
     return render_template("properties.html", cls = m[className])
@@ -95,7 +90,3 @@ def decorate(cls):
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
-
-
-    
-

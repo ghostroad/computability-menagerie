@@ -30,14 +30,19 @@
     .level0-3 ellipse {fill: url(#level0-3)}
     .level0-4 ellipse {fill: url(#level0-4)}
 
-    .above ellipse, .above rect {fill: #FFADAD;}
+    .above ellipse, .above rect {fill: red;}
     .eqAbove ellipse {fill: url(#eqAbove);}
     .below ellipse, .below rect {fill: #ADADFF;}
     .eqBelow ellipse {fill: url(#eqBelow);}
+    .comp ellipse, .comp rect {fill: #FF66FF;}
     .inc ellipse, .inc rect {fill: lightgray;}
+    .eqComp ellipse {fill: url(#eqComp);}
+    .aboveComp ellipse {fill: url(#aboveComp);}
+    .belowComp ellipse {fill: url(#belowComp);}
     .belowInc ellipse {fill: url(#belowInc);}
     .aboveInc ellipse {fill: url(#aboveInc);}
     .eqInc ellipse {fill: url(#eqInc);}
+    .compInc ellipse {fill: url(#compInc);}
 
     .notBetw ellipse, .notBetw rect {fill: gray;}
     .betw ellipse, .betw rect {fill: lightcoral;}
@@ -116,18 +121,18 @@
    </div>
 
   <div id="keys" style="display: none;">
-    <div id="singleRecoloringKey" class="key" style="display: none;">
+    <div id="recoloringKey" class="key" style="display: none;">
 	<table>
 	  <tr><td>{{ svgellipse("selected") }}</td><td>Selected</td></tr>
-	  <tr><td>{{ svgellipse("above") }}</td><td>Superclass of selected class</td></tr>
-	  <tr><td>{{ svgellipse("below") }}</td><td>Subclass of selected class</td></tr>
-	  <tr><td>{{ svgellipse("inc") }}</td><td>Incomparable to selected class</td></tr>
+	  <tr><td>{{ svgellipse("above") }}</td><td>Superclass of each of the selected classes</td></tr>
+	  <tr><td>{{ svgellipse("below") }}</td><td>Subclass of each of the selected classes</td></tr>
+	  <tr><td>{{ svgellipse("comp") }}</td><td>Comparable to each of the selected classes</td></tr>
+	  <tr><td>{{ svgellipse("inc") }}</td><td>Incomparable to some selected class</td></tr>
 	</table>
 	Stripes indicate one or more unknown implications. Colors alternate between the possibilities.
     </div>
     <div id="measureKey" class="key" style="display: none;">
 	<table>
-	  <tr><td>{{ svgellipse("selected") }}</td><td>Selected</td></tr>
 	  <tr><td>{{ svgellipse("level4") }}</td><td>Measure 1</td></tr>
 	  <tr><td>{{ svgellipse("level3") }}</td><td>Hausdorff dimension 1, <br/>measure 0</td></tr>
 	  <tr><td>{{ svgellipse("level2") }}</td><td>Packing dimension 0, <br/>Hausdorff dimension 1</td></tr>
@@ -138,20 +143,11 @@
     </div>
     <div id="categoryKey" class="key" style="display: none;">
 	<table>
-	  <tr><td>{{ svgellipse("selected") }}</td><td>Selected</td></tr>
 	  <tr><td>{{ svgellipse("uncountableComeager") }}</td><td>Comeager</td></tr>
 	  <tr><td>{{ svgellipse("uncountableMeager") }}</td><td>Uncountable and meager</td></tr>
 	  <tr><td>{{ svgellipse("countable") }}</td><td>Countable</td></tr>
 	</table>
 	Stripes indicate unknown category information. Colors alternate between the possible extremes.
-    </div>
-    <div id="pairRecoloringKey" class="key" style="display: none;">
-	<table>
-	  <tr><td>{{ svgellipse("selected") }}</td><td>Selected</td></tr>
-	  <tr><td>{{ svgellipse("betw") }}</td><td>Intermediate</td></tr>
-	  <tr><td>{{ svgellipse("notBetw") }}</td><td>Not intermediate</td></tr>
-	</table>
-	  Stripes indicate unknown implications.
     </div>
   </div>
 
@@ -178,7 +174,11 @@
 	{{ stripePattern("aboveInc", "above", "inc") }}
 	{{ stripePattern("belowInc", "below", "inc") }}
 	{{ stripePattern("eqInc", "selected", "inc") }}
-	{{ stripePattern("possiblyBetw", "betw", "notBetw") }}
+	{{ stripePattern("eqComp", "selected", "comp") }}
+	{{ stripePattern("aboveComp", "above", "comp") }}
+	{{ stripePattern("belowComp", "below", "comp") }}
+	{{ stripePattern("compInc", "inc", "comp") }}
+
 	{{ stripePattern("uncountableUnknown", "uncountableMeager", "uncountableComeager") }}
 	{{ stripePattern("unknownMeager", "countable", "uncountableMeager") }}
 	{{ stripePattern("unknownUnknown", "countable", "uncountableComeager") }}
