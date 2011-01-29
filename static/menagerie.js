@@ -330,3 +330,8 @@ function restoreChecked() {
     var url = $SCRIPT_ROOT + '?classes=' + classesToDisplay + window.location.hash;
     window.location = url;
 }
+
+function restoreAll() {
+    var url = $SCRIPT_ROOT + "/" + window.location.hash;
+    window.location = url;
+}
