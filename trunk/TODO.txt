@@ -1,13 +1,9 @@
-* Key should be on by default (possibly help too?)
 * Figuring out coloring
 * Add bounded by shift-complex
 * Bounds no shift-complex
 * Error page
 * Email yvonne and john heim
-* Restore weak and strong open implications
-* Add a gateway page and a link to the home page, add a link to the database
-* Put checkboxes next to restore classes
-* Make the content of the hover appear in the key
+* Add a link to the database
 
 Make things easier to install and provide instructions
 Make server reload database.txt if it changes

@@ -1,5 +1,6 @@
 body {
     font-family: "Lucida Grande",Lucida,Helvetica,sans-serif;
+    font-size: 12px;
 }
 
 g text {
@@ -54,7 +55,6 @@ div.hovertip {
     width: 120px;
     border: 2px beige solid ;
     background-color: #E0E0EB;
-    font-size: 12px;
     z-index: 100;
     margin-left: 0px;
     margin-top: 0px;

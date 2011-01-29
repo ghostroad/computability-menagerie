@@ -70,7 +70,7 @@
 	   <td>{{ button("excludeSelected", "Exclude selected", onclick="excludeSelected();", disabled=True) }}</td>
 	   <td>{{ button("unselectAll", "Deselect All", onclick="unselectAll();") }}</td>
 	   <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
-	   <td>{{ button("openImplications", "Open implications", onclick="toggleOpenImplications();") }}</td>
+	   <td>{{ button("openImplications", "Toggle open implications", onclick="toggleOpenImplications();") }}</td>
 	   <td>{{ button("toggleHelp", "Help") }}</td>
 	   <td>{{ button("toggleKey", "Key") }}</td>
 
@@ -97,13 +97,15 @@
 
      {% if excludedClasses %}
      <div id="excludedClasses" class="classList" style="display: none;">
+       <div style="margin-bottom: 10px;">{{ button("restoreChecked", "Restore all excluded classes", onclick="restoreAll();")}}</div>
        <ul>
        {% for cls in excludedClasses %}
        <li><input type="checkbox" class="excludedClassCheckbox" onclick="enableRestoreChecked();" value="{{cls.name}}"/> {{ cls|decorate|safe }}</li>
        {% endfor %}
        </ul>
        <br/>
-        {{ button("restoreChecked", "Restore checked classes", onclick="restoreChecked();", disabled=True)}}
+        {{ button("restoreChecked", "Restore only selected classes", onclick="restoreChecked();", disabled=True)}}
+
      </div>
      {% endif %}
 
