@@ -16,9 +16,6 @@ var numSelected = 0;
 var currentSizeColoring;
 var currentColoring;
 var restoreCheckedClassesButton;
-var CATEGORY_CLASSES = "countable uncountableMeager uncountableComeager uncountableUnknown unknownMeager unknownUnknown";
-var MEASURE_CLASSES = "level0 level1 level2 level3 level4 level3-4 level2-3 level2-4 level1-2 level0-3 level1-4 level0-1 level0-2 level0-3 level0-4";
-var RECOLORING_CLASSES = "above eqAbove below eqBelow inc eqComp eqInc aboveComp aboveInc belowComp belowInc comp compInc";
 
 function getSelectedClasses() {
     var selected = [];
@@ -43,7 +40,10 @@ var CategoryMode = {
 	updateHash("coloring", "category");
 	currentColoring = CategoryMode;
 	currentSizeColoring = CategoryMode;
-	nodes.removeClass(MEASURE_CLASSES).addClass(function() {return $PROPERTIES[this.id][0];});
+	nodes.removeClass(function() { return this.sizeColor; }).addClass(function() {
+									      this.sizeColor = $PROPERTIES[this.id][0];
+									      return this.sizeColor;
+									  });
 	activateKey('#categoryKey');
     },
     "switchToOtherSizeModeSilently" : function() {
@@ -61,7 +61,10 @@ var MeasureMode = {
 	updateHash("coloring", "measure");
 	currentColoring = MeasureMode;
 	currentSizeColoring = MeasureMode;
-	nodes.removeClass(CATEGORY_CLASSES).addClass(function() {return $PROPERTIES[this.id][1];});
+	nodes.removeClass(function() { return this.sizeColor;}).addClass(function() {
+									     this.sizeColor = $PROPERTIES[this.id][1];
+									     return this.sizeColor;
+									 });
 	activateKey('#measureKey');
     },
     "switchToOtherSizeModeSilently" : function() {
@@ -79,7 +82,13 @@ var RecoloringMode = {
 	$.getJSON($SCRIPT_ROOT + '/_recolor', { selectedClasses: cacheSelected }, 
 		  function(data) {
 		      if (getSelectedClasses() == cacheSelected) {
-			  nodes.removeClass(RECOLORING_CLASSES).addClass(function() { return data[this.id]; });
+			  nodes.removeClass(function() {
+						return this.recolor;})
+			      .addClass(function() { 
+					    this.recolor = data[this.id] || "";
+					    return this.recolor;
+					});
+			  
 			  currentColoring = RecoloringMode;
 			  activateKey('#recoloringKey');
 		      }
@@ -90,7 +99,11 @@ var RecoloringMode = {
     "handleSelect" : function() {
 	if (numSelected > 0) { RecoloringMode.apply(); }
 	else {
-	    nodes.removeClass(RECOLORING_CLASSES);
+	    nodes.removeClass(function() {
+				  var recolor = this.recolor;
+				  this.recolor = "";
+				  return recolor;
+			      });
 	    currentSizeColoring.apply();
 	}
     },
@@ -189,11 +202,13 @@ $(document).ready(function(){
 		      selectedClassesDiv.hover(function() { postponeHidingDiv(selectedClassesDiv); },
 					       function() { hideDiv(selectedClassesDiv);});	      
 
-		      readAndApplySettings();
+
 		      toggleNonstrictArrowHighlight();
 
 		      nodes.each(function(i, node) {
 				     node.selected = false; 
+				     node.sizeColor = "";
+				     node.recolor = "";
 				     node.toggleSelected = function() {
 					 if (!this.selected) {
 					     $(this).addClass('selected');
@@ -212,6 +227,8 @@ $(document).ready(function(){
 							       evt.target.parentNode.toggleSelected(); currentColoring.handleSelect(); }, true);
 				     node.addEventListener("dblclick", function(evt) { showClassDetails(evt.target.parentNode.id); }, true);
 				 });
+
+		      readAndApplySettings();
 		  });
 
 function readAndApplySettings() {
@@ -275,7 +292,7 @@ function showClassDetails(nodeId) {
 }
 
 function viewSubgraph() {
-    window.location = buildGraphUrl({"classes" : getSelectedClasses()});
+    window.open(buildGraphUrl({"classes" : getSelectedClasses()}));
 }
 
 function unselectAll() {
