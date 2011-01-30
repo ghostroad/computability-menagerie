@@ -24,42 +24,6 @@
 ########################
 ########################
 
-# ArrayComp			array computable (recursive)
-# CET				c.e. traceable
-# BB1G				bounded by a 1-generic
-# BB2G				bounded by a 2-generic
-# BB2R				bounded by a 2-random
-# BB3R				bounded by a 3-random
-# BBmin				minimal or computable (bounded by a minimal degree)
-# BN1G				bounds no 1-generic
-# BN2G				bounds no 2-generic
-# BN3G				bounds no 3-generic
-# BN1R				bounds no 1-random
-# BN2R				bounds no 2-random
-# BNDeltaTwo        bounds no (nonzero) Delta_2
-# BNHIF				bounds no (nonzero) HIF degree
-# BNLFO             bounds no (nonzero) low for Omega
-# BNmin				bounds no minimal degree
-# BOGL1				bounds only GL_1
-# BOGL2				bounds only GL_2
-# DeltaTwo
-# HIF				hyperimmune-free
-# JumpTraceable
-# Low
-# Low1Rand          low for random
-# LowKurtz			low for Kurtz randomness
-# LowSchnorr		low for Schnorr randomness (computably traceable)
-# NotAboveZP		incomplete
-# NotDNC
-# NotDNCinZP		not DNC relative to 0'
-# NotHigh
-# NotPA
-# NotPAinZP			not PA relative to 0'
-# OmegaLow			low for Omega
-# SuperLow
-
-
-
 
 ArrayComp "array computable"
 CET "c.e. traceable"
@@ -94,7 +58,7 @@ NotPA "not PA"
 NotPAinZP "not PA in 0'"
 OmegaLow "low for Omega"
 SuperLow "superlow"
-
+BNSC "bounds no shift-complex"
 
 
 BB3R -> BB2R				""
@@ -235,6 +199,12 @@ BB1G -/> BNLFO				"There is a noncomputable c.e.\ low for random [Ku{\v c}era an
 LowSchnorr -/> BNHIF		"Every computably traceable degree is hyperimmune-free"
 BNmin -/> BNDeltaTwo		"Every noncomputable degree below a $\Delta^0_2$ 1-generic contains a 1-generic [Haught 1986, The degrees below a 1-generic degree $<{\bf 0}'$], hence is not minimal"
 BNmin -/> BNHIF				"Demuth proved that every noncomputable set truth-table below a 1-random is Turing equivalent to a 1-random (see [Downey and Hirschfeldt 2010, Algorithmic randomness and complexity]). Consider a hyperimmune-free 1-random $X$. Every set Turing below $X$ is truth-table below $X$. Thus every noncomputable degree below $X$ is 1-random, hence not minimal"
+
+BNSC -> NotPA "For every $\delta \in (0, 1)$ there is a $\Pi^0_1$ class of $\delta$-shift-complex sequences, nonempty by a construction of Levin. Thus every PA degree computes a shift-complex sequence."
+NotPA -/> BNSC "There is a shift-complex sequence that is not of PA degree: there is a shift-complex sequence that does not compute any 1-random, and every PA degree computes a 1-random."
+
+M(BNSC) = 1 "The measure of oracles that compute shift-complex sequences is 0 [Rumyantsev]"
+	
 
 #
 # The End
