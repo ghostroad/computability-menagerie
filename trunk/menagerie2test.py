@@ -20,9 +20,9 @@ class TestMenagerie(unittest.TestCase):
         self.assertTrue(m["DeltaTwo"].cardinality == COUNTABLE)
         self.assertTrue(m["JumpTraceable"].cardinality == UNCOUNTABLE)
         self.assertEqual("[Nies 2002, Reals which compute little]", str(m["JumpTraceable"].cardinality.justification))
-        self.assertEqual(33, len(m.classes))
+        self.assertEqual(34, len(m.classes))
         numFacts, numUnjustifiedFacts = m.numFactsAndUnjustifiedFacts();
-        self.assertEqual(114, numFacts)
+        self.assertEqual(117, numFacts)
         self.assertEqual(19, numUnjustifiedFacts)
         Deductions().apply(m)
         self.assertEquals(0, len(m.errors))
@@ -164,6 +164,15 @@ Use the hyperimmune-free basis theorem
 \\end{fact}
 \\end{fact}
 """, str(LatexWriter().write(m["BNLFO"].doesNotImply(m["BBmin"]))))
+        
+    def test_compiling_the_menagerie(self):
+        m = Menagerie()
+        parser = MenagerieParser(m)
+        parser.read("""A -> B "A very elegant observation of Eeyore." \nB -> C ""\nM(A) = 1""")
+        Deductions().apply(m)
+        exec(m.compile())
+        self.assertTrue(menagerie["A"].implies(menagerie["C"]))
+        self.assertEqual(1, menagerie["C"].measure)
 
 if __name__ == "__main__":
     unittest.main()

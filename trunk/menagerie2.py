@@ -114,6 +114,18 @@ class Menagerie:
             numFacts += 1
             if fact.justification.empty(): numUnjustifiedFacts += 1
         return numFacts, numUnjustifiedFacts
+    
+    def compile(self):
+        result = ["from menagerie2 import *", "menagerie = Menagerie()"]
+        for cls in self.classes:
+            result.append("{0} = menagerie.classMap[\"{1}\"]".format(cls.identifier(), cls.name))
+            if cls.longName: result.append("{0}.longName = {1}".format(cls.identifier(), repr(cls.longName)))
+        weights = sorted(set(fact.weight for fact in self.facts()))
+        for weight in weights:
+            for fact in self.facts():
+                if fact.weight == weight:
+                    result.append(fact.compileAdd())
+        return "\n".join(result)
 
 class Deductions:
     def apply(self, menagerie):
@@ -225,8 +237,11 @@ class ClassNode:
         return not (self.implies(other) or self.doesNotImply(other))
     def incomparableTo(self, other):
         return self.doesNotImply(other) and other.doesNotImply(self)
+    def identifier(self):
+        return self.name
     def __repr__(self):
         return self.name
+
 
 class NonEmpty:
     def empty(self):
@@ -269,6 +284,10 @@ class Property(Justifiable):
         return self.propertyValue == other
     def __ne__(self, other):
         return self.propertyValue != other
+    def compileAdd(self):
+        return "menagerie.setProperty({0}, \"{1}\", {2}, {3})".format(self.cls.identifier(), self.propertyName, self.propertyValue, self.justification.compileReference())
+    def compileReference(self):
+        return "{0}.{1}".format(self.cls.identifier(), self.propertyName)
 
 class IsProperty(Property):
     def __repr__(self):
@@ -301,12 +320,20 @@ class Implication(Justifiable):
         out.writeClass(self.source)
         out.writeImplication()
         out.writeClass(self.dest)
+    def compileAdd(self):
+        return "menagerie.addImplication({0}, {1}, {2})".format(self.source.identifier(), self.dest.identifier(), self.justification.compileReference())
+    def compileReference(self):
+        return "{0}.implies({1})".format(self.source.identifier(), self.dest.identifier())
     def __repr__(self):
         return "{0} -> {1}".format(self.source, self.dest)
 
 class Nonimplication(Implication):
     def __repr__(self):
         return "{0} -/> {1}".format(self.source, self.dest)
+    def compileAdd(self):
+        return "menagerie.addNonimplication({0}, {1}, {2})".format(self.source.identifier(), self.dest.identifier(), self.justification.compileReference())
+    def compileReference(self):
+        return "{0}.doesNotImply({1})".format(self.source.identifier(), self.dest.identifier())
     def writeSummary(self, out):
         out.writeClass(self.source)
         out.writeNonImplication()
@@ -322,6 +349,8 @@ class DirectJustification(NonEmpty):
         return self.justification
     def write(self, out):
         out.writeLine(self.justification)
+    def compileReference(self):
+        return "DirectJustification({0})".format(repr(self.justification))
         
 class Empty:
     def write(self, out):
@@ -330,6 +359,8 @@ class Empty:
 class Obvious(DirectJustification):
     def __init__(self):
         DirectJustification.__init__(self, None)
+    def compileReference(self):
+        return "Obvious()"
     def write(self, out):
         pass
 
@@ -338,6 +369,8 @@ class Unjustified(DirectJustification):
         DirectJustification.__init__(self, "UNJUSTIFIED")
     def empty(self):
         return True
+    def compileReference(self):
+        return "Unjustified()"
 
 class CompositeJustification(NonEmpty):
     def __init__(self, *children):
@@ -349,6 +382,8 @@ class CompositeJustification(NonEmpty):
         return self.children.__repr__()
     def plain(self):
         return "[" + ", ".join([child.plain() for child in self.children]) + "]"
+    def compileReference(self):
+        return "CompositeJustification({0})".format(", ".join([child.compileReference() for child in self.children]))
     def write(self, out):
         for child in self.children:
             child.write(out)
