@@ -1,5 +1,5 @@
 import unittest
-from menagerie2 import *
+from menagerie_core import *
 
 
 class TestMenagerieWithLargeDB(unittest.TestCase):

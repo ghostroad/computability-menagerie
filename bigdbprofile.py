@@ -1,5 +1,5 @@
 import hotshot, hotshot.stats
-from menagerie2 import *
+from menagerie_core import *
 
 def load():
     m = Menagerie()

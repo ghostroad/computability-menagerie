@@ -1,5 +1,5 @@
 from xml.dom import minidom
-from menagerie2 import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER, HtmlClassDecorator
+from menagerie_core import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER, HtmlClassDecorator
 
 classDecorator = HtmlClassDecorator()
 

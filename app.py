@@ -1,8 +1,9 @@
 from flask import Flask, jsonify, request, render_template, make_response
-from menagerie2 import *
-from bn1g import menagerie as m
+from menagerie_core import *
 from apputils import *
 from os import getenv
+
+m = __import__(getenv("MENAGERIE_DATABASE_FILE") or "database").menagerie
 
 propertiesMap = Coloring(m).buildPropertiesMap()
 

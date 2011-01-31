@@ -1,4 +1,4 @@
-from menagerie2 import *
+from menagerie_core import *
 import sys
 database = sys.argv[1]
 m = Menagerie()
