@@ -50,7 +50,7 @@
     .selected ellipse, .selected rect {fill: gold;}
   </style>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-  <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.4.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.4.compressed.js') }}"></script>
   <script type="text/javascript"><![CDATA[
      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
      $PROPERTIES = {{ propertiesMap|tojson|safe }};
@@ -201,22 +201,3 @@
   </svg>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

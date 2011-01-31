@@ -1,12 +1,9 @@
 from flask import Flask, jsonify, request, render_template, make_response
 from menagerie2 import *
+from bn1g import menagerie as m
 from apputils import *
 from os import getenv
 
-m = Menagerie()
-parser = MenagerieParser(m)
-parser.readFromFile(getenv("MENAGERIE_DATABASE_FILE") or "database.txt")
-Deductions().apply(m)
 propertiesMap = Coloring(m).buildPropertiesMap()
 
 app = Flask(__name__)
