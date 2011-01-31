@@ -1,4 +1,4 @@
-from menagerie2 import *
+from menagerie_core import *
 menagerie = Menagerie()
 CET = menagerie.classMap["CET"]
 NotDNC = menagerie.classMap["NotDNC"]

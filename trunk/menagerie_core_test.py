@@ -1,5 +1,5 @@
 import unittest
-from menagerie2 import *
+from menagerie_core import *
 from xml.dom import minidom
 from svgutils import *
 

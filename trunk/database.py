@@ -1,4 +1,4 @@
-from menagerie2 import *
+from menagerie_core import *
 menagerie = Menagerie()
 ArrayComp = menagerie.classMap["ArrayComp"]
 ArrayComp.longName = 'array computable'
