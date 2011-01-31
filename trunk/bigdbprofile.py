@@ -6,7 +6,7 @@ def load():
     parser = MenagerieParser(m)
     parser.readFromFile("bn1g.txt")
     Deductions().apply(m)
-    DotRenderer(m).render(showWeakOpenImplications=True, showStrongOpenImplications=False).to_string()
+    DotRenderer(m).render(showOpenImplications=True).to_string()
 
 prof = hotshot.Profile("bigdb.prof")
 
