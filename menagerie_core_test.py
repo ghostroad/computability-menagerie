@@ -1,7 +1,7 @@
 import unittest
 from menagerie_core import *
 from xml.dom import minidom
-from svgutils import *
+from apputils import *
 
 class TestMenagerie(unittest.TestCase):
 

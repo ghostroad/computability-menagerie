@@ -214,7 +214,9 @@ class ClassMap(defaultdict):
             row.append(None)
         self.menagerie.nonimplicationsMatrix.append([None]*self.menagerie.classCounter)
 
-class ClassNode:
+class ClassNode(object):
+    __slots__ = ["index", "menagerie", "name", "longName", "implications", 
+                 "nonimplications", "cardinality", "category", "measure", "hdim", "pdim"]
     def __init__(self, name, index, menagerie):
         self.index = index
         self.menagerie = menagerie
@@ -243,11 +245,13 @@ class ClassNode:
         return self.name
 
 
-class NonEmpty:
+class NonEmpty(object):
+    __slots__ = []
     def empty(self):
         return False
 
 class Justifiable(NonEmpty):
+    __slots__ = []
     def plain(self):
         return "{0} : {1}".format(self, self.justification.plain())
     def write(self, out):
@@ -256,6 +260,7 @@ class Justifiable(NonEmpty):
         out.endFact()
 
 class Property(Justifiable):
+    __slots__ = ["cls", "propertyName", "propertyValue", "justification", "weight"]
     def __init__(self, cls, propertyName):
         self.cls = cls
         self.propertyValue = None
@@ -290,6 +295,7 @@ class Property(Justifiable):
         return "{0}.{1}".format(self.cls.identifier(), self.propertyName)
 
 class IsProperty(Property):
+    __slots__ = []
     def __repr__(self):
         return "{0} is {1}".format(self.cls, self.prettyPropertyValue())
     def writeSummaryKnown(self, out):
@@ -298,12 +304,14 @@ class IsProperty(Property):
         out.writeString(self.prettyPropertyValue())
 
 class Cardinality(IsProperty):
+    __slots__ = []
     def __init__(self, cls):
         IsProperty.__init__(self, cls, "cardinality")
     def prettyPropertyValue(self):
         return self.propertyValue and "uncountable" or "countable"
 
 class Category(IsProperty):
+    __slots__ = []
     def __init__(self, cls):
         IsProperty.__init__(self, cls, "category")
     def prettyPropertyValue(self):
@@ -311,6 +319,7 @@ class Category(IsProperty):
     
 
 class Implication(Justifiable):
+    __slots__ = ["source", "dest", "justification", "weight"]
     def __init__(self, source, dest, justification):
         self.source = source
         self.dest = dest
@@ -328,6 +337,7 @@ class Implication(Justifiable):
         return "{0} -> {1}".format(self.source, self.dest)
 
 class Nonimplication(Implication):
+    __slots__ = []
     def __repr__(self):
         return "{0} -/> {1}".format(self.source, self.dest)
     def compileAdd(self):
@@ -340,6 +350,7 @@ class Nonimplication(Implication):
         out.writeClass(self.dest)
 
 class DirectJustification(NonEmpty):
+    __slots__ = ["justification", "weight"]
     def __init__(self, justification):
         self.justification = justification
         self.weight = 1
@@ -352,11 +363,13 @@ class DirectJustification(NonEmpty):
     def compileReference(self):
         return "DirectJustification({0})".format(repr(self.justification))
         
-class Empty:
+class Empty(object):
+    __slots__ = []
     def write(self, out):
         pass
 
 class Obvious(DirectJustification):
+    __slots__ = []
     def __init__(self):
         DirectJustification.__init__(self, None)
     def compileReference(self):
@@ -365,6 +378,7 @@ class Obvious(DirectJustification):
         pass
 
 class Unjustified(DirectJustification):
+    __slots__ = []
     def __init__(self):
         DirectJustification.__init__(self, "UNJUSTIFIED")
     def empty(self):
@@ -373,6 +387,7 @@ class Unjustified(DirectJustification):
         return "Unjustified()"
 
 class CompositeJustification(NonEmpty):
+    __slots__ = ["children", "weight"]
     def __init__(self, *children):
         self.children = children
         self.weight = 1
