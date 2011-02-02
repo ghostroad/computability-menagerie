@@ -1,5 +1,5 @@
 from xml.dom import minidom
-from menagerie_core import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER, HtmlClassDecorator
+from menagerie.core import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER
 
 classDecorator = HtmlClassDecorator()
 
@@ -79,5 +79,38 @@ def buildMap(menagerie, A, B):
         else:
             result[C.name] = "possiblyBetw"
     return result
+    
+
+class HtmlClassDecorator:
+    def decorate(self, cls):
+        return '<span class="className">' + cls.displayName() + '</span>'
+
+class HtmlWriter:
+    def __init__(self):
+        self.result = []
+        self.classDecorator = HtmlClassDecorator()
+    def write(self, item):
+        self.result.append("<ul>")
+        item.write(self)
+        self.result.append("</ul>")
+        return self
+    def __repr__(self):
+        return "".join(self.result)
+    def beginFact(self, fact):
+        self.result.append("<li>")
+        fact.writeSummary(self)
+        self.result.append("<ul>")
+    def endFact(self):
+        self.result.append("</ul></li>")
+    def writeString(self, str):
+        self.result.append(str)
+    def writeClass(self, cls):
+        self.result.append(self.classDecorator.decorate(cls));
+    def writeImplication(self):
+        self.result.append(" $\\Rightarrow$ ")
+    def writeNonImplication(self):
+        self.result.append(" $\\nRightarrow$ ")
+    def writeLine(self, str):
+        self.result.append("<li>{0}</li>".format(str))
     
 

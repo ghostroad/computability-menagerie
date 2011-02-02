@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, render_template, make_response
-from menagerie_core import *
+from menagerie.core import *
 from apputils import *
 from os import getenv
 
