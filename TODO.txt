@@ -1,10 +1,6 @@
-* Rename menagerie2 to menagerie_core
-* Compile to Python
 * Unzip Firefox MathJax patch to enable svg fonts
-* Investigate how variables in one scope can be made visible to modules loaded in that scope
 * Key for striped arrows
 * Key for strong and weak open implications and link to an explanatory page
-* Fix typo in measure key
 * Error page
 * Email yvonne and john heim
 * Add a link to the database

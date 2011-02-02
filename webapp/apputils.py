@@ -1,8 +1,6 @@
 from xml.dom import minidom
 from menagerie.core import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER
 
-classDecorator = HtmlClassDecorator()
-
 class UnknownImplication:
     def __init__(self, src, dest):
         self.src = src
@@ -113,4 +111,5 @@ class HtmlWriter:
     def writeLine(self, str):
         self.result.append("<li>{0}</li>".format(str))
     
+classDecorator = HtmlClassDecorator()
 
