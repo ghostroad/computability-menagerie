@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  {% from 'macros.html' import svgellipse, stripePattern, button %}
+  {% from 'macros.html' import svgellipse, svgarrow, stripePattern, button, openImplicationKey %}
   <title>The Computability Menagerie</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"/>
   <!-- SVG node styling. This needs to be inline for Firefox -->
@@ -86,16 +86,15 @@
      </div>
 
      <div id="help" style="display: none;">
-	<p>The coloring of classes contains a great deal of information about their properties and their relations to other classes. We recommend enabling the color key (click "Key"). The coloring changes depending on how many classes are selected and the key changes accordingly. Here are a few things to try:</p>
+	<p>The coloring of classes contains a great deal of information about their properties and how they relate to other classes. We recommend enabling the key (click "Key"). Here are a few things to try:</p>
        <ul>
 	 
 	 <li>Select/unselect classes by clicking on them.</li>
-	 <li>Switch between coloring by "measure" (Hausdorff dimension, packing dimension and Lebesgue measure) and category using the dropdown.</li>
+	 <li>When no classes are selected, switch between coloring by "measure" (Hausdorff dimension, packing dimension and Lebesgue measure) and category using the dropdown.</li>
 	 <li>Double-click on a class to see its properties in detail (opens a new tab). Alternatively, hover over the class to see a short summary.</li>
-	 <li>When a single class is selected, the graph is recolored to indicate how other classes relate to the selected class.</li>
-	 <li>When a pair of classes is selected, classes that are intermediate between them are highlighted.</li>
+	 <li>When one or more classes are selected, the graph is recolored to indicate how other classes relate to the selected classes.</li>
 	 <li>Select a pair of classes, then click "View proofs" to see the implications between them (opens a new tab/window).</li>
-	 <li>Select a group of classes, then click "View subgraph" to generate a subgraph consisting only of the selected classes.</li>
+	 <li>Select a group of classes, then click "View subgraph" to generate a subgraph consisting only of the selected classes (opens a new tab/window).</li>
 	 <li>Select a group of classes, then click "Exclude selected" to remove those classes from the graph.</li>
 	 <li>Bookmark the page to save your settings.</li>
        </ul>
@@ -125,6 +124,8 @@
   <div id="keys" style="display: none;">
     <div id="recoloringKey" class="key" style="display: none;">
 	<table>
+	  <tr><td>{{ svgarrow("black", "highlightArrow") }}</td><td> Nonstrict implication </td></tr>
+	  {{ openImplicationKey(showOpen) }}
 	  <tr><td>{{ svgellipse("selected") }}</td><td>Selected</td></tr>
 	  <tr><td>{{ svgellipse("above") }}</td><td>Superclass of each of <br/>the selected classes</td></tr>
 	  <tr><td>{{ svgellipse("below") }}</td><td>Subclass of each of<br/> the selected classes</td></tr>
@@ -135,9 +136,11 @@
     </div>
     <div id="measureKey" class="key" style="display: none;">
 	<table>
+	  <tr><td>{{ svgarrow("black", "highlightArrow") }}</td><td> Nonstrict implication </td></tr>
+	  {{ openImplicationKey(showOpen) }}
 	  <tr><td>{{ svgellipse("level4") }}</td><td>Measure 1</td></tr>
 	  <tr><td>{{ svgellipse("level3") }}</td><td>Hausdorff dimension 1, <br/>measure 0</td></tr>
-	  <tr><td>{{ svgellipse("level2") }}</td><td>Packing dimension 0, <br/>Hausdorff dimension 1</td></tr>
+	  <tr><td>{{ svgellipse("level2") }}</td><td>Packing dimension 1, <br/>Hausdorff dimension 0</td></tr>
 	  <tr><td>{{ svgellipse("level1") }}</td><td>Uncountable, <br/>packing dimension 0</td></tr>
 	  <tr><td>{{ svgellipse("level0") }}</td><td>Countable</td></tr>
 	</table>
@@ -145,6 +148,8 @@
     </div>
     <div id="categoryKey" class="key" style="display: none;">
 	<table>
+	  <tr><td>{{ svgarrow("black", "highlightArrow") }}</td><td> Nonstrict implication </td></tr>
+	  {{ openImplicationKey(showOpen) }}
 	  <tr><td>{{ svgellipse("uncountableComeager") }}</td><td>Comeager</td></tr>
 	  <tr><td>{{ svgellipse("uncountableMeager") }}</td><td>Uncountable and meager</td></tr>
 	  <tr><td>{{ svgellipse("countable") }}</td><td>Countable</td></tr>
