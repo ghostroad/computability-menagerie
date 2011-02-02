@@ -116,7 +116,7 @@ class Menagerie:
         return numFacts, numUnjustifiedFacts
     
     def compile(self):
-        result = ["from menagerie_core import *", "menagerie = Menagerie()"]
+        result = ["from menagerie.core import *", "menagerie = Menagerie()"]
         for cls in self.classes:
             result.append("{0} = menagerie.classMap[\"{1}\"]".format(cls.identifier(), cls.name))
             if cls.longName: result.append("{0}.longName = {1}".format(cls.identifier(), repr(cls.longName)))
