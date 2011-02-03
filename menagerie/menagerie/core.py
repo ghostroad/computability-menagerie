@@ -36,6 +36,13 @@ class MenagerieParser:
     def read(self, source):
         self.database_parser.parseString(source)
 
+
+class ClassNotFoundError(Exception):
+    def __init__(self, name):
+        self.name = name
+    def __str__(self):
+        return "No class named {0} found.".format(self.name)
+
 class Menagerie:
 
     def __init__(self):
@@ -51,7 +58,7 @@ class Menagerie:
         if name in self.classMap: 
             return self.classMap.get(name)
         else:
-            raise KeyError("No class named {0} in the menagerie.".format(name))
+            raise ClassNotFoundError(name)
 
     def addStrictImplication(self, source, dest, forwardJustification, backwardJustification):
         self.addImplication(source, dest, forwardJustification)
@@ -403,6 +410,21 @@ class CompositeJustification(NonEmpty):
         for child in self.children:
             child.write(out)
                                        
+class UnknownImplication:
+    def __init__(self, src, dest):
+        self.src = src
+        self.dest = dest
+    def write(self, out):
+        out.beginFact(self)
+        out.endFact()
+    def writeSummary(self, out):
+        out.writeString("It is not known whether ")
+        out.writeClass(self.src)
+        out.writeImplication()
+        out.writeClass(self.dest)
+        out.writeString(".")
+
+
 class TextWriter:
     def __init__(self):
         self.result = []
@@ -423,39 +445,6 @@ class TextWriter:
         self.result.append(self.__currIndent() + str)
     def writeLine(self, str):
         self.result.append(self.__currIndent() + str)
-
-class HtmlClassDecorator:
-    def decorate(self, cls):
-        return '<span class="className">' + cls.displayName() + '</span>'
-
-class HtmlWriter:
-    def __init__(self):
-        self.result = []
-        self.classDecorator = HtmlClassDecorator()
-    def write(self, item):
-        self.result.append("<ul>")
-        item.write(self)
-        self.result.append("</ul>")
-        return self
-    def __repr__(self):
-        return "".join(self.result)
-    def beginFact(self, fact):
-        self.result.append("<li>")
-        fact.writeSummary(self)
-        self.result.append("<ul>")
-    def endFact(self):
-        self.result.append("</ul></li>")
-    def writeString(self, str):
-        self.result.append(str)
-    def writeClass(self, cls):
-        self.result.append(self.classDecorator.decorate(cls));
-    def writeImplication(self):
-        self.result.append(" $\\Rightarrow$ ")
-    def writeNonImplication(self):
-        self.result.append(" $\\nRightarrow$ ")
-    def writeLine(self, str):
-        self.result.append("<li>{0}</li>".format(str))
-    
 
 class LatexWriter:
     def __init__(self):
@@ -484,24 +473,25 @@ class LatexWriter:
 
 
 class DotRenderer(object):
-    def __init__(self, menagerie, classes = []):
+    def __init__(self, menagerie, classes = [], showOpenImplications = False):
         self.menagerie = menagerie
         self.classes = set(classes or self.menagerie.classes)
-    def render(self, displayLongNames = False, showOpenImplications = False):
+        self.showOpenImplications = showOpenImplications
+    def render(self):
         graph = Dot(rankdir = "BT")
         graph.set_name("\"The Computability Menagerie\"")
         if self.menagerie.errors: graph.set_bgcolor("pink")
-        self.__addClasses(graph, displayLongNames)
+        self.__addClasses(graph)
         self.__addEdges(graph)
-        if showOpenImplications: self.__addOpenImplications(graph, True, True)
+        self.addOpenImplicationsIfAppropriate(graph)
         return graph
 
-    def __addClasses(self, graph, displayLongNames):
+    def addOpenImplicationsIfAppropriate(self, graph):
+        if self.showOpenImplications: self.addOpenImplications(graph, True, True)
+
+    def __addClasses(self, graph):
         for cls in self.classes:
-            node = self.createNodeFor(cls)
-            if displayLongNames and cls.longName: 
-                node.set_label("\\n".join(textwrap.wrap(cls.longName, 12)))
-            graph.add_node(node)
+            graph.add_node(self.createNodeFor(cls))
 
     def __addEdges(self, graph):
         for cls in self.classes:
@@ -514,7 +504,7 @@ class DotRenderer(object):
                     if not dest.doesNotImply(cls): edge.set_id("nonstrict-\\E")
                     graph.add_edge(edge)
 
-    def __addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications):
+    def addOpenImplications(self, graph, showWeakOpenImplications, showStrongOpenImplications):
         weakEdges = {}
         strongEdges = {}
         imp, nonimp = self.menagerie.implicationsMatrix, self.menagerie.nonimplicationsMatrix
@@ -560,17 +550,24 @@ class DotRenderer(object):
         node.set_style("filled")
         node.set_color("lightgrey")
         node.set_margin("0.0825,0.0412")
+        node.set_label("\\n".join(textwrap.wrap(cls.displayName(), 12)))
 	return node
 
 class DotCommandLineRenderer(DotRenderer):
-    def render(self, showWeakOpenImplications = False, showStrongOpenImplications = False, displayLongNames = False):
-        graph = super(DotCommandLineRenderer, self).render(displayLongNames)
-        if showWeakOpenImplications or showStrongOpenImplications: self.__addOpenImplications(graph, showWeakOpenImplications, 
-                                                                                              showStrongOpenImplications)
-        return graph
+    def __init__(self, menagerie, classes = [], showWeakOpenImplications = False, showStrongOpenImplications = False, plain = False):
+        super(DotCommandLineRenderer, self).__init__(menagerie, classes, False)
+        self.showWeakOpenImplications = showWeakOpenImplications
+        self.showStrongOpenImplications = showStrongOpenImplications
+        self.plain = plain
 
+    def addOpenImplicationsIfAppropriate(self, graph):
+        if self.showWeakOpenImplications or self.showStrongOpenImplications: self.addOpenImplications(graph, self.showWeakOpenImplications, 
+                                                                                              self.showStrongOpenImplications)
+        
     def createNodeFor(self, cls):
-        node = super(DotCommandLineRenderer, self).createNodeFor(cls)
+        node = Node(cls.name)
+        node.set_label("\\n".join(textwrap.wrap(cls.displayName(), 12)))
+        if self.plain: return node
         if cls.category == MEAGER:
             node.set_style("filled")
             if cls.cardinality == COUNTABLE:

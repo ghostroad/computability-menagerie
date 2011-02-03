@@ -1,21 +1,6 @@
 from xml.dom import minidom
 from menagerie.core import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER
 
-class UnknownImplication:
-    def __init__(self, src, dest):
-        self.src = src
-        self.dest = dest
-    def write(self, out):
-        out.beginFact(self)
-        out.endFact()
-    def writeSummary(self, out):
-        out.writeString("It is not known whether ")
-        out.writeClass(self.src)
-        out.writeImplication()
-        out.writeClass(self.dest)
-        out.writeString(".")
-
-
 class SVGPostProcessor:
     def process(self, graph):
         rawSource = graph.create_svg()

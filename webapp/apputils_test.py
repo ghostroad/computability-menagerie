@@ -22,7 +22,7 @@ class TestAppUtils(unittest.TestCase):
         parser.readFromFile("database.txt")
         Deductions().apply(m)
         classesToShow = [m[name] for name in ["LowSchnorr", "LowKurtz", "BBmin", "BB1G", "BNLFO", "NotHigh", "CET", "BN2G", "BN3G", "NotPAinZP"]]
-        graph = DotRenderer(m, classesToShow).render(displayLongNames=True)
+        graph = DotRenderer(m, classesToShow).render()
         processedSvg = SVGPostProcessor().process(graph)
         self.assertTrue("<g class=\"node\" id=\"BN2G\">\n<ellipse" in processedSvg.toxml())
 
