@@ -49,9 +49,9 @@ def main():
         MenagerieParser(m).readFromFile(dbFile)
         Deductions().apply(m)
         if m.errors:
-            print "Errors found:"
-            for error in errors:
-                print error
+            info.write("\nErrors found:\n")
+            for error in m.errors:
+                info.write(error + "\n")
                 return
         open(pyFilename, "w").write(m.compile())
         info.write("Done.")

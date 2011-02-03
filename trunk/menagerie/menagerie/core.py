@@ -67,7 +67,7 @@ class Menagerie:
     def addImplication(self, source, dest, justification):
         implication = Implication(source, dest, justification)
         if source.doesNotImply(dest): 
-            self.errors.append("Inconsistency detected: {0}, reason for change: {1}".format(source.doesNotImply(dest), justification.plain()))
+            self.errors.append("Inconsistency detected: {0}, reason for change: {1}".format(source.doesNotImply(dest).plain(), justification.plain()))
             return
         
         existingImplication = source.implies(dest)
@@ -84,7 +84,7 @@ class Menagerie:
     def addNonimplication(self, source, dest, justification):
         nonimplication = Nonimplication(source, dest, justification)
         if source.implies(dest): 
-            self.errors.append("Inconsistency detected: {0}, reason for change: {1}".format(source.implies(dest), justification.plain()))
+            self.errors.append("Inconsistency detected: {0}, reason for change: {1}".format(source.implies(dest).plain(), justification.plain()))
             return
         
         existingNonimplication = source.doesNotImply(dest)
@@ -101,7 +101,7 @@ class Menagerie:
     def setProperty(self, cls, propertyName, value, justification):
         prop = getattr(cls, propertyName)
         if prop.known() and prop != value: 
-            self.errors.append("Inconsistency detected: {0}, reason for change: {1}".format(prop, justification.plain()))
+            self.errors.append("Inconsistency detected: {0}, reason for change: {1}".format(prop.plain(), justification.plain()))
             return
 
         if not prop.known() or justification.weight < prop.justification.weight:
