@@ -48,8 +48,14 @@ def main():
         m = Menagerie()
         MenagerieParser(m).readFromFile(dbFile)
         Deductions().apply(m)
+        if m.errors:
+            print "Errors found:"
+            for error in errors:
+                print error
+                return
         open(pyFilename, "w").write(m.compile())
         info.write("Done.")
+        
 
     if options.justify:
         justify(m, options.justify.split(), parser)
@@ -72,6 +78,8 @@ def justify(m, classes, errorHandler):
             justifyOne(m, classes[0], errorHandler)
         else:
             justifyTwo(m, classes[0], classes[1], errorHandler)
+    else:
+        errorHandler.error("Invalid justification request.")
 
 def justifyTwo(m, classA, classB, errorHandler):
     try:
