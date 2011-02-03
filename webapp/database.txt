@@ -201,9 +201,10 @@ BNmin -/> BNDeltaTwo		"Every noncomputable degree below a $\Delta^0_2$ 1-generic
 BNmin -/> BNHIF				"Demuth proved that every noncomputable set truth-table below a 1-random is Turing equivalent to a 1-random (see [Downey and Hirschfeldt 2010, Algorithmic randomness and complexity]). Consider a hyperimmune-free 1-random $X$. Every set Turing below $X$ is truth-table below $X$. Thus every noncomputable degree below $X$ is 1-random, hence not minimal"
 
 BNSC -> NotPA "For every $\delta \in (0, 1)$ there is a $\Pi^0_1$ class of $\delta$-shift-complex sequences, nonempty by a construction of Levin. Thus every PA degree computes a shift-complex sequence."
-BN1R -/> BNSC "There is a shift-complex sequence that computes no 1-random."
+BN1R -/> BNSC "There is a shift-complex sequence that computes no 1-random. [Khan, Miller 2010]"
 M(BNSC) = 1 "The measure of oracles that compute shift-complex sequences is 0 [Rumyantsev]"
-	
+
+BNSC -/> BNDeltaTwo "There is a low 1-random and a 1-random computes a shift-complex sequence iff it is complete. [Khan 2010]"
 
 #
 # The End
