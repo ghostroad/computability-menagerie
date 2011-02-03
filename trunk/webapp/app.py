@@ -15,7 +15,7 @@ def displayMenagerie():
     showOpenImplications = request.args.get("showOpen", None) == "true"
     classes = classesParam and [m[clsName] for clsName in classesParam.split(",")] or m.classes
     excludedClasses = sorted(set(m.classes).difference(classes), cmp = lambda x, y: cmp(x.displayName(), y.displayName()))
-    g = DotRenderer(m, classes).render(showOpenImplications=showOpenImplications, displayLongNames=True)
+    g = DotRenderer(m, classes, showOpenImplications).render()
     processedSvg = SVGPostProcessor().process(g)
     
     response = make_response(render_template("menagerie.html", graph = processedSvg, showOpen=showOpenImplications, propertiesMap = propertiesMap, excludedClasses = excludedClasses, classesParam = classesParam))
