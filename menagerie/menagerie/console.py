@@ -41,6 +41,7 @@ def main():
     pyFile = os.path.splitext(os.path.basename(dbFile))[0]
     pyFilename = pyFile + ".py"
     if os.path.exists(pyFilename) and modificationTime(pyFilename) >= dbModTime:
+        sys.path.append(os.getcwd())
         m = __import__(pyFile).menagerie
     else:
         info.write("Compiling...")
