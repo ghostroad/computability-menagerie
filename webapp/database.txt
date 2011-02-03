@@ -205,6 +205,7 @@ BN1R -/> BNSC "There is a shift-complex sequence that computes no 1-random. [Kha
 M(BNSC) = 1 "The measure of oracles that compute shift-complex sequences is 0 [Rumyantsev]"
 
 BNSC -/> BNDeltaTwo "There is a low 1-random and a 1-random computes a shift-complex sequence iff it is complete. [Khan 2010]"
+BB2R -> BNSC "No 2-random computes a shift-complex sequence. [Khan 2010]"
 
 #
 # The End
