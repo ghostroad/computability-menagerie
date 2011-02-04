@@ -19,16 +19,8 @@
     .level2 ellipse, .level2 rect {fill: #6699FF}
     .level3 ellipse, .level3 rect {fill: #CC33FF}
     .level4 ellipse, .level4 rect {fill: #FF0066}
-    .level3-4 ellipse {fill: url(#level3-4)}
-    .level2-3 ellipse {fill: url(#level2-3)}
-    .level2-4 ellipse {fill: url(#level2-4)}
-    .level1-2 ellipse {fill: url(#level1-2)}
-    .level0-3 ellipse {fill: url(#level0-3)}
-    .level1-4 ellipse {fill: url(#level1-4)}
-    .level0-1 ellipse {fill: url(#level0-1)}
-    .level0-2 ellipse {fill: url(#level0-2)}
-    .level0-3 ellipse {fill: url(#level0-3)}
-    .level0-4 ellipse {fill: url(#level0-4)}
+    {% for smallest in range(4) %}{% for largest in range(smallest+1, 5) %}
+    .level{{smallest}}-{{largest}} ellipse {fill: url(#level{{smallest}}-{{largest}})}{% endfor %}{% endfor %}
 
     .above ellipse, .above rect {fill: #FF4D4D;}
     .eqAbove ellipse {fill: url(#eqAbove);}
@@ -189,18 +181,9 @@
 	{{ stripePattern("uncountableUnknown", "uncountableMeager", "uncountableComeager") }}
 	{{ stripePattern("unknownMeager", "countable", "uncountableMeager") }}
 	{{ stripePattern("unknownUnknown", "countable", "uncountableComeager") }}
-	{{ stripePattern("level3-4", "level3", "level4") }}
-	{{ stripePattern("level2-3", "level2", "level3") }}
-	{{ stripePattern("level2-4", "level2", "level4") }}
-	{{ stripePattern("level1-2", "level1", "level2") }}
-	{{ stripePattern("level0-3", "level0", "level3") }}
-	{{ stripePattern("level1-4", "level1", "level4") }}
-	{{ stripePattern("level0-1", "level0", "level1") }}
-	{{ stripePattern("level0-2", "level0", "level2") }}
-	{{ stripePattern("level0-3", "level0", "level3") }}
-	{{ stripePattern("level0-4", "level0", "level4") }}
-	
 
+	{% for smallest in range(4) %}{% for largest in range(smallest+1, 5) %}
+	{{ stripePattern("level" ~ smallest ~ "-" ~ largest, "level"~smallest, "level"~largest)}}{% endfor %}{% endfor %}
       </defs>
     </g>
   </svg>
