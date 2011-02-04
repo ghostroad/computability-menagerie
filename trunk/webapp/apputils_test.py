@@ -25,6 +25,30 @@ class TestAppUtils(unittest.TestCase):
         graph = DotRenderer(m, classesToShow).render()
         processedSvg = SVGPostProcessor().process(graph)
         self.assertTrue("<g class=\"node\" id=\"BN2G\">\n<ellipse" in processedSvg.toxml())
+    
+    def test_coloring_by_measure(self):
+        measureLookupTable = {(COUNTABLE,   0, 0, 0) : "level0",
+                              (UNCOUNTABLE, 0, 0, 0) : "level1",
+                              (UNCOUNTABLE, 1, 0, 0) : "level2",
+                              (UNCOUNTABLE, 1, 1, 0) : "level3",
+                              (UNCOUNTABLE, 1, 1, 1) : "level4",
+                              (UNCOUNTABLE, 1, 1, None) : "level3-4",
+                              (UNCOUNTABLE, 1, None, 0) : "level2-3",
+                              (UNCOUNTABLE, 1, None, None) : "level2-4",
+                              (UNCOUNTABLE, None, 0, 0) : "level1-2",
+                              (UNCOUNTABLE, None, None, 0) : "level1-3",
+                              (UNCOUNTABLE, None, None, None) : "level1-4",
+                              (None, 0, 0, 0) : "level0-1",
+                              (None, None, 0, 0) : "level0-2",
+                              (None, None, None, 0) : "level0-3",
+                              (None, None, None, None) : "level0-4" }
+        for props in measureLookupTable:
+            cls = ClassNode("A", None, None)
+            for index, attr in enumerate(["cardinality", "pdim", "hdim", "measure"]):
+                getattr(cls, attr).propertyValue = props[index]
+            self.assertEqual(measureLookupTable[props], Coloring(None).measureClass(cls))
+
+
 
 if __name__ == "__main__":
     unittest.main()
