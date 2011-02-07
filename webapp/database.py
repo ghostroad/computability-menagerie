@@ -1,194 +1,194 @@
 from menagerie.core import *
 menagerie = Menagerie()
 ArrayComp = menagerie.classMap["ArrayComp"]
-ArrayComp.longName = 'array computable'
+ArrayComp.longName = u'array computable'
 CET = menagerie.classMap["CET"]
-CET.longName = 'c.e. traceable'
+CET.longName = u'c.e. traceable'
 BB1G = menagerie.classMap["BB1G"]
-BB1G.longName = 'bounded by a 1-generic'
+BB1G.longName = u'bounded by a 1-generic'
 BB2G = menagerie.classMap["BB2G"]
-BB2G.longName = 'bounded by a 2-generic'
+BB2G.longName = u'bounded by a 2-generic'
 BB2R = menagerie.classMap["BB2R"]
-BB2R.longName = 'bounded by a 2-random'
+BB2R.longName = u'bounded by a 2-random'
 BB3R = menagerie.classMap["BB3R"]
-BB3R.longName = 'bounded by a 3-random'
+BB3R.longName = u'bounded by a 3-random'
 BBmin = menagerie.classMap["BBmin"]
-BBmin.longName = 'minimal or computable'
+BBmin.longName = u'minimal or computable'
 BN1G = menagerie.classMap["BN1G"]
-BN1G.longName = 'bounds no 1-generic'
+BN1G.longName = u'bounds no 1-generic'
 BN2G = menagerie.classMap["BN2G"]
-BN2G.longName = 'bounds no 2-generic'
+BN2G.longName = u'bounds no 2-generic'
 BN3G = menagerie.classMap["BN3G"]
-BN3G.longName = 'bounds no 3-generic'
+BN3G.longName = u'bounds no 3-generic'
 BN1R = menagerie.classMap["BN1R"]
-BN1R.longName = 'bounds no 1-random'
+BN1R.longName = u'bounds no 1-random'
 BN2R = menagerie.classMap["BN2R"]
-BN2R.longName = 'bounds no 2-random'
+BN2R.longName = u'bounds no 2-random'
 BNDeltaTwo = menagerie.classMap["BNDeltaTwo"]
-BNDeltaTwo.longName = 'bounds no nonzero Delta_2'
+BNDeltaTwo.longName = u'bounds no nonzero Delta_2'
 BNHIF = menagerie.classMap["BNHIF"]
-BNHIF.longName = 'bounds no nonzero HIF degree'
+BNHIF.longName = u'bounds no nonzero HIF degree'
 BNLFO = menagerie.classMap["BNLFO"]
-BNLFO.longName = 'bounds no nonzero low for Omega'
+BNLFO.longName = u'bounds no nonzero low for Omega'
 BNmin = menagerie.classMap["BNmin"]
-BNmin.longName = 'bounds no minimal degree'
+BNmin.longName = u'bounds no minimal degree'
 BOGL1 = menagerie.classMap["BOGL1"]
-BOGL1.longName = 'bounds only GL_1'
+BOGL1.longName = u'bounds only GL_1'
 BOGL2 = menagerie.classMap["BOGL2"]
-BOGL2.longName = 'bounds only GL_2'
+BOGL2.longName = u'bounds only GL_2'
 DeltaTwo = menagerie.classMap["DeltaTwo"]
-DeltaTwo.longName = 'Delta_2'
+DeltaTwo.longName = u'Delta_2'
 HIF = menagerie.classMap["HIF"]
-HIF.longName = 'hyperimmune-free'
+HIF.longName = u'hyperimmune-free'
 JumpTraceable = menagerie.classMap["JumpTraceable"]
-JumpTraceable.longName = 'jump traceable'
+JumpTraceable.longName = u'jump traceable'
 Low = menagerie.classMap["Low"]
-Low.longName = 'low'
+Low.longName = u'low'
 Low1Rand = menagerie.classMap["Low1Rand"]
-Low1Rand.longName = 'low for random'
+Low1Rand.longName = u'low for random'
 LowKurtz = menagerie.classMap["LowKurtz"]
-LowKurtz.longName = 'low for Kurtz random'
+LowKurtz.longName = u'low for Kurtz random'
 LowSchnorr = menagerie.classMap["LowSchnorr"]
-LowSchnorr.longName = 'computably traceable'
+LowSchnorr.longName = u'computably traceable'
 NotAboveZP = menagerie.classMap["NotAboveZP"]
-NotAboveZP.longName = 'incomplete'
+NotAboveZP.longName = u'incomplete'
 NotDNC = menagerie.classMap["NotDNC"]
-NotDNC.longName = 'not DNC'
+NotDNC.longName = u'not DNC'
 NotDNCinZP = menagerie.classMap["NotDNCinZP"]
-NotDNCinZP.longName = "not DNC in 0'"
+NotDNCinZP.longName = u"not DNC in 0'"
 NotHigh = menagerie.classMap["NotHigh"]
-NotHigh.longName = 'not high'
+NotHigh.longName = u'not high'
 NotPA = menagerie.classMap["NotPA"]
-NotPA.longName = 'not PA'
+NotPA.longName = u'not PA'
 NotPAinZP = menagerie.classMap["NotPAinZP"]
-NotPAinZP.longName = "not PA in 0'"
+NotPAinZP.longName = u"not PA in 0'"
 OmegaLow = menagerie.classMap["OmegaLow"]
-OmegaLow.longName = 'low for Omega'
+OmegaLow.longName = u'low for Omega'
 SuperLow = menagerie.classMap["SuperLow"]
-SuperLow.longName = 'superlow'
+SuperLow.longName = u'superlow'
 BNSC = menagerie.classMap["BNSC"]
-BNSC.longName = 'bounds no shift-complex'
-menagerie.addImplication(ArrayComp, BOGL2, DirectJustification('[Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]'))
+BNSC.longName = u'bounds no shift-complex'
+menagerie.addImplication(ArrayComp, BOGL2, DirectJustification(u'[Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]'))
 menagerie.setProperty(CET, "pdim", 0, Unjustified())
 menagerie.addImplication(CET, NotDNC, Unjustified())
 menagerie.addImplication(CET, ArrayComp, Unjustified())
 menagerie.addImplication(BB1G, NotDNC, Unjustified())
-menagerie.addNonimplication(BB1G, NotHigh, DirectJustification('Friedberg jump inversion produces a high 1-generic'))
-menagerie.addNonimplication(BB1G, BNmin, DirectJustification('There is a 1-generic bounding a minimal degree [Kumabe 1990; Chong and Downey 1990]'))
-menagerie.addNonimplication(BB1G, BNDeltaTwo, DirectJustification('There is a $\\Delta^0_2$ 1-generic'))
+menagerie.addNonimplication(BB1G, NotHigh, DirectJustification(u'Friedberg jump inversion produces a high 1-generic'))
+menagerie.addNonimplication(BB1G, BNmin, DirectJustification(u'There is a 1-generic bounding a minimal degree [Kumabe 1990; Chong and Downey 1990]'))
+menagerie.addNonimplication(BB1G, BNDeltaTwo, DirectJustification(u'There is a $\\Delta^0_2$ 1-generic'))
 menagerie.addNonimplication(BB1G, BNHIF, Unjustified())
-menagerie.addNonimplication(BB1G, BNLFO, DirectJustification('There is a noncomputable c.e.\\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\\ set computes a 1-generic'))
-menagerie.setProperty(BB2G, "category", 1, DirectJustification('The class of 2-generics is comeager'))
+menagerie.addNonimplication(BB1G, BNLFO, DirectJustification(u'There is a noncomputable c.e. low for random [Ku\u010dera and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e. set computes a 1-generic'))
+menagerie.setProperty(BB2G, "category", 1, DirectJustification(u'The class of 2-generics is comeager'))
 menagerie.addImplication(BB2G, BB1G, Obvious())
-menagerie.addImplication(BB2G, NotHigh, DirectJustification("Every 2-generic $A$ satisfies $A''=A\\oplus 0''$ [Kurtz 1981, PhD thesis]. So if $A$ were high, then $A'$ would compute $A''$"))
-menagerie.addImplication(BB2G, BNDeltaTwo, DirectJustification('Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). There are no $\\Delta^0_2$ 2-generics'))
-menagerie.addImplication(BB2G, BNHIF, DirectJustification('Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). But every 2-generic (even every 1-generic) is hyperimmune'))
-menagerie.addImplication(BB2G, BNmin, DirectJustification('Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). A minimal degree clearly does not bound a 2-generic'))
+menagerie.addImplication(BB2G, NotHigh, DirectJustification(u"Every 2-generic $A$ satisfies $A''=A\\oplus 0''$ [Kurtz 1981, PhD thesis]. So if $A$ were high, then $A'$ would compute $A''$"))
+menagerie.addImplication(BB2G, BNDeltaTwo, DirectJustification(u'Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). There are no $\\Delta^0_2$ 2-generics'))
+menagerie.addImplication(BB2G, BNHIF, DirectJustification(u'Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). But every 2-generic (even every 1-generic) is hyperimmune'))
+menagerie.addImplication(BB2G, BNmin, DirectJustification(u'Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). A minimal degree clearly does not bound a 2-generic'))
 menagerie.addImplication(BB2G, BNLFO, Unjustified())
-menagerie.addImplication(BB2R, OmegaLow, DirectJustification("Every 2-random is low for $\\Omega$ by Van Lambalgen's theorem and the fact that $\\Omega\\equiv_T\\emptyset'$"))
-menagerie.addImplication(BB2R, BNmin, DirectJustification('The 1-generic degrees are downward dense below any 2-random degree [Kurtz 1981, PhD thesis] and a minimal degree clearly does not bound a 1-generic'))
-menagerie.addImplication(BB2R, BNDeltaTwo, DirectJustification("Every (weak) 2-random forms a minimal pair with $\\emptyset'$"))
-menagerie.addImplication(BB2R, BNSC, DirectJustification('No 2-random computes a shift-complex sequence. [Khan 2010]'))
-menagerie.addNonimplication(BB2R, NotHigh, DirectJustification("$\\Omega$ relative to $\\emptyset'$ is high and 2-random"))
-menagerie.setProperty(BB3R, "measure", 1, DirectJustification('The class of 3-randoms has measure one'))
+menagerie.addImplication(BB2R, OmegaLow, DirectJustification(u"Every 2-random is low for $\\Omega$ by Van Lambalgen's theorem and the fact that $\\Omega\\equiv_T\\emptyset'$"))
+menagerie.addImplication(BB2R, BNmin, DirectJustification(u'The 1-generic degrees are downward dense below any 2-random degree [Kurtz 1981, PhD thesis] and a minimal degree clearly does not bound a 1-generic'))
+menagerie.addImplication(BB2R, BNDeltaTwo, DirectJustification(u"Every (weak) 2-random forms a minimal pair with $\\emptyset'$"))
+menagerie.addImplication(BB2R, BNSC, DirectJustification(u'No 2-random computes a shift-complex sequence. [Khan, Miller 2010]'))
+menagerie.addNonimplication(BB2R, NotHigh, DirectJustification(u"$\\Omega$ relative to $\\emptyset'$ is high and 2-random"))
+menagerie.setProperty(BB3R, "measure", 1, DirectJustification(u'The class of 3-randoms has measure one'))
 menagerie.addImplication(BB3R, BB2R, Obvious())
-menagerie.addImplication(BB3R, NotHigh, DirectJustification("Every 3-random $A$ satisfies $A''=A\\oplus 0''$ [Kurtz 1981, PhD thesis]. So if $A$ were high, then $A'$ would compute $A''$"))
-menagerie.setProperty(BBmin, "pdim", 1, DirectJustification('In [Downey and Greenberg 2008, Turing degreed of reals of positive effective packing dimension], it is shown that there is an $X$ of minimal degree and effective packing dimension 1. In fact, this partially relativizes to allow $X$ to have effective packing dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) packing dimension 1.'))
-menagerie.addImplication(BBmin, BN1R, DirectJustification('If $A\\oplus B$ is 1-random then $A$ and $B$ are Turing incomparable'))
-menagerie.addImplication(BBmin, BN1G, DirectJustification('If $A\\oplus B$ is 1-generic then $A$ and $B$ are Turing incomparable'))
-menagerie.addNonimplication(BBmin, NotHigh, DirectJustification("There is a high minimal degree by Cooper's jump inversion theorem for minimal degrees"))
-menagerie.addNonimplication(BBmin, BNmin, DirectJustification('Consider any minimal degree'))
-menagerie.addNonimplication(BBmin, BNDeltaTwo, DirectJustification("There is a minimal degree below $\\emptyset'$ [Sacks 1963]"))
-menagerie.addNonimplication(BBmin, BNHIF, DirectJustification('The standard construction of a minimal degree makes it hyperimmune-free'))
-menagerie.addNonimplication(BBmin, BOGL1, DirectJustification('[Sasso 1974, A minimal degree not realizing least possible jump]'))
-menagerie.addNonimplication(BBmin, NotDNC, DirectJustification('[Kumabe and Lewis 2009, A fixed-point-free minimal degree]'))
-menagerie.addNonimplication(BBmin, BNLFO, DirectJustification('There is a noncomputable c.e.\\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\\Omega$, and all noncomputable c.e.\\ sets compute minimal degrees [Yates 1970, Initial segments of the degrees of unsolvability, II; Cooper 1972, Degrees of unsolvability complementary between recursively enumerable degrees]'))
+menagerie.addImplication(BB3R, NotHigh, DirectJustification(u"Every 3-random $A$ satisfies $A''=A\\oplus 0''$ [Kurtz 1981, PhD thesis]. So if $A$ were high, then $A'$ would compute $A''$"))
+menagerie.setProperty(BBmin, "pdim", 1, DirectJustification(u'In [Downey and Greenberg 2008, Turing degreed of reals of positive effective packing dimension], it is shown that there is an $X$ of minimal degree and effective packing dimension 1. In fact, this partially relativizes to allow $X$ to have effective packing dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) packing dimension 1.'))
+menagerie.addImplication(BBmin, BN1R, DirectJustification(u'If $A\\oplus B$ is 1-random then $A$ and $B$ are Turing incomparable'))
+menagerie.addImplication(BBmin, BN1G, DirectJustification(u'If $A\\oplus B$ is 1-generic then $A$ and $B$ are Turing incomparable'))
+menagerie.addNonimplication(BBmin, NotHigh, DirectJustification(u"There is a high minimal degree by Cooper's jump inversion theorem for minimal degrees"))
+menagerie.addNonimplication(BBmin, BNmin, DirectJustification(u'Consider any minimal degree'))
+menagerie.addNonimplication(BBmin, BNDeltaTwo, DirectJustification(u"There is a minimal degree below $\\emptyset'$ [Sacks 1963]"))
+menagerie.addNonimplication(BBmin, BNHIF, DirectJustification(u'The standard construction of a minimal degree makes it hyperimmune-free'))
+menagerie.addNonimplication(BBmin, BOGL1, DirectJustification(u'[Sasso 1974, A minimal degree not realizing least possible jump]'))
+menagerie.addNonimplication(BBmin, NotDNC, DirectJustification(u'[Kumabe and Lewis 2009, A fixed-point-free minimal degree]'))
+menagerie.addNonimplication(BBmin, BNLFO, DirectJustification(u'There is a noncomputable c.e. low for random [Ku\u010dera and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\\Omega$, and all noncomputable c.e. sets compute minimal degrees [Yates 1970, Initial segments of the degrees of unsolvability, II; Cooper 1972, Degrees of unsolvability complementary between recursively enumerable degrees]'))
 menagerie.addImplication(BN1G, BN2G, Obvious())
-menagerie.addImplication(BN1G, BN2R, DirectJustification('Every 2-random bounds a 1-generic. Indeed, the 1-generic degrees are downward dense below any 2-random degree [Kurtz 1981, PhD thesis]'))
-menagerie.addImplication(BN1G, NotAboveZP, DirectJustification('There is a $\\Delta^0_2$ 1-generic'))
-menagerie.addImplication(BN1G, ArrayComp, DirectJustification('Every array noncomputable bounds a 1-generic [Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]'))
+menagerie.addImplication(BN1G, BN2R, DirectJustification(u'Every 2-random bounds a 1-generic. Indeed, the 1-generic degrees are downward dense below any 2-random degree [Kurtz 1981, PhD thesis]'))
+menagerie.addImplication(BN1G, NotAboveZP, DirectJustification(u'There is a $\\Delta^0_2$ 1-generic'))
+menagerie.addImplication(BN1G, ArrayComp, DirectJustification(u'Every array noncomputable bounds a 1-generic [Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]'))
 menagerie.addImplication(BN2G, BN3G, Obvious())
-menagerie.addNonimplication(BN2G, NotAboveZP, DirectJustification("$\\emptyset'$ clearly bounds no 2-generic"))
-menagerie.setProperty(BN3G, "category", 0, DirectJustification('The class of 3-generics is comeager'))
-menagerie.setProperty(BN1R, "hdim", 1, DirectJustification('In [Greenberg and Miller 2011, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of effective Hausdorff dimension 1 that computes no 1-random. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of reals that bound no 1-random has (classical) Hausdorff dimension 1'))
+menagerie.addNonimplication(BN2G, NotAboveZP, DirectJustification(u"$\\emptyset'$ clearly bounds no 2-generic"))
+menagerie.setProperty(BN3G, "category", 0, DirectJustification(u'The class of 3-generics is comeager'))
+menagerie.setProperty(BN1R, "hdim", 1, DirectJustification(u'In [Greenberg and Miller 2011, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of effective Hausdorff dimension 1 that computes no 1-random. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of reals that bound no 1-random has (classical) Hausdorff dimension 1'))
 menagerie.addImplication(BN1R, BN2R, Obvious())
-menagerie.addImplication(BN1R, NotPA, DirectJustification('There is a $\\Pi^0_1$ class containing only 1-random reals, hence every PA degree computes a 1-random'))
-menagerie.addNonimplication(BN1R, BNSC, DirectJustification('There is a shift-complex sequence that computes no 1-random. [Khan, Miller 2010]'))
-menagerie.setProperty(BN2R, "measure", 0, DirectJustification('The class of 2-randoms has measure one'))
+menagerie.addImplication(BN1R, NotPA, DirectJustification(u'There is a $\\Pi^0_1$ class containing only 1-random reals, hence every PA degree computes a 1-random'))
+menagerie.addNonimplication(BN1R, BNSC, DirectJustification(u'There is a shift-complex sequence that computes no 1-random. [Khan, Miller 2010]'))
+menagerie.setProperty(BN2R, "measure", 0, DirectJustification(u'The class of 2-randoms has measure one'))
 menagerie.addImplication(BN2R, NotPAinZP, Unjustified())
 menagerie.addImplication(BNDeltaTwo, NotAboveZP, Obvious())
 menagerie.addImplication(BNHIF, NotPAinZP, Unjustified())
 menagerie.setProperty(BNLFO, "hdim", 1, Unjustified())
-menagerie.addImplication(BNLFO, BN2R, DirectJustification("Every 2-random is low for $\\Omega$ by Van Lambalgen's theorem and the fact that $\\Omega\\equiv_T\\emptyset'$"))
-menagerie.addImplication(BNLFO, NotAboveZP, DirectJustification('There is a noncomputable c.e.\\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\\Omega$'))
-menagerie.addNonimplication(BNLFO, BNDeltaTwo, DirectJustification('Sasso, Epstein and Cooper [Sasso 1974, A minimal degree not realizing least possible jump] produced a non-low $\\Delta^0_2$ minimal degree. Obviously, this degree cannot compute a noncomputable low for $\\Omega$ (which must be GL$_1$)'))
-menagerie.addImplication(BNmin, NotPA, DirectJustification('There is nonempty $\\Pi^0_1$ class of reals, each of which computes a minimal degree [Groszek, Slaman 1997, $\\Pi^0_1$ classes and minimal degrees]'))
-menagerie.addNonimplication(BNmin, BNDeltaTwo, DirectJustification("Every noncomputable degree below a $\\Delta^0_2$ 1-generic contains a 1-generic [Haught 1986, The degrees below a 1-generic degree $<{\\bf 0}'$], hence is not minimal"))
-menagerie.addNonimplication(BNmin, BNHIF, DirectJustification('Demuth proved that every noncomputable set truth-table below a 1-random is Turing equivalent to a 1-random (see [Downey and Hirschfeldt 2010, Algorithmic randomness and complexity]). Consider a hyperimmune-free 1-random $X$. Every set Turing below $X$ is truth-table below $X$. Thus every noncomputable degree below $X$ is 1-random, hence not minimal'))
+menagerie.addImplication(BNLFO, BN2R, DirectJustification(u"Every 2-random is low for $\\Omega$ by Van Lambalgen's theorem and the fact that $\\Omega\\equiv_T\\emptyset'$"))
+menagerie.addImplication(BNLFO, NotAboveZP, DirectJustification(u'There is a noncomputable c.e. low for random [Ku\u010dera and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\\Omega$'))
+menagerie.addNonimplication(BNLFO, BNDeltaTwo, DirectJustification(u'Sasso, Epstein and Cooper [Sasso 1974, A minimal degree not realizing least possible jump] produced a non-low $\\Delta^0_2$ minimal degree. Obviously, this degree cannot compute a noncomputable low for $\\Omega$ (which must be GL$_1$)'))
+menagerie.addImplication(BNmin, NotPA, DirectJustification(u'There is nonempty $\\Pi^0_1$ class of reals, each of which computes a minimal degree [Groszek, Slaman 1997, $\\Pi^0_1$ classes and minimal degrees]'))
+menagerie.addNonimplication(BNmin, BNDeltaTwo, DirectJustification(u"Every noncomputable degree below a $\\Delta^0_2$ 1-generic contains a 1-generic [Haught 1986, The degrees below a 1-generic degree $<{\\bf 0}'$], hence is not minimal"))
+menagerie.addNonimplication(BNmin, BNHIF, DirectJustification(u'Demuth proved that every noncomputable set truth-table below a 1-random is Turing equivalent to a 1-random (see [Downey and Hirschfeldt 2010, Algorithmic randomness and complexity]). Consider a hyperimmune-free 1-random $X$. Every set Turing below $X$ is truth-table below $X$. Thus every noncomputable degree below $X$ is 1-random, hence not minimal'))
 menagerie.addImplication(BOGL1, BOGL2, Obvious())
-menagerie.addImplication(BOGL1, BN2G, DirectJustification('Jockusch proved that every 2-generic computes a properly GL$_2$ set [1980, Degrees of generic sets]'))
-menagerie.addImplication(BOGL2, NotAboveZP, DirectJustification("If $A\\geq_T \\emptyset'$, then $A''>_T (A\\oplus\\emptyset')' \\equiv_T A'$"))
-menagerie.addImplication(BOGL2, BN3G, DirectJustification('Jockusch proved that every 3-generic computes a properly GL$_3$ set [1980, Degrees of generic sets]'))
+menagerie.addImplication(BOGL1, BN2G, DirectJustification(u'Jockusch proved that every 2-generic computes a properly GL$_2$ set [1980, Degrees of generic sets]'))
+menagerie.addImplication(BOGL2, NotAboveZP, DirectJustification(u"If $A\\geq_T \\emptyset'$, then $A''>_T (A\\oplus\\emptyset')' \\equiv_T A'$"))
+menagerie.addImplication(BOGL2, BN3G, DirectJustification(u'Jockusch proved that every 3-generic computes a properly GL$_3$ set [1980, Degrees of generic sets]'))
 menagerie.setProperty(DeltaTwo, "cardinality", 0, Obvious())
-menagerie.addImplication(DeltaTwo, BN2G, DirectJustification("No 2-generic can be computable from $\\emptyset'$"))
-menagerie.addImplication(DeltaTwo, NotDNCinZP, DirectJustification("No function DNC relative to $\\emptyset'$ is computable from $\\emptyset'$"))
-menagerie.addImplication(DeltaTwo, BNHIF, DirectJustification('No noncomputable $\\Delta^0_2$ degree is hyperimmune-free [W. Miller and Martin 1968, The degrees of hyperimmune sets]'))
-menagerie.addNonimplication(DeltaTwo, NotAboveZP, DirectJustification("$\\emptyset'$ is $\\Delta^0_2$"))
+menagerie.addImplication(DeltaTwo, BN2G, DirectJustification(u"No 2-generic can be computable from $\\emptyset'$"))
+menagerie.addImplication(DeltaTwo, NotDNCinZP, DirectJustification(u"No function DNC relative to $\\emptyset'$ is computable from $\\emptyset'$"))
+menagerie.addImplication(DeltaTwo, BNHIF, DirectJustification(u'No noncomputable $\\Delta^0_2$ degree is hyperimmune-free [W. Miller and Martin 1968, The degrees of hyperimmune sets]'))
+menagerie.addNonimplication(DeltaTwo, NotAboveZP, DirectJustification(u"$\\emptyset'$ is $\\Delta^0_2$"))
 menagerie.addImplication(HIF, NotDNCinZP, Unjustified())
-menagerie.addImplication(HIF, BN1G, DirectJustification('Every 1-generic is hyperimmune'))
-menagerie.addImplication(HIF, NotHigh, DirectJustification("By Martin's theorem and the definition of hyperimmune-free"))
-menagerie.addImplication(HIF, BNDeltaTwo, DirectJustification('No noncomputable $\\Delta^0_2$ degree is hyperimmune-free [W. Miller and Martin 1968, The degrees of hyperimmune sets]'))
-menagerie.addImplication(HIF, BNLFO, DirectJustification('Hyperimmune-free and low for $\\Omega$ implies computable [Miller and Nies] (See [Nies 2009, Computability and Randomness])'))
-menagerie.addNonimplication(HIF, NotPA, DirectJustification('Use the hyperimmune-free basis theorem'))
-menagerie.setProperty(JumpTraceable, "cardinality", 1, DirectJustification('[Nies 2002, Reals which compute little]'))
-menagerie.addImplication(JumpTraceable, BOGL1, DirectJustification('Every jump traceable is GL$_1$ [Nies 2002, Reals which compute little]'))
-menagerie.addImplication(JumpTraceable, CET, DirectJustification('[Nies 2002, Reals which compute little]'))
-menagerie.addNonimplication(JumpTraceable, BNHIF, DirectJustification('There is a nonempty $\\Pi^0_1$ class of jump traceable reals with no computable paths [Nies 2009, Computability and randomness]. Thus there is a noncomputable hyperimmune-free jump traceable by the hyperimmune-free basis theorem'))
-menagerie.addNonimplication(JumpTraceable, NotHigh, DirectJustification('See Corollary 8.4.5 in [Nies 2009, Computability and randomness]'))
+menagerie.addImplication(HIF, BN1G, DirectJustification(u'Every 1-generic is hyperimmune'))
+menagerie.addImplication(HIF, NotHigh, DirectJustification(u"By Martin's theorem and the definition of hyperimmune-free"))
+menagerie.addImplication(HIF, BNDeltaTwo, DirectJustification(u'No noncomputable $\\Delta^0_2$ degree is hyperimmune-free [W. Miller and Martin 1968, The degrees of hyperimmune sets]'))
+menagerie.addImplication(HIF, BNLFO, DirectJustification(u'Hyperimmune-free and low for $\\Omega$ implies computable [Miller and Nies] (See [Nies 2009, Computability and Randomness])'))
+menagerie.addNonimplication(HIF, NotPA, DirectJustification(u'Use the hyperimmune-free basis theorem'))
+menagerie.setProperty(JumpTraceable, "cardinality", 1, DirectJustification(u'[Nies 2002, Reals which compute little]'))
+menagerie.addImplication(JumpTraceable, BOGL1, DirectJustification(u'Every jump traceable is GL$_1$ [Nies 2002, Reals which compute little]'))
+menagerie.addImplication(JumpTraceable, CET, DirectJustification(u'[Nies 2002, Reals which compute little]'))
+menagerie.addNonimplication(JumpTraceable, BNHIF, DirectJustification(u'There is a nonempty $\\Pi^0_1$ class of jump traceable reals with no computable paths [Nies 2009, Computability and randomness]. Thus there is a noncomputable hyperimmune-free jump traceable by the hyperimmune-free basis theorem'))
+menagerie.addNonimplication(JumpTraceable, NotHigh, DirectJustification(u'See Corollary 8.4.5 in [Nies 2009, Computability and randomness]'))
 menagerie.addImplication(Low, DeltaTwo, Obvious())
 menagerie.addImplication(Low, NotHigh, Obvious())
 menagerie.addImplication(Low, BOGL1, Obvious())
-menagerie.addNonimplication(Low, ArrayComp, DirectJustification('There is a low c.e.\\ degree that is array noncomputable [Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]'))
+menagerie.addNonimplication(Low, ArrayComp, DirectJustification(u'There is a low c.e. degree that is array noncomputable [Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]'))
 menagerie.addImplication(Low1Rand, JumpTraceable, Unjustified())
 menagerie.addImplication(Low1Rand, OmegaLow, Obvious())
-menagerie.addImplication(Low1Rand, SuperLow, DirectJustification('[Nies 2005, Lowness properties and randomness]'))
-menagerie.addImplication(Low1Rand, BNSC, DirectJustification('Every low for random is K-trivial and no K-trivial is shift-complex.'))
-menagerie.addNonimplication(Low1Rand, BB1G, DirectJustification('There is a noncomputable c.e.\\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets], but no 1-generic bounds a noncomputable c.e./ set (see [Kumabe 1996] for the latter)'))
-menagerie.addNonimplication(Low1Rand, BN1G, DirectJustification('There is a noncomputable c.e.\\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\\ set computes a 1-generic'))
-menagerie.addNonimplication(Low1Rand, BNmin, DirectJustification('There is a noncomputable c.e.\\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets] and all noncomputable c.e.\\ sets compute minimal degrees [Yates 1970, Initial segments of the degrees of unsolvability, II; Cooper 1972, Degrees of unsolvability complementary between recursively enumerable degrees]'))
-menagerie.addNonimplication(Low1Rand, BNDeltaTwo, DirectJustification('There is a noncomputable c.e.\\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets]'))
-menagerie.addNonimplication(Low1Rand, BNLFO, DirectJustification('There is a noncomputable c.e.\\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\\Omega$'))
+menagerie.addImplication(Low1Rand, SuperLow, DirectJustification(u'[Nies 2005, Lowness properties and randomness]'))
+menagerie.addImplication(Low1Rand, BNSC, DirectJustification(u'Every low for random is K-trivial and no K-trivial is shift-complex.'))
+menagerie.addNonimplication(Low1Rand, BB1G, DirectJustification(u'There is a noncomputable c.e. low for random [Ku\u010dera and Terwijn 1999, Lowness for the class of random sets], but no 1-generic bounds a noncomputable c.e. set (see [Kumabe 1996] for the latter)'))
+menagerie.addNonimplication(Low1Rand, BN1G, DirectJustification(u'There is a noncomputable c.e. low for random [Ku\u010dera and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e. set computes a 1-generic'))
+menagerie.addNonimplication(Low1Rand, BNmin, DirectJustification(u'There is a noncomputable c.e. low for random [Ku\u010dera and Terwijn 1999, Lowness for the class of random sets] and all noncomputable c.e. sets compute minimal degrees [Yates 1970, Initial segments of the degrees of unsolvability, II; Cooper 1972, Degrees of unsolvability complementary between recursively enumerable degrees]'))
+menagerie.addNonimplication(Low1Rand, BNDeltaTwo, DirectJustification(u'There is a noncomputable c.e. low for random [Ku\u010dera and Terwijn 1999, Lowness for the class of random sets]'))
+menagerie.addNonimplication(Low1Rand, BNLFO, DirectJustification(u'There is a noncomputable c.e. low for random [Ku\u010dera and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\\Omega$'))
 menagerie.setProperty(LowKurtz, "pdim", 1, Unjustified())
-menagerie.addImplication(LowKurtz, NotDNC, DirectJustification('[Greenberg and Miller 2009, Lowness for Kurtz randomness]'))
-menagerie.addImplication(LowKurtz, HIF, DirectJustification('[Downey, Griffiths and Reid 2004, On Kurtz randomness]'))
+menagerie.addImplication(LowKurtz, NotDNC, DirectJustification(u'[Greenberg and Miller 2009, Lowness for Kurtz randomness]'))
+menagerie.addImplication(LowKurtz, HIF, DirectJustification(u'[Downey, Griffiths and Reid 2004, On Kurtz randomness]'))
 menagerie.setProperty(LowSchnorr, "cardinality", 1, Unjustified())
-menagerie.addImplication(LowSchnorr, LowKurtz, DirectJustification('Computably traceable implies hyperimmune-free and not DNR, which in turn implies being low for Kurtz (tests) [Stephan and Yu 2006, Lowness for weakly 1-generic and Kurtz-random]'))
+menagerie.addImplication(LowSchnorr, LowKurtz, DirectJustification(u'Computably traceable implies hyperimmune-free and not DNR, which in turn implies being low for Kurtz (tests) [Stephan and Yu 2006, Lowness for weakly 1-generic and Kurtz-random]'))
 menagerie.addImplication(LowSchnorr, CET, Obvious())
 menagerie.addNonimplication(LowSchnorr, BOGL1, Unjustified())
-menagerie.addNonimplication(LowSchnorr, BNmin, DirectJustification('The standard construction of a minimal degree makes it computably traceable'))
-menagerie.addNonimplication(LowSchnorr, BNHIF, DirectJustification('Every computably traceable degree is hyperimmune-free'))
+menagerie.addNonimplication(LowSchnorr, BNmin, DirectJustification(u'The standard construction of a minimal degree makes it computably traceable'))
+menagerie.addNonimplication(LowSchnorr, BNHIF, DirectJustification(u'Every computably traceable degree is hyperimmune-free'))
 menagerie.addImplication(NotAboveZP, NotPAinZP, Unjustified())
 menagerie.addImplication(NotDNC, NotDNCinZP, Obvious())
-menagerie.addImplication(NotDNC, BN1R, DirectJustification('Every 1-random compute a diagonally noncomputable function [Ku{\\v c}era 1985, Measure, $\\Pi^0_1$ classes, and complete extensions of PA]'))
-menagerie.addImplication(NotDNC, BNSC, DirectJustification('A shift-complex sequence $X$ is DNC as witnessed by (a finite modification of) the function $f(n) = X \\restriction n$.'))
+menagerie.addImplication(NotDNC, BN1R, DirectJustification(u'Every 1-random compute a diagonally noncomputable function [Ku\u010dera 1985, Measure, $\\Pi^0_1$ classes, and complete extensions of PA]'))
+menagerie.addImplication(NotDNC, BNSC, DirectJustification(u'A shift-complex sequence $X$ is DNC as witnessed by (a finite modification of) the function $f(n) = X \\restriction n$.'))
 menagerie.setProperty(NotDNCinZP, "hdim", 0, Unjustified())
-menagerie.addImplication(NotDNCinZP, BN2R, DirectJustification('Relativize the fact [Ku{\\v c}era 1985, Measure, $\\Pi^0_1$ classes, and complete extensions of PA] that every 1-random computes a diagonally noncomputable function'))
+menagerie.addImplication(NotDNCinZP, BN2R, DirectJustification(u'Relativize the fact [Ku\u010dera 1985, Measure, $\\Pi^0_1$ classes, and complete extensions of PA] that every 1-random computes a diagonally noncomputable function'))
 menagerie.addImplication(NotHigh, NotAboveZP, Obvious())
-menagerie.addImplication(NotPA, NotAboveZP, DirectJustification("$\\emptyset'$ has PA degree"))
+menagerie.addImplication(NotPA, NotAboveZP, DirectJustification(u"$\\emptyset'$ has PA degree"))
 menagerie.addNonimplication(NotPAinZP, NotAboveZP, Unjustified())
 menagerie.addNonimplication(NotPAinZP, BN2R, Unjustified())
-menagerie.addImplication(OmegaLow, NotAboveZP, DirectJustification("$\\Omega\\leq_T\\emptyset'$, hence not random relative to $\\emptyset'$"))
+menagerie.addImplication(OmegaLow, NotAboveZP, DirectJustification(u"$\\Omega\\leq_T\\emptyset'$, hence not random relative to $\\emptyset'$"))
 menagerie.addImplication(OmegaLow, ArrayComp, Unjustified())
-menagerie.addImplication(OmegaLow, BOGL1, DirectJustification('Theorem 3.2 in [Nies, Stephan and Terwijn 2005, Randomness, relativization and Turing degrees]. See also Proposition 3.4.10 in [Nies 2009, Computability and Randomness]'))
-menagerie.addImplication(OmegaLow, BNHIF, DirectJustification('Hyperimmune-free and low for $\\Omega$ implies computable [Miller and Nies] (See [Nies 2009, Computability and Randomness])'))
-menagerie.addNonimplication(OmegaLow, NotPA, DirectJustification('Use the low for $\\Omega$ basis theorem [Downey, Hirschfeldt, Miller and Nies 2005; Reimann and Slaman, Measures and their random reals]'))
+menagerie.addImplication(OmegaLow, BOGL1, DirectJustification(u'Theorem 3.2 in [Nies, Stephan and Terwijn 2005, Randomness, relativization and Turing degrees]. See also Proposition 3.4.10 in [Nies 2009, Computability and Randomness]'))
+menagerie.addImplication(OmegaLow, BNHIF, DirectJustification(u'Hyperimmune-free and low for $\\Omega$ implies computable [Miller and Nies] (See [Nies 2009, Computability and Randomness])'))
+menagerie.addNonimplication(OmegaLow, NotPA, DirectJustification(u'Use the low for $\\Omega$ basis theorem [Downey, Hirschfeldt, Miller and Nies 2005; Reimann and Slaman, Measures and their random reals]'))
 menagerie.addImplication(SuperLow, Low, Obvious())
-menagerie.addImplication(SuperLow, ArrayComp, DirectJustification('[Nies and Ng] (see Exercise 8.2.10 in [Nies 2009, Computability and Randomness]'))
-menagerie.addNonimplication(SuperLow, OmegaLow, DirectJustification("There is a superlow 1-random $X$ by the (super)low basis theorem. Note that $X\\leq_T\\Omega\\equiv_T\\emptyset'$, so if $X$ were low for $\\Omega$, then it would be a base for 1-randomness. Then by [Hirschfeldt, Nies and Stephan 2007, Using random sets as oracles], $X$ would be low for random. But a 1-random cannot be low for random"))
-menagerie.addNonimplication(SuperLow, NotPA, DirectJustification('Use the (super)low basis theorem'))
-menagerie.setProperty(BNSC, "measure", 1, DirectJustification('The measure of oracles that compute shift-complex sequences is 0 [Rumyantsev]'))
-menagerie.addImplication(BNSC, NotPA, DirectJustification('For every $\\delta \\in (0, 1)$ there is a $\\Pi^0_1$ class of $\\delta$-shift-complex sequences, nonempty by a construction of Levin. Thus every PA degree computes a shift-complex sequence.'))
-menagerie.addNonimplication(BNSC, BNDeltaTwo, DirectJustification('There is a low 1-random and a 1-random computes a shift-complex sequence iff it is complete. [Khan 2010]'))
+menagerie.addImplication(SuperLow, ArrayComp, DirectJustification(u'[Nies and Ng] (see Exercise 8.2.10 in [Nies 2009, Computability and Randomness]'))
+menagerie.addNonimplication(SuperLow, OmegaLow, DirectJustification(u"There is a superlow 1-random $X$ by the (super)low basis theorem. Note that $X\\leq_T\\Omega\\equiv_T\\emptyset'$, so if $X$ were low for $\\Omega$, then it would be a base for 1-randomness. Then by [Hirschfeldt, Nies and Stephan 2007, Using random sets as oracles], $X$ would be low for random. But a 1-random cannot be low for random"))
+menagerie.addNonimplication(SuperLow, NotPA, DirectJustification(u'Use the (super)low basis theorem'))
+menagerie.setProperty(BNSC, "measure", 1, DirectJustification(u'The measure of oracles that compute shift-complex sequences is 0 [Rumyantsev]'))
+menagerie.addImplication(BNSC, NotPA, DirectJustification(u'For every $\\delta \\in (0, 1)$ there is a $\\Pi^0_1$ class of $\\delta$-shift-complex sequences, nonempty by a construction of Levin. Thus every PA degree computes a shift-complex sequence.'))
+menagerie.addNonimplication(BNSC, BNDeltaTwo, DirectJustification(u'There is a low 1-random and a 1-random computes a shift-complex sequence iff it is complete. [Khan, Miller 2010]'))
 menagerie.setProperty(CET, "category", 0, CET.pdim)
 menagerie.setProperty(CET, "hdim", 0, CET.pdim)
 menagerie.setProperty(CET, "measure", 0, CET.pdim)
