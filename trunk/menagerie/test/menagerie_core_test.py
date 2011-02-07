@@ -70,7 +70,7 @@ class TestMenagerie(unittest.TestCase):
         self.assertEqual("B is countable", str(B.hdim.justification))
         self.assertTrue("Adding a fact without justification: B is countable" in m.warnings)
         parser.read("B is uncountable")
-        self.assertTrue("Inconsistency detected: B is countable, reason for change: UNJUSTIFIED" in m.errors)
+        self.assertTrue("Inconsistency detected: B is countable : UNJUSTIFIED, reason for change: UNJUSTIFIED" in m.errors)
 
     def test_close_under_implications(self):
         m = Menagerie()
@@ -144,7 +144,7 @@ Use the hyperimmune-free basis theorem
     def test_compiling_the_menagerie(self):
         m = Menagerie()
         parser = MenagerieParser(m)
-        parser.read("""A -> B "A very elegant observation of Eeyore." \nB -> C ""\nM(A) = 1""")
+        parser.read(u"""A -> B "A very elegant observation of E\u00C9yore." \nB -> C ""\nM(A) = 1""")
         Deductions().apply(m)
         exec(m.compile())
         self.assertTrue(menagerie["A"].implies(menagerie["C"]))

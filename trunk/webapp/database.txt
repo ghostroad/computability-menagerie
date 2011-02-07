@@ -74,8 +74,8 @@ BN1G -> BN2R				"Every 2-random bounds a 1-generic. Indeed, the 1-generic degree
 
 NotDNC -> NotDNCinZP		""
 HD(NotDNCinZP) = 0
-NotDNC -> BN1R				"Every 1-random compute a diagonally noncomputable function [Ku{\v c}era 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA]"
-NotDNCinZP -> BN2R			"Relativize the fact [Ku{\v c}era 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA] that every 1-random computes a diagonally noncomputable function"
+NotDNC -> BN1R				"Every 1-random compute a diagonally noncomputable function [Kučera 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA]"
+NotDNCinZP -> BN2R			"Relativize the fact [Kučera 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA] that every 1-random computes a diagonally noncomputable function"
 BB1G -> NotDNC
 
 HIF -> NotDNCinZP			# this is a slight generalization of Kurtz’s result that no 2-random set can be computably dominated
@@ -133,7 +133,7 @@ CET -> NotDNC				# Trace initial segments of the function slowly enough that you
 
 BN1G -> ArrayComp			"Every array noncomputable bounds a 1-generic [Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]"
 ArrayComp -> BOGL2			"[Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]"
-Low -/> ArrayComp			"There is a low c.e.\ degree that is array noncomputable [Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]"
+Low -/> ArrayComp			"There is a low c.e. degree that is array noncomputable [Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]"
 SuperLow -> ArrayComp		"[Nies and Ng] (see Exercise 8.2.10 in [Nies 2009, Computability and Randomness]"
 OmegaLow -> ArrayComp
 CET -> ArrayComp
@@ -187,14 +187,14 @@ HD(BNLFO) = 1
 
 Low1Rand -> OmegaLow		""
 Low1Rand -> SuperLow		"[Nies 2005, Lowness properties and randomness]"
-Low1Rand -/> BB1G			"There is a noncomputable c.e.\ low for random [Ku{\v c}era and Terwijn 1999, Lowness for the class of random sets], but no 1-generic bounds a noncomputable c.e./ set (see [Kumabe 1996] for the latter)"
-Low1Rand -/> BN1G			"There is a noncomputable c.e.\ low for random [Ku{\v c}era and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\ set computes a 1-generic"
-Low1Rand -/> BNmin			"There is a noncomputable c.e.\ low for random [Ku{\v c}era and Terwijn 1999, Lowness for the class of random sets] and all noncomputable c.e.\ sets compute minimal degrees [Yates 1970, Initial segments of the degrees of unsolvability, II; Cooper 1972, Degrees of unsolvability complementary between recursively enumerable degrees]"
-Low1Rand -/> BNDeltaTwo		"There is a noncomputable c.e.\ low for random [Ku{\v c}era and Terwijn 1999, Lowness for the class of random sets]"
-Low1Rand -/> BNLFO			"There is a noncomputable c.e.\ low for random [Ku{\v c}era and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\Omega$"
-BNLFO -> NotAboveZP			"There is a noncomputable c.e.\ low for random [Ku{\v c}era and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\Omega$"
-BBmin -/> BNLFO				"There is a noncomputable c.e.\ low for random [Ku{\v c}era and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\Omega$, and all noncomputable c.e.\ sets compute minimal degrees [Yates 1970, Initial segments of the degrees of unsolvability, II; Cooper 1972, Degrees of unsolvability complementary between recursively enumerable degrees]"
-BB1G -/> BNLFO				"There is a noncomputable c.e.\ low for random [Ku{\v c}era and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\ set computes a 1-generic"
+Low1Rand -/> BB1G			"There is a noncomputable c.e. low for random [Kučera and Terwijn 1999, Lowness for the class of random sets], but no 1-generic bounds a noncomputable c.e. set (see [Kumabe 1996] for the latter)"
+Low1Rand -/> BN1G			"There is a noncomputable c.e. low for random [Kučera and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e. set computes a 1-generic"
+Low1Rand -/> BNmin			"There is a noncomputable c.e. low for random [Kučera and Terwijn 1999, Lowness for the class of random sets] and all noncomputable c.e. sets compute minimal degrees [Yates 1970, Initial segments of the degrees of unsolvability, II; Cooper 1972, Degrees of unsolvability complementary between recursively enumerable degrees]"
+Low1Rand -/> BNDeltaTwo		"There is a noncomputable c.e. low for random [Kučera and Terwijn 1999, Lowness for the class of random sets]"
+Low1Rand -/> BNLFO			"There is a noncomputable c.e. low for random [Kučera and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\Omega$"
+BNLFO -> NotAboveZP			"There is a noncomputable c.e. low for random [Kučera and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\Omega$"
+BBmin -/> BNLFO				"There is a noncomputable c.e. low for random [Kučera and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\Omega$, and all noncomputable c.e. sets compute minimal degrees [Yates 1970, Initial segments of the degrees of unsolvability, II; Cooper 1972, Degrees of unsolvability complementary between recursively enumerable degrees]"
+BB1G -/> BNLFO				"There is a noncomputable c.e. low for random [Kučera and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e. set computes a 1-generic"
 
 LowSchnorr -/> BNHIF		"Every computably traceable degree is hyperimmune-free"
 BNmin -/> BNDeltaTwo		"Every noncomputable degree below a $\Delta^0_2$ 1-generic contains a 1-generic [Haught 1986, The degrees below a 1-generic degree $<{\bf 0}'$], hence is not minimal"
@@ -204,8 +204,8 @@ BNSC -> NotPA "For every $\delta \in (0, 1)$ there is a $\Pi^0_1$ class of $\del
 BN1R -/> BNSC "There is a shift-complex sequence that computes no 1-random. [Khan, Miller 2010]"
 M(BNSC) = 1 "The measure of oracles that compute shift-complex sequences is 0 [Rumyantsev]"
 
-BNSC -/> BNDeltaTwo "There is a low 1-random and a 1-random computes a shift-complex sequence iff it is complete. [Khan 2010]"
-BB2R -> BNSC "No 2-random computes a shift-complex sequence. [Khan 2010]"
+BNSC -/> BNDeltaTwo "There is a low 1-random and a 1-random computes a shift-complex sequence iff it is complete. [Khan, Miller 2010]"
+BB2R -> BNSC "No 2-random computes a shift-complex sequence. [Khan, Miller 2010]"
 Low1Rand -> BNSC "Every low for random is K-trivial and no K-trivial is shift-complex."
 NotDNC -> BNSC "A shift-complex sequence $X$ is DNC as witnessed by (a finite modification of) the function $f(n) = X \restriction n$."
 

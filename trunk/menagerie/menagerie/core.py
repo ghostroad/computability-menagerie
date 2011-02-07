@@ -1,8 +1,10 @@
+from __future__ import unicode_literals
 from pyparsing import *
 from collections import defaultdict
 from itertools import product, permutations
 from pydot import Dot, Node, Edge
 import textwrap
+import codecs
 
 COMEAGER = 1
 MEAGER = 0
@@ -31,7 +33,8 @@ class MenagerieParser:
         self.database_parser = ZeroOrMore(implication | strictimp | setprop | label | reckoning | Literal(";") | comment) + StringEnd()
 
     def readFromFile(self, filename):
-        self.database_parser.parseFile(filename)
+        with codecs.open(filename, encoding='utf-8', mode='r') as infile:
+            self.database_parser.parseFile(infile)
 
     def read(self, source):
         self.database_parser.parseString(source)
