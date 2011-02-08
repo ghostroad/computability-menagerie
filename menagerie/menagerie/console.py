@@ -51,7 +51,7 @@ def main():
         if m.errors:
             info.write("\nErrors found:\n")
             for error in m.errors:
-                info.write(error + "\n")
+                info.write(error.encode('utf-8') + "\n")
                 return
         open(pyFilename, "w").write(m.compile())
         info.write("Done.")
@@ -114,7 +114,7 @@ def justifyOne(m, clsName, errorHandler):
 
 def beginDocument():
     print """\\documentclass{amsart}
-
+\\usepackage[utf8]{inputenc}
 \\makeatletter
 \\newenvironment{fact}[1]
 {

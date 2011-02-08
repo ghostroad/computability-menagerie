@@ -44,7 +44,7 @@ class ClassNotFoundError(Exception):
     def __init__(self, name):
         self.name = name
     def __str__(self):
-        return "No class named {0} found.".format(self.name)
+        return "No class named {0} found.".format(self.name).encode('utf-8')
 
 class Menagerie:
 
@@ -128,7 +128,7 @@ class Menagerie:
     def compile(self):
         result = ["from menagerie.core import *", "menagerie = Menagerie()"]
         for cls in self.classes:
-            result.append("{0} = menagerie.classMap[\"{1}\"]".format(cls.identifier(), cls.name))
+            result.append("{0} = menagerie.classMap[{1}]".format(cls.identifier(), repr(cls.name)))
             if cls.longName: result.append("{0}.longName = {1}".format(cls.identifier(), repr(cls.longName)))
         weights = sorted(set(fact.weight for fact in self.facts()))
         for weight in weights:
@@ -224,7 +224,12 @@ class ClassMap(defaultdict):
             row.append(None)
         self.menagerie.nonimplicationsMatrix.append([None]*self.menagerie.classCounter)
 
-class ClassNode(object):
+class Printable(object):
+    __slots__ = []
+    def __repr__(self):
+        return self.__unicode__().encode('utf-8')
+
+class ClassNode(Printable):
     __slots__ = ["index", "menagerie", "name", "longName", "implications", 
                  "nonimplications", "cardinality", "category", "measure", "hdim", "pdim"]
     def __init__(self, name, index, menagerie):
@@ -251,7 +256,7 @@ class ClassNode(object):
         return self.doesNotImply(other) and other.doesNotImply(self)
     def identifier(self):
         return self.name
-    def __repr__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -260,7 +265,7 @@ class NonEmpty(object):
     def empty(self):
         return False
 
-class Justifiable(NonEmpty):
+class Justifiable(NonEmpty, Printable):
     __slots__ = []
     def plain(self):
         return "{0} : {1}".format(self, self.justification.plain())
@@ -282,7 +287,7 @@ class Property(Justifiable):
         self.propertyValue = propertyValue
         self.justification = justification
         self.weight = justification.weight + 1
-    def __repr__(self):
+    def __unicode__(self):
         return "{0}({1}) = {2}".format(self.propertyName, self.cls, self.propertyValue)
     def writeSummary(self, out):
         if not self.known(): 
@@ -306,7 +311,7 @@ class Property(Justifiable):
 
 class IsProperty(Property):
     __slots__ = []
-    def __repr__(self):
+    def __unicode__(self):
         return "{0} is {1}".format(self.cls, self.prettyPropertyValue())
     def writeSummaryKnown(self, out):
         out.writeClass(self.cls)
@@ -343,12 +348,12 @@ class Implication(Justifiable):
         return "menagerie.addImplication({0}, {1}, {2})".format(self.source.identifier(), self.dest.identifier(), self.justification.compileReference())
     def compileReference(self):
         return "{0}.implies({1})".format(self.source.identifier(), self.dest.identifier())
-    def __repr__(self):
+    def __unicode__(self):
         return "{0} -> {1}".format(self.source, self.dest)
 
 class Nonimplication(Implication):
     __slots__ = []
-    def __repr__(self):
+    def __unicode__(self):
         return "{0} -/> {1}".format(self.source, self.dest)
     def compileAdd(self):
         return "menagerie.addNonimplication({0}, {1}, {2})".format(self.source.identifier(), self.dest.identifier(), self.justification.compileReference())
@@ -359,12 +364,12 @@ class Nonimplication(Implication):
         out.writeNonImplication()
         out.writeClass(self.dest)
 
-class DirectJustification(NonEmpty):
+class DirectJustification(NonEmpty, Printable):
     __slots__ = ["justification", "weight"]
     def __init__(self, justification):
         self.justification = justification
         self.weight = 1
-    def __repr__(self):
+    def __unicode__(self):
         return self.justification
     def plain(self):
         return self.justification
@@ -396,15 +401,15 @@ class Unjustified(DirectJustification):
     def compileReference(self):
         return "Unjustified()"
 
-class CompositeJustification(NonEmpty):
+class CompositeJustification(NonEmpty, Printable):
     __slots__ = ["children", "weight"]
     def __init__(self, *children):
         self.children = children
         self.weight = 1
         for child in self.children:
             self.weight += child.weight
-    def __repr__(self):
-        return self.children.__repr__()
+    def __unicode__(self):
+        return self.children.__unicode__()
     def plain(self):
         return "[" + ", ".join([child.plain() for child in self.children]) + "]"
     def compileReference(self):
@@ -428,7 +433,7 @@ class UnknownImplication:
         out.writeString(".")
 
 
-class TextWriter:
+class TextWriter(Printable):
     def __init__(self):
         self.result = []
         self.indentLevel = 0
@@ -437,10 +442,10 @@ class TextWriter:
     def write(self, item):
         item.write(self)
         return self
-    def __repr__(self):
+    def __unicode__(self):
         return "\n".join(self.result)
     def beginFact(self, fact):
-        self.result.append(self.__currIndent() + str(fact))
+        self.result.append(self.__currIndent() + unicode(fact))
         self.indentLevel += 1
     def endFact(self):
         self.indentLevel -= 1
@@ -449,13 +454,13 @@ class TextWriter:
     def writeLine(self, str):
         self.result.append(self.__currIndent() + str)
 
-class LatexWriter:
+class LatexWriter(Printable):
     def __init__(self):
         self.result = []
     def write(self, item):
         item.write(self)
         return self
-    def __repr__(self):
+    def __unicode__(self):
         return "".join(self.result)
     def beginFact(self, fact):
         self.result.append("\\begin{fact}{")

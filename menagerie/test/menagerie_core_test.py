@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import unittest
 from menagerie.core import *
 
@@ -11,13 +12,13 @@ class TestMenagerie(unittest.TestCase):
         self.assertTrue(m["BBmin"].implies(m["BN1G"]))
         self.assertTrue(m["BBmin"].implies(m["BN1R"]))
         self.assertTrue(m["BBmin"].doesNotImply(m["BNDeltaTwo"]))
-        self.assertEqual("If $A\oplus B$ is 1-random then $A$ and $B$ are Turing incomparable", str(m["BBmin"].implies(m["BN1R"]).justification))
-        self.assertEqual("The class of 3-randoms has measure one", str(m["BB3R"].measure.justification))
+        self.assertEqual("If $A\oplus B$ is 1-random then $A$ and $B$ are Turing incomparable", unicode(m["BBmin"].implies(m["BN1R"]).justification))
+        self.assertEqual("The class of 3-randoms has measure one", unicode(m["BB3R"].measure.justification))
         self.assertTrue(m["BB2G"].category == COMEAGER)
         self.assertTrue(m["BN3G"].category == MEAGER)
         self.assertTrue(m["DeltaTwo"].cardinality == COUNTABLE)
         self.assertTrue(m["JumpTraceable"].cardinality == UNCOUNTABLE)
-        self.assertEqual("[Nies 2002, Reals which compute little]", str(m["JumpTraceable"].cardinality.justification))
+        self.assertEqual("[Nies 2002, Reals which compute little]", unicode(m["JumpTraceable"].cardinality.justification))
         self.assertEqual(34, len(m.classes))
         numFacts, numUnjustifiedFacts = m.numFactsAndUnjustifiedFacts();
         self.assertEqual(117, numFacts)
@@ -37,13 +38,13 @@ class TestMenagerie(unittest.TestCase):
                 CET -> NotDNC
                     UNJUSTIFIED
         NotDNC -> BN1R
-            Every 1-random compute a diagonally noncomputable function [Ku{\\v c}era 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA]
+            Every 1-random compute a diagonally noncomputable function [Ku\u010dera 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA]
     Low1Rand -/> BBmin
         BBmin -> BN1G
             If $A\oplus B$ is 1-generic then $A$ and $B$ are Turing incomparable
         Low1Rand -/> BN1G
-            There is a noncomputable c.e.\ low for random [Ku{\\v c}era and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\ set computes a 1-generic""", str(TextWriter().write(BN1R.doesNotImply(BBmin))))
-        self.assertEqual("""BN1G -> BN2G""", str(TextWriter().write(m["BN1G"].implies(m["BN2G"]))))
+            There is a noncomputable c.e.\ low for random [Ku\u010dera and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\ set computes a 1-generic""", unicode(TextWriter().write(BN1R.doesNotImply(BBmin))))
+        self.assertEqual("""BN1G -> BN2G""", unicode(TextWriter().write(m["BN1G"].implies(m["BN2G"]))))
 
 
     def test_load_a_database_from_a_string(self):
@@ -60,14 +61,14 @@ class TestMenagerie(unittest.TestCase):
         parser = MenagerieParser(m)
         parser.read("A -> B\nB is countable")
         B = m["B"]
-        self.assertEqual("hdim(B) = None", str(B.hdim))
+        self.assertEqual("hdim(B) = None", unicode(B.hdim))
         Deductions().apply(m)
         self.assertEqual(COUNTABLE, B.cardinality)
         self.assertEqual(MEAGER, B.category)
-        self.assertEqual("B is countable", str(B.category.justification))
+        self.assertEqual("B is countable", unicode(B.category.justification))
         self.assertEqual(0, B.hdim)
-        self.assertEqual("hdim(B) = 0", str(B.hdim))
-        self.assertEqual("B is countable", str(B.hdim.justification))
+        self.assertEqual("hdim(B) = 0", unicode(B.hdim))
+        self.assertEqual("B is countable", unicode(B.hdim.justification))
         self.assertTrue("Adding a fact without justification: B is countable" in m.warnings)
         parser.read("B is uncountable")
         self.assertTrue("Inconsistency detected: B is countable : UNJUSTIFIED, reason for change: UNJUSTIFIED" in m.errors)
@@ -139,7 +140,7 @@ Use the hyperimmune-free basis theorem
 \\end{fact}
 \\end{fact}
 \\end{fact}
-""", str(LatexWriter().write(m["BNLFO"].doesNotImply(m["BBmin"]))))
+""", unicode(LatexWriter().write(m["BNLFO"].doesNotImply(m["BBmin"]))))
         
     def test_compiling_the_menagerie(self):
         m = Menagerie()

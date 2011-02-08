@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from xml.dom import minidom
-from menagerie.core import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER
+from menagerie.core import COUNTABLE, UNCOUNTABLE, MEAGER, COMEAGER, Printable
 
 class SVGPostProcessor:
     def process(self, graph):
@@ -61,7 +61,7 @@ class HtmlClassDecorator:
     def decorate(self, cls):
         return '<span class="className">' + cls.displayName() + '</span>'
 
-class HtmlWriter:
+class HtmlWriter(Printable):
     def __init__(self):
         self.result = []
         self.classDecorator = HtmlClassDecorator()
@@ -70,7 +70,7 @@ class HtmlWriter:
         item.write(self)
         self.result.append("</ul>")
         return self
-    def __repr__(self):
+    def __unicode__(self):
         return "".join(self.result)
     def beginFact(self, fact):
         self.result.append("<li>")
