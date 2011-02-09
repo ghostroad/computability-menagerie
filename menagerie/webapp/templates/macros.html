@@ -14,9 +14,9 @@
 <span class="button {% if disabled %} disabled {% endif %}" id="{{ id }}" {% if onclick %} onclick="{{ onclick }}" {% endif %}><span>{{ label }}</span></span>
 {%- endmacro %}
 
-{% macro openImplicationKey(show) -%}
+{% macro openImplicationKey(show, gatewayPage) -%}
 {% if show %}
-<tr><td>{{ svgarrow("green", "highlightArrow") }}</td><td> Strongest open implication </td></tr>
-<tr><td>{{ svgarrow("red", "highlightArrow") }}</td><td> Weakest open implication </td></tr>
+<tr><td>{{ svgarrow("green", "highlightArrow") }}</td><td> <a href="{{ gatewayPage }}#openImplications" target="_blank">Strongest</a> open implication </td></tr>
+<tr><td>{{ svgarrow("red", "highlightArrow") }}</td><td> <a href="{{ gatewayPage }}#openImplications" target="_blank">Weakest</a> open implication </td></tr>
 {% endif %}
 {%- endmacro %}

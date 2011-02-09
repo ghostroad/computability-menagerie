@@ -57,7 +57,7 @@
  <body>
    <div id="controlPanel">
      <div id="title">
-       <span class="appName">The Computability Menagerie</span><span class="credits">maintained by <a href="http://www.math.wisc.edu/~jmiller">Joseph S. Miller</a> and <a href="http://www.math.wisc.edu/~khan">Mushfeq Khan</a></span>
+       <span class="appName">The Computability Menagerie</span><span class="credits"><a href="{{ gatewayPage }}#about" target="_blank">about</a></span>
      </div>
      <div id="controls">
        <table>
@@ -117,36 +117,36 @@
     <div id="recoloringKey" class="key" style="display: none;">
 	<table>
 	  <tr><td>{{ svgarrow("black", "highlightArrow") }}</td><td> Nonstrict implication </td></tr>
-	  {{ openImplicationKey(showOpen) }}
+	  {{ openImplicationKey(showOpen, gatewayPage) }}
 	  <tr><td>{{ svgellipse("selected") }}</td><td>Selected</td></tr>
 	  <tr><td>{{ svgellipse("above") }}</td><td>Superclass of each of <br/>the selected classes</td></tr>
 	  <tr><td>{{ svgellipse("below") }}</td><td>Subclass of each of<br/> the selected classes</td></tr>
 	  <tr><td>{{ svgellipse("comp") }}</td><td>Comparable to each of <br/>the selected classes</td></tr>
 	  <tr><td>{{ svgellipse("inc") }}</td><td>Incomparable to some <br/>selected class</td></tr>
 	</table>
-	Stripes indicate one or more unknown implications. Colors alternate between the possibilities.
+	<a href="{{ gatewayPage }}#stripes" target="_blank">Stripes</a> indicate one or more unknown implications. Colors alternate between the possibilities.
     </div>
     <div id="measureKey" class="key" style="display: none;">
 	<table>
 	  <tr><td>{{ svgarrow("black", "highlightArrow") }}</td><td> Nonstrict implication </td></tr>
-	  {{ openImplicationKey(showOpen) }}
+	  {{ openImplicationKey(showOpen, gatewayPage) }}
 	  <tr><td>{{ svgellipse("level4") }}</td><td>Measure 1</td></tr>
 	  <tr><td>{{ svgellipse("level3") }}</td><td>Hausdorff dimension 1, <br/>measure 0</td></tr>
 	  <tr><td>{{ svgellipse("level2") }}</td><td>Packing dimension 1, <br/>Hausdorff dimension 0</td></tr>
 	  <tr><td>{{ svgellipse("level1") }}</td><td>Uncountable, <br/>packing dimension 0</td></tr>
 	  <tr><td>{{ svgellipse("level0") }}</td><td>Countable</td></tr>
 	</table>
-	Stripes indicate unknown measure information. Colors alternate between the possible extremes.
+	<a href="{{ gatewayPage }}#stripes" target="_blank">Stripes</a> indicate unknown measure information. Colors alternate between the possible extremes.
     </div>
     <div id="categoryKey" class="key" style="display: none;">
 	<table>
 	  <tr><td>{{ svgarrow("black", "highlightArrow") }}</td><td> Nonstrict implication </td></tr>
-	  {{ openImplicationKey(showOpen) }}
+	  {{ openImplicationKey(showOpen, gatewayPage) }}
 	  <tr><td>{{ svgellipse("uncountableComeager") }}</td><td>Comeager</td></tr>
 	  <tr><td>{{ svgellipse("uncountableMeager") }}</td><td>Uncountable and meager</td></tr>
 	  <tr><td>{{ svgellipse("countable") }}</td><td>Countable</td></tr>
 	</table>
-	Stripes indicate unknown category information. Colors alternate between the possible extremes.
+	<a href="{{ gatewayPage }}#stripes" target="_blank">Stripes</a> indicate unknown category information. Colors alternate between the possible extremes.
     </div>
   </div>
 
