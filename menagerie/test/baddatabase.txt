@@ -1,0 +1,4 @@
+A "A is a bēautiful class"
+A -> B "B is a bēautiful class too"
+M(A) = 1 "A is big"
+M(B) = 0 "B, however is smāll"
