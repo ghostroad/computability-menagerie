@@ -1,0 +1,2 @@
+recursive-include menagerie/webapp/templates *
+recursive-include menagerie/webapp/static *
