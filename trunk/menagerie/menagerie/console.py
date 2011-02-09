@@ -49,7 +49,7 @@ def importOrCompileMenagerie(errorHandler, args):
         if m.errors:
             info.write("\nErrors found:\n")
             for error in m.errors:
-                info.write(error + "\n")
+                info.write(error.encode('utf-8') + "\n")
                 errorHandler.error('Aborting compilation.')
         open(pyFilename, "w").write(m.compile())
         info.write("Done.\n")
