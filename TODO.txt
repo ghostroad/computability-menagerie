@@ -1,10 +1,8 @@
+* Handle parse exceptions in a nicer way
 * Unzip Firefox MathJax patch to enable svg fonts
 * Key for striped arrows
 * Key for strong and weak open implications and link to an explanatory page
 * Error page
-* Email yvonne and john heim
 * Add a link to the database
 
-Make things easier to install and provide instructions
-Make server reload database.txt if it changes
 
