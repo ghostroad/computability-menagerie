@@ -58,12 +58,16 @@ def importOrCompileMenagerie(errorHandler, args):
 def webappMain():
     options, args = webappParser.parse_args()
     m = importOrCompileMenagerie(webappParser, args)
+    app = configureApp(m)
+    app.run(debug=True)
+
+def configureApp(m):
     from menagerie.webapp import app
     from menagerie.webapp.apputils import Coloring
     app.config['menagerie'] = m
     app.config['propertiesMap'] = Coloring(m).buildPropertiesMap()
     app.config['gatewayPage'] = "http://www.math.wisc.edu/~jmiller/menagerie.html"
-    app.run(debug=True)
+    return app
 
 def consoleMain():
     options, args = consoleParser.parse_args()
