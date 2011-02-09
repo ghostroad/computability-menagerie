@@ -3,6 +3,8 @@ setup(
     name = "Menagerie",
     version = "0.1",
     packages = find_packages(),
-    install_requires = ['pydot', 'pyparsing'],
-    entry_points = { 'console_scripts': ['menagerie = menagerie.console:main'] }
+    include_package_data = True,
+    zip_safe = False,
+    install_requires = ['pydot', 'pyparsing', 'flask'],
+    entry_points = { 'console_scripts': ['menagerie = menagerie.console:consoleMain', 'menagerie_app = menagerie.console:webappMain'] }
 )
