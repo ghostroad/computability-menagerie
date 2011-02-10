@@ -1,6 +1,7 @@
 from core import *
 import os, stat, sys, time
 from optparse import OptionParser, OptionGroup
+import pyparsing
 
 VERSION = "0.1"
 info = sys.stderr
@@ -44,16 +45,24 @@ def importOrCompileMenagerie(errorHandler, args):
     else:
         info.write("Compiling...")
         m = Menagerie()
-        MenagerieParser(m).readFromFile(dbFile)
+        try:
+            MenagerieParser(m).readFromFile(dbFile)
+        except pyparsing.ParseException as e:
+            compilationError("\nThere was an error parsing the database file:\n{0}".format(e))
         Deductions().apply(m)
         if m.errors:
             info.write("\nErrors found:\n")
             for error in m.errors:
                 info.write(error.encode('utf-8') + "\n")
-                errorHandler.error('Aborting compilation.')
+                compilationError('Aborting compilation.')
         open(pyFilename, "w").write(m.compile())
         info.write("Done.\n")
         return m
+
+def compilationError(message):
+    info.write(message)
+    info.write("\n")
+    sys.exit(1)
 
 def webappMain():
     options, args = webappParser.parse_args()
@@ -117,7 +126,7 @@ def justifyOne(m, clsName, errorHandler):
     try:
         cls = m[clsName]
     except ClassNotFoundError as e:
-        errorHandler.error(str(e))
+        errorHandler.error(e)
 
     beginDocument()
     for attr in CLASS_ATTRIBUTES:
