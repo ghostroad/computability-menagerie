@@ -69,6 +69,7 @@ BB2G -> BB1G				""
 BB2G is comeager			"The class of 2-generics is comeager"
 BN1G -> BN2G				""
 BN2G -> BN3G				""
+BN3G -/> BN2G				"$\emptyset''$ bounds no 3-generic but does bound a 2-generic"
 BN3G is meager				"The class of 3-generics is comeager"
 BN1G -> BN2R				"Every 2-random bounds a 1-generic. Indeed, the 1-generic degrees are downward dense below any 2-random degree [Kurtz 1981, PhD thesis]"
 
