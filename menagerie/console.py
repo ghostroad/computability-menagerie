@@ -26,38 +26,27 @@ consoleParser.add_option('-j', '--justify', dest='justify', metavar='CLASS | "CL
 
 webappParser = OptionParser('Usage: %prog database', version='%prog ' + VERSION)
 
-def modificationTime(fileName):
-    return time.localtime(os.stat(fileName)[stat.ST_MTIME])
-
-def importOrCompileMenagerie(errorHandler, args):
+def compileMenagerie(errorHandler, args):
     if len(args)>1: errorHandler.error('Too many arguments')
     if len(args)<1: errorHandler.error('No database file specified')
 
     dbFile = args[0]
     if not os.path.exists(dbFile): errorHandler.error("{0} not found".format(dbFile))
     
-    dbModTime = modificationTime(dbFile)
-    pyFile = os.path.splitext(os.path.basename(dbFile))[0]
-    pyFilename = pyFile + ".py"
-    if os.path.exists(pyFilename) and modificationTime(pyFilename) >= dbModTime:
-        sys.path.append(os.getcwd())
-        return __import__(pyFile).menagerie
-    else:
-        info.write("Compiling...")
-        m = Menagerie()
-        try:
-            MenagerieParser(m).readFromFile(dbFile)
-        except pyparsing.ParseException as e:
-            compilationError("\nThere was an error parsing the database file:\n{0}".format(e))
-        Deductions().apply(m)
-        if m.errors:
-            info.write("\nErrors found:\n")
-            for error in m.errors:
-                info.write(error.encode('utf-8') + "\n")
-                compilationError('Aborting compilation.')
-        open(pyFilename, "w").write(m.compile())
-        info.write("Done.\n")
-        return m
+    info.write("Processing...")
+    m = Menagerie()
+    try:
+        MenagerieParser(m).readFromFile(dbFile)
+    except pyparsing.ParseException as e:
+        compilationError("\nThere was an error parsing the database file:\n{0}".format(e))
+    Deductions().apply(m)
+    if m.errors:
+        info.write("\nErrors found:\n")
+        for error in m.errors:
+            info.write(error.encode('utf-8') + "\n")
+            compilationError('Aborting compilation.')
+    info.write("Done.\n")
+    return m
 
 def compilationError(message):
     info.write(message)
@@ -66,7 +55,7 @@ def compilationError(message):
 
 def webappMain():
     options, args = webappParser.parse_args()
-    m = importOrCompileMenagerie(webappParser, args)
+    m = compileMenagerie(webappParser, args)
     app = configureApp(m)
     app.run(debug=True)
 
@@ -80,7 +69,7 @@ def configureApp(m):
 
 def consoleMain():
     options, args = consoleParser.parse_args()
-    m = importOrCompileMenagerie(consoleParser, args)
+    m = compileMenagerie(consoleParser, args)
 
     if options.justify:
         justify(m, options.justify.split(), consoleParser)

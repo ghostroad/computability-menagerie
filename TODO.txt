@@ -1,3 +1,5 @@
+* Make merge tool
+* Fix restore selected classes disabled after back button
 * Handle parse exceptions in a nicer way
 * Unzip Firefox MathJax patch to enable svg fonts
 * Error page
