@@ -32,7 +32,7 @@ span.button {
 }
 
 span.button span {
-    pointer-events: none;
+    cursor: default;
 }
 
 span.button.disabled {
