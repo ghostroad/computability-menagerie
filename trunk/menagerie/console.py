@@ -33,6 +33,9 @@ def compileMenagerie(errorHandler, args):
     dbFile = args[0]
     if not os.path.exists(dbFile): errorHandler.error("{0} not found".format(dbFile))
     
+    pyFile = os.path.splitext(os.path.basename(dbFile))[0]
+    pyFilename = pyFile + ".py"
+	
     info.write("Processing...")
     m = Menagerie()
     try:
@@ -44,9 +47,10 @@ def compileMenagerie(errorHandler, args):
         info.write("\nErrors found:\n")
         for error in m.errors:
             info.write(error.encode('utf-8') + "\n")
-            compilationError('Aborting compilation.')
+    open(pyFilename, "w").write(m.compile())	
     info.write("Done.\n")
-    return m
+    sys.path.append(os.getcwd())	
+    return __import__(pyFile).menagerie
 
 def compilationError(message):
     info.write(message)
