@@ -36,19 +36,25 @@ def compileMenagerie(errorHandler, args):
     pyFile = os.path.splitext(os.path.basename(dbFile))[0]
     pyFilename = pyFile + ".py"
 	
-    info.write("Processing...")
+    print "Processing..."
     m = Menagerie()
     try:
         MenagerieParser(m).readFromFile(dbFile)
     except pyparsing.ParseException as e:
         compilationError("\nThere was an error parsing the database file:\n{0}".format(e))
+
+    print "{0} classes".format(len(m.classes))
+    numFacts, numUnjustifiedFacts = m.numFactsAndUnjustifiedFacts();
+    print "{0} facts".format(numFacts)
+    print "{0} unjustified facts".format(numUnjustifiedFacts)
+
     Deductions().apply(m)
     if m.errors:
         info.write("\nErrors found:\n")
         for error in m.errors:
             info.write(error.encode('utf-8') + "\n")
     open(pyFilename, "w").write(m.compile())	
-    info.write("Done.\n")
+    print "Done.\n"
     sys.path.append(os.getcwd())	
     return __import__(pyFile).menagerie
 
@@ -70,6 +76,10 @@ def configureApp(m):
     app.config['propertiesMap'] = Coloring(m).buildPropertiesMap()
     app.config['gatewayPage'] = "http://www.math.wisc.edu/~jmiller/menagerie.html"
     return app
+
+def compileMain():
+    options, args = webappParser.parse_args()
+    m = compileMenagerie(webappParser, args)
 
 def consoleMain():
     options, args = consoleParser.parse_args()
