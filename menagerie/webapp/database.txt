@@ -158,7 +158,7 @@ BBmin -/> NotHigh			"There is a high minimal degree by Cooper's jump inversion t
 
 BBmin -/> BNmin				"Consider any minimal degree"
 BNmin -> NotPA				"There is nonempty $\Pi^0_1$ class of reals, each of which computes a minimal degree [Groszek, Slaman 1997, $\Pi^0_1$ classes and minimal degrees]"
-M(BNmin) = 1                "The set of reals that bound no minimal degree has measure 1. [Paris 1977]"
+BB2R -> BNmin               "The 1-generics are downward dense below any 2-random. [Day 2011]"
 LowSchnorr -/> BNmin		"The standard construction of a minimal degree makes it computably traceable"
 
 BB1G -/> BNmin				"There is a 1-generic bounding a minimal degree [Kumabe 1990; Chong and Downey 1990]"
