@@ -85,7 +85,7 @@ NotDNC -> BN1R				"Every 1-random compute a diagonally noncomputable function [K
 NotDNCinZP -> BN2R			"Relativize the fact [Kučera 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA] that every 1-random computes a diagonally noncomputable function"
 BB1G -> NotDNC
 
-HIF -> NotDNCinZP			# this is a slight generalization of Kurtz’s result that no 2-random set can be computably dominated
+HIF -> NotDNCinZP			"This is a slight generalization of Kurtz’s result that no 2-random set can be computably dominated."
 HIF -> BN1G					"Every 1-generic is hyperimmune"
 HIF -> NotHigh				"By Martin's theorem and the definition of hyperimmune-free"
 BB3R -> NotHigh				"Every 3-random $A$ satisfies $A''=A\oplus 0''$ [Kurtz 1981, PhD thesis]. So if $A$ were high, then $A'$ would compute $A''$"
@@ -180,6 +180,7 @@ BBmin -/> BNDeltaTwo		"There is a minimal degree below $\emptyset'$ [Sacks 1963]
 BBmin -/> BNHIF				"The standard construction of a minimal degree makes it hyperimmune-free"
 BBmin -/> BOGL1				"[Sasso 1974, A minimal degree not realizing least possible jump]"
 BBmin -/> NotDNC			"[Kumabe and Lewis 2009, A fixed-point-free minimal degree]"
+BBmin -/> NotDNCinZP        "[Khan, Miller 2012] Given any X, there is a DNC relative to X that is of minimal degree."
 
 DeltaTwo -> BNHIF			"No noncomputable $\Delta^0_2$ degree is hyperimmune-free [W. Miller and Martin 1968, The degrees of hyperimmune sets]"
 HIF -> BNDeltaTwo			"No noncomputable $\Delta^0_2$ degree is hyperimmune-free [W. Miller and Martin 1968, The degrees of hyperimmune sets]"
