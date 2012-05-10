@@ -1,11 +1,7 @@
 #
-# Class Menagerie Database
+# The Computability Menagerie Database
+# Last Modified: May 10, 2012
 #
-# Date: August 11, 2010
-#
-
-########################
-########################
 #
 # File Format:
 #
@@ -15,15 +11,41 @@
 # Inclusion: a -> b ["justify"]
 # Non-inclusion: a -/> b ["justify"]
 # Strict inclusion: a ->> b ["justify implication" ["justify strictness"]]
+#
 # Cardinality, Category: a [is] countable ["justify"] (or uncountable, comeager, meager)
 # Packing dimension, Hausdorff dimension, Measure: PD(a) = 0 ["justify"] (or HD, M; or 1)
 #
-# Justification is preferably LaTeX: "No $\Delta^0_2$ set is 2-random"
+# Full name: a "name"
+#
+# Justifications are preferably LaTeX: "No $\Delta^0_2$ set is 2-random"
+# Class names are preferably plain text: "bounds only GL_1"
 # Use an empty justification string (i.e., "") for things that should be obvious
 #
-########################
-########################
+#
+#######################################
+#
+# Your Additions
+#
+# Please send additions and corrections
+# to Joe Miller <jmiller@math.wisc.edu>
+#
 
+
+
+
+
+
+
+
+
+
+
+
+#######################################
+
+#
+# Classes
+#
 
 ArrayComp "array computable"
 CET "c.e. traceable"
@@ -42,6 +64,8 @@ BNDeltaTwo "bounds no nonzero Delta_2"
 BNHIF "bounds no nonzero HIF degree"
 BNLFO "bounds no nonzero low for Omega"
 BNmin "bounds no minimal degree"
+BNSC "bounds no shift-complex"
+BNW2G "bounds no weak 2-generic"			# Bounding a weak 2-generic is equivalent to computing a function that escapes all 0'-computable functions and to containing a bi-hyperhyperimmune set [Andrews, Gerdes, Miller]
 BOGL1 "bounds only GL_1"
 BOGL2 "bounds only GL_2"
 DeltaTwo "Delta_2"
@@ -49,8 +73,8 @@ HIF "hyperimmune-free"
 JumpTraceable "jump traceable"
 Low "low"
 Low1Rand "low for random"
-LowKurtz "low for Kurtz random"
-LowSchnorr "computably traceable"
+LowKurtz "low for Kurtz random"				# Low for Kurtz is equivalent to non-DNC and HIF 
+LowSchnorr "computably traceable"			# Computably traceable is equivalent to low for Schnorr
 NotAboveZP "incomplete"
 NotDNC "not DNC"
 NotDNCinZP "not DNC in 0'"
@@ -59,16 +83,11 @@ NotPA "not PA"
 NotPAinZP "not PA in 0'"
 OmegaLow "low for Omega"
 SuperLow "superlow"
-BNSC "bounds no shift-complex"
 
-BIF -> HIF                  "Every hyperimmune degree is bi-immune. [Jockusch 1969]"
-BIF -> BN1R                 "Every 1-random (in fact, every Kurtz random) is bi-immune."
-BIF -/> BBmin				"There is a pair of sets $A$ and $B$ of incomparable degree such that $A \oplus B$ computes no bi-immune set. [Jockusch 1969]"
-BIF -/> BNmin               "There is a minimal bi-immune free degree. [Jockusch 1969]"
-BIF -/> BNHIF				"There is a nonzero bi-immune free degree and every bi-immune free degree is hyperimmune-free. [Jockusch 1969]"
-BIF -> NotDNC				"Every DNR function computes a bi-immune set. [Lewis 2012]"
-BIF is uncountable			""
-PD(BIF) = 1					"For any X, there is a bi-immune free set with effective packing dimmension 1 relative to X. [Khan 2012]"
+#
+# Facts
+#
+
 BB3R -> BB2R				""
 M(BB3R) = 1					"The class of 3-randoms has measure one"
 BN1R -> BN2R				""
@@ -79,19 +98,19 @@ BN1G -> BN2G				""
 BN2G -> BN3G				""
 BN3G -/> BN2G				"$\emptyset''$ bounds no 3-generic but does bound a 2-generic"
 BN3G is meager				"The class of 3-generics is comeager"
-BN1G -> BN2R				"Every 2-random bounds a 1-generic. [Kurtz 1981, PhD thesis]"
+BN1G -> BN2R				"Every 2-random bounds a 1-generic [Kurtz 1981, PhD thesis]"
 
 NotDNC -> NotDNCinZP		""
-HD(NotDNCinZP) = 0
+HD(NotDNCinZP) = 0			# UNJUSTIFIED
 NotDNC -> BN1R				"Every 1-random compute a diagonally noncomputable function [Kučera 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA]"
 NotDNCinZP -> BN2R			"Relativize the fact [Kučera 1985, Measure, $\Pi^0_1$ classes, and complete extensions of PA] that every 1-random computes a diagonally noncomputable function"
-BB1G -> NotDNC
+BB1G -> NotDNC				"[Demuth and Kučera 1987, Remarks on 1-genericity, semigenericity and related concepts]"
 
-HIF -> NotDNCinZP			"This is a slight generalization of Kurtz’s result that no 2-random set can be computably dominated."
+HIF -> NotDNCinZP			"This is a slight generalization of Kurtz’s result that no 2-random set can be computably dominated"
 HIF -> BN1G					"Every 1-generic is hyperimmune"
 HIF -> NotHigh				"By Martin's theorem and the definition of hyperimmune-free"
-BB3R -> NotHigh				"Every 3-random $A$ satisfies $A''=A\oplus 0''$ [Kurtz 1981, PhD thesis]. So if $A$ were high, then $A'$ would compute $A''$"
-BB2G -> NotHigh				"Every 2-generic $A$ satisfies $A''=A\oplus 0''$ [Kurtz 1981, PhD thesis]. So if $A$ were high, then $A'$ would compute $A''$"
+BB3R -> NotHigh				"Every 3-random $A$ satisfies $A''=A\oplus\emptyset''$ [Kurtz 1981, PhD thesis]. So if $A$ were high, then $A'$ would compute $A''$"
+BB2G -> NotHigh				"Every 2-generic $A$ satisfies $A''=A\oplus\emptyset''$ [Kurtz 1981, PhD thesis]. So if $A$ were high, then $A'$ would compute $A''$"
 BB1G -/> NotHigh			"Friedberg jump inversion produces a high 1-generic"
 BB2R -/> NotHigh			"$\Omega$ relative to $\emptyset'$ is high and 2-random"
 
@@ -114,75 +133,69 @@ SuperLow -/> OmegaLow		"There is a superlow 1-random $X$ by the (super)low basis
 
 LowKurtz -> NotDNC			"[Greenberg and Miller 2009, Lowness for Kurtz randomness]"
 LowKurtz -> HIF				"[Downey, Griffiths and Reid 2004, On Kurtz randomness]"
-
-	# Miller? (unpublished): direct construction of a HIF with effective PD 1 (delayed splitting;
-	# see Downey, Greenberg) with NotDNC added in by having long waits between fat sections
-PD(LowKurtz) = 1
+PD(LowKurtz) = 1			# UNJUSTIFIED -- direct construction of a HIF with effective PD 1 (delayed splitting; see Downey, Greenberg) with NotDNC added in by having long waits between fat sections
 
 NotPA -> NotAboveZP			"$\emptyset'$ has PA degree"
-NotAboveZP ->> NotPAinZP
+NotAboveZP ->> NotPAinZP	# UNJUSTIFIED, UNJUSTIFIED
 BN1R -> NotPA				"There is a $\Pi^0_1$ class containing only 1-random reals, hence every PA degree computes a 1-random"
-BN2R ->> NotPAinZP
-
+BN2R ->> NotPAinZP			# UNJUSTIFIED, UNJUSTIFIED
 SuperLow -/> NotPA			"Use the (super)low basis theorem"
 HIF -/> NotPA				"Use the hyperimmune-free basis theorem"
 OmegaLow -/> NotPA			"Use the low for $\Omega$ basis theorem [Downey, Hirschfeldt, Miller and Nies 2005; Reimann and Slaman, Measures and their random reals]"
 
-LowSchnorr -> LowKurtz		"Computably traceable implies hyperimmune-free and not DNR, which in turn implies being low for Kurtz (tests) [Stephan and Yu 2006, Lowness for weakly 1-generic and Kurtz-random]"
-LowSchnorr is uncountable
+LowSchnorr -> LowKurtz		"Computably traceable implies hyperimmune-free and not DNC, which in turn implies being low for Kurtz (tests) [Stephan and Yu 2006, Lowness for weakly 1-generic and Kurtz-random]"
+LowSchnorr is uncountable	# UNJUSTIFIED
 LowSchnorr -> CET			""
-PD(CET) = 0					# Trace with $n$ possibilities for first $2^n$ bytes; compress
-Low1Rand -> JumpTraceable	# Even jump traceable by O(n log_2 n).
+PD(CET) = 0					# UNJUSTIFIED -- Trace with $n$ possibilities for first $2^n$ bytes; compress
+Low1Rand -> JumpTraceable	# UNJUSTIFIED -- Even jump traceable by O(n log_2 n).
 JumpTraceable -> BOGL1		"Every jump traceable is GL$_1$ [Nies 2002, Reals which compute little]"
 JumpTraceable is uncountable	"[Nies 2002, Reals which compute little]"
 JumpTraceable -> CET		"[Nies 2002, Reals which compute little]"
 JumpTraceable -/> BNHIF		"There is a nonempty $\Pi^0_1$ class of jump traceable reals with no computable paths [Nies 2009, Computability and randomness]. Thus there is a noncomputable hyperimmune-free jump traceable by the hyperimmune-free basis theorem"
 JumpTraceable -/> NotHigh	"See Corollary 8.4.5 in [Nies 2009, Computability and randomness]"
-CET -> NotDNC				# Trace initial segments of the function slowly enough that you can hit all possibilities.
+CET -> NotDNC				# UNJUSTIFIED -- Trace initial segments of the function slowly enough that you can hit all possibilities.
 
 BN1G -> ArrayComp			"Every array noncomputable bounds a 1-generic [Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]"
 ArrayComp -> BOGL2			"[Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]"
 Low -/> ArrayComp			"There is a low c.e. degree that is array noncomputable [Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]"
 SuperLow -> ArrayComp		"[Nies and Ng] (see Exercise 8.2.10 in [Nies 2009, Computability and Randomness]"
-OmegaLow -> ArrayComp
-CET -> ArrayComp
+OmegaLow -> ArrayComp		# UNJUSTIFIED
+CET -> ArrayComp			# UNJUSTIFIED
 
 Low -> BOGL1				""
 BOGL1 -> BOGL2				""
-BOGL2 -> NotAboveZP			"If $A\geq_T \emptyset'$, then $A''>_T (A\oplus\emptyset')' \equiv_T A'$"
+BOGL2 -> NotAboveZP			"If $A\geq_T\emptyset'$, then $A''>_T A' \equiv_T (A\oplus\emptyset')'$"
 BOGL1 -> BN2G				"Jockusch proved that every 2-generic computes a properly GL$_2$ set [1980, Degrees of generic sets]"
 BOGL2 -> BN3G				"Jockusch proved that every 3-generic computes a properly GL$_3$ set [1980, Degrees of generic sets]"
 OmegaLow -> BOGL1			"Theorem 3.2 in [Nies, Stephan and Terwijn 2005, Randomness, relativization and Turing degrees]. See also Proposition 3.4.10 in [Nies 2009, Computability and Randomness]"
-
-	# Lerman (1983, Thm. V.3.12) constructed a set A of minimal Turing degree such that A''\equiv_T\emptyset'' and A not? GL_1.
-	# Examining his construction reveals that A is computably traceable.
-LowSchnorr -/> BOGL1
+BOGL2 -/> BN2G				"Every 2-generic $A$ satisfies $A''=A\oplus\emptyset''$ [Kurtz 1981, PhD thesis]. Let $A\leq_T\emptyset''$ be 2-generic. Then any for any $B\leq_T A$ we have $B''\leq_T A''\leq_T\emptyset''\leq_T (B\oplus\emptyset')'$"
+LowSchnorr -/> BOGL1		# UNJUSTIFIED -- Lerman (1983, Thm. V.3.12) constructed a set A of minimal Turing degree such that A''\equiv_T\emptyset'' and A not? GL_1. Examining his construction reveals that A is computably traceable.
 
 BBmin -> BN1R				"If $A\oplus B$ is 1-random then $A$ and $B$ are Turing incomparable"
 BBmin -> BN1G				"If $A\oplus B$ is 1-generic then $A$ and $B$ are Turing incomparable"
-PD(BBmin) = 1				"In [Downey and Greenberg 2008, Turing degreed of reals of positive effective packing dimension], it is shown that there is an $X$ of minimal degree and effective packing dimension 1. In fact, this partially relativizes to allow $X$ to have effective packing dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) packing dimension 1."
+PD(BBmin) = 1				"In [Downey and Greenberg 2008, Turing degreed of reals of positive effective packing dimension], it is shown that there is an $X$ of minimal degree and effective packing dimension 1. In fact, this partially relativizes to allow $X$ to have effective packing dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) packing dimension 1"
 HD(BN1R) = 1				"In [Greenberg and Miller 2011, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of effective Hausdorff dimension 1 that computes no 1-random. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of reals that bound no 1-random has (classical) Hausdorff dimension 1"
 BBmin -/> NotHigh			"There is a high minimal degree by Cooper's jump inversion theorem for minimal degrees"
 
 BBmin -/> BNmin				"Consider any minimal degree"
 BNmin -> NotPA				"There is nonempty $\Pi^0_1$ class of reals, each of which computes a minimal degree [Groszek, Slaman 1997, $\Pi^0_1$ classes and minimal degrees]"
-BB2R -> BNmin               "The 1-generics are downward dense below any 2-random. [Barmpalias, Day, Lewis 2012]"
+BB2R -> BNmin               "The 1-generics are downward dense below any 2-random [Barmpalias, Day, Lewis 2012]"
 LowSchnorr -/> BNmin		"The standard construction of a minimal degree makes it computably traceable"
 
 BB1G -/> BNmin				"There is a 1-generic bounding a minimal degree [Kumabe 1990; Chong and Downey 1990]"
 BB1G -/> BNDeltaTwo			"There is a $\Delta^0_2$ 1-generic"
-BB1G -/> BNHIF
+BB1G -/> BNHIF				# UNJUSTIFIED
 
 BB2G -> BNDeltaTwo			"Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). There are no $\Delta^0_2$ 2-generics"
 BB2G -> BNHIF				"Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). But every 2-generic (even every 1-generic) is hyperimmune"
 BB2G -> BNmin				"Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). A minimal degree clearly does not bound a 2-generic"
-BB2G -> BNLFO
+BB2G -> BNLFO				# UNJUSTIFIED
 
 BBmin -/> BNDeltaTwo		"There is a minimal degree below $\emptyset'$ [Sacks 1963]"
 BBmin -/> BNHIF				"The standard construction of a minimal degree makes it hyperimmune-free"
 BBmin -/> BOGL1				"[Sasso 1974, A minimal degree not realizing least possible jump]"
 BBmin -/> NotDNC			"[Kumabe and Lewis 2009, A fixed-point-free minimal degree]"
-BBmin -/> NotDNCinZP        "[Khan, Miller 2012] Given any X, there is a DNC relative to X that is of minimal degree."
+BBmin -/> NotDNCinZP        "Given any $X$, there is a DNC relative to $X$ that is of minimal degree [Khan]"
 
 DeltaTwo -> BNHIF			"No noncomputable $\Delta^0_2$ degree is hyperimmune-free [W. Miller and Martin 1968, The degrees of hyperimmune sets]"
 HIF -> BNDeltaTwo			"No noncomputable $\Delta^0_2$ degree is hyperimmune-free [W. Miller and Martin 1968, The degrees of hyperimmune sets]"
@@ -191,9 +204,9 @@ OmegaLow -> BNHIF			"Hyperimmune-free and low for $\Omega$ implies computable [M
 
 BB2R -> BNDeltaTwo			"Every (weak) 2-random forms a minimal pair with $\emptyset'$" 
 BNDeltaTwo -> NotAboveZP	""
-BNHIF -> NotPAinZP
+BNHIF -> NotPAinZP			# UNJUSTIFIED
 BNLFO -/> BNDeltaTwo		"Sasso, Epstein and Cooper [Sasso 1974, A minimal degree not realizing least possible jump] produced a non-low $\Delta^0_2$ minimal degree. Obviously, this degree cannot compute a noncomputable low for $\Omega$ (which must be GL$_1$)"
-HD(BNLFO) = 1
+HD(BNLFO) = 1				# UNJUSTIFIED
 
 Low1Rand -> OmegaLow		""
 Low1Rand -> SuperLow		"[Nies 2005, Lowness properties and randomness]"
@@ -210,16 +223,31 @@ LowSchnorr -/> BNHIF		"Every computably traceable degree is hyperimmune-free"
 BNmin -/> BNDeltaTwo		"Every noncomputable degree below a $\Delta^0_2$ 1-generic contains a 1-generic [Haught 1986, The degrees below a 1-generic degree $<{\bf 0}'$], hence is not minimal"
 BNmin -/> BNHIF				"Demuth proved that every noncomputable set truth-table below a 1-random is Turing equivalent to a 1-random (see [Downey and Hirschfeldt 2010, Algorithmic randomness and complexity]). Consider a hyperimmune-free 1-random $X$. Every set Turing below $X$ is truth-table below $X$. Thus every noncomputable degree below $X$ is 1-random, hence not minimal"
 
-BNSC -> NotPA "For every $\delta \in (0, 1)$ there is a $\Pi^0_1$ class of $\delta$-shift-complex sequences, nonempty by a construction of Levin. Thus every PA degree computes a shift-complex sequence."
-BN1R -/> BNSC "There is a shift-complex sequence that computes no 1-random. [Khan, Miller 2010]"
-M(BNSC) = 1 "The measure of oracles that compute shift-complex sequences is 0 [Rumyantsev]"
+BNSC -> NotPA				"For every $\delta\in (0, 1)$ there is a $\Pi^0_1$ class of $\delta$-shift-complex sequences, nonempty by a construction of Levin. Thus every PA degree computes a shift-complex sequence"
+BN1R -/> BNSC				"There is a shift-complex sequence that computes no 1-random [Khan]"
+M(BNSC) = 1					"The measure of oracles that compute shift-complex sequences is 0 [Rumyantsev 2011]"
+BNSC -/> BNDeltaTwo			"There is a low 1-random and a 1-random computes a shift-complex sequence iff it is complete [Khan]"
+BB2R -> BNSC				"No 2-random computes a shift-complex sequence [Khan]"
+Low1Rand -> BNSC			"Every low for random is $K$-trivial and no $K$-trivial is shift-complex"
+NotDNC -> BNSC				"A shift-complex sequence $X$ is DNC as witnessed by (a finite modification of) the function $f(n) = X\restriction n$"
 
-BNSC -/> BNDeltaTwo "There is a low 1-random and a 1-random computes a shift-complex sequence iff it is complete. [Khan, Miller 2010]"
-BB2R -> BNSC "No 2-random computes a shift-complex sequence. [Khan, Miller 2010]"
-Low1Rand -> BNSC "Every low for random is K-trivial and no K-trivial is shift-complex."
-NotDNC -> BNSC "A shift-complex sequence $X$ is DNC as witnessed by (a finite modification of) the function $f(n) = X \restriction n$."
+BIF -> HIF                  "Every hyperimmune degree is bi-immune [Jockusch 1969]"
+BIF -> BN1R                 "Every 1-random (in fact, every Kurtz random) is bi-immune"
+BIF -> NotDNC				"Every DNC function computes a bi-immune set [Lewis]"
+BIF -> LowKurtz				"Every DNC function computes a bi-immune set [Lewis], as does every hyperimmune degree [Jockusch 1969]. But low for Kurtz random is equivalent to non-DNC and hyperimmune-free [Greenberg and Miller 2009, Lowness for Kurtz randomness]"
+BIF -/> BBmin				"There is a pair of sets $A$ and $B$ of incomparable degree such that $A\oplus B$ computes no bi-immune set [Jockusch 1969]"
+BIF -/> BNmin               "There is a minimal bi-immune free degree [Jockusch 1969]"
+BIF -/> BNHIF				"There is a nonzero bi-immune free degree and every bi-immune free degree is hyperimmune-free [Jockusch 1969]"
+BIF is uncountable			# UNJUSTIFIED
+PD(BIF) = 1					"For any $X$, there is a bi-immune free set with effective packing dimension 1 relative to $X$ [Khan]"
 
- 
+BNW2G -> BN2G				""
+BN1G -> BNW2G				""
+DeltaTwo -> BNW2G			"If $A$ is $\Delta^0_2$, then $2^\omega\smallsetminus A$ is a dense $\Sigma^0_2$ class not containing $A$"		
+ArrayComp -> BNW2G			# UNJUSTIFIED
+BOGL1 -/> BNW2G				# UNJUSTIFIED -- There is a weak 2-generic that bounds only GL_1
+BNW2G -/> NotPAinZP			# UNJUSTIFIED -- Consider a HIF in \emptyset'
+
 #
 # The End
 #
