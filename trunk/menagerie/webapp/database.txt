@@ -42,7 +42,6 @@
 
 
 #######################################
-
 #
 # Classes
 #
@@ -219,7 +218,7 @@ BNLFO -> NotAboveZP			"There is a noncomputable c.e. low for random [Kučera and
 BBmin -/> BNLFO				"There is a noncomputable c.e. low for random [Kučera and Terwijn 1999, Lowness for the class of random sets], which is obviously low for $\Omega$, and all noncomputable c.e. sets compute minimal degrees [Yates 1970, Initial segments of the degrees of unsolvability, II; Cooper 1972, Degrees of unsolvability complementary between recursively enumerable degrees]"
 BB1G -/> BNLFO				"There is a noncomputable c.e. low for random [Kučera and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e. set computes a 1-generic"
 
-LowSchnorr -/> BNHIF		"Every computably traceable degree is hyperimmune-free"
+LowSchnorr -/> BNHIF		""
 BNmin -/> BNDeltaTwo		"Every noncomputable degree below a $\Delta^0_2$ 1-generic contains a 1-generic [Haught 1986, The degrees below a 1-generic degree $<{\bf 0}'$], hence is not minimal"
 BNmin -/> BNHIF				"Demuth proved that every noncomputable set truth-table below a 1-random is Turing equivalent to a 1-random (see [Downey and Hirschfeldt 2010, Algorithmic randomness and complexity]). Consider a hyperimmune-free 1-random $X$. Every set Turing below $X$ is truth-table below $X$. Thus every noncomputable degree below $X$ is 1-random, hence not minimal"
 
@@ -244,9 +243,9 @@ PD(BIF) = 1					"For any $X$, there is a bi-immune free set with effective packi
 BNW2G -> BN2G				""
 BN1G -> BNW2G				""
 DeltaTwo -> BNW2G			"If $A$ is $\Delta^0_2$, then $2^\omega\smallsetminus A$ is a dense $\Sigma^0_2$ class not containing $A$"		
-ArrayComp -> BNW2G			# UNJUSTIFIED
-BOGL1 -/> BNW2G				# UNJUSTIFIED -- There is a weak 2-generic that bounds only GL_1
-BNW2G -/> NotPAinZP			# UNJUSTIFIED -- Consider a HIF in \emptyset'
+ArrayComp -> BNW2G			"If $A$ is weak 2-generic, then the function mapping $n$ to the $n$th element of $A$ is not dominated by the settling-time function for $\emptyset'$, hence $A$ is not array computable"
+BOGL1 -/> BNW2G				"Build a partial $\emptyset'$-computable tree as as follows. Make the $n$th splits above the root $e$-splitting for every $e\leq n$ for which this is possible. Then meet the $n$th $\Sigma^0_1[\emptyset']$ class on the right branch of each split. (If this is not possible, the tree stops growing above that branch.) By going right at the $n$th split if only if the $n$th $\Sigma^0_1[\emptyset']$ class is dense, we get a weak 2-generic path $A$. But the construction guarantees that if $B\leq_T A$ is non-computable, then $A\leq_T B\oplus\emptyset'$. Therefore, $B'\leq_T A'\leq_T A\oplus\emptyset'\leq_T B\oplus\emptyset'$, so $A$ bounds only GL$_1$ degrees."
+BNW2G -/> NotPAinZP			"By relativizing the hyperimmune-free basis theorem to $\emptyset'$, there is a degree PA in $\emptyset'$ such that every function it computes is dominated by a $\emptyset'$-computable function. But every weak 2-generic $A$ computes a function that escapes every $\emptyset'$-computable function, in particular, the function mapping $n$ to the $n$th element of $A$"
 
 #
 # The End
