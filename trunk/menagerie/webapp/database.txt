@@ -1,6 +1,6 @@
 #
 # The Computability Menagerie Database
-# Last Modified: May 10, 2012
+# Last Modified: May 13, 2012
 #
 #
 # File Format:
@@ -17,7 +17,7 @@
 #
 # Full name: a "name"
 #
-# Justifications are preferably LaTeX: "No $\Delta^0_2$ set is 2-random"
+# Justifications preferably have TeX-style math: "No $\Delta^0_2$ set is 2-random"
 # Class names are preferably plain text: "bounds only GL_1"
 # Use an empty justification string (i.e., "") for things that should be obvious
 #
@@ -143,7 +143,7 @@ HIF -/> NotPA				"Use the hyperimmune-free basis theorem"
 OmegaLow -/> NotPA			"Use the low for $\Omega$ basis theorem [Downey, Hirschfeldt, Miller and Nies 2005; Reimann and Slaman, Measures and their random reals]"
 
 LowSchnorr -> LowKurtz		"Computably traceable implies hyperimmune-free and not DNC, which in turn implies being low for Kurtz (tests) [Stephan and Yu 2006, Lowness for weakly 1-generic and Kurtz-random]"
-LowSchnorr is uncountable	# UNJUSTIFIED
+LowSchnorr is uncountable	"There are continuum many computably traceable degrees [Terwijn and Zambella 2001, Algorithmic randomness and lowness]"
 LowSchnorr -> CET			""
 PD(CET) = 0					# UNJUSTIFIED -- Trace with $n$ possibilities for first $2^n$ bytes; compress
 Low1Rand -> JumpTraceable	# UNJUSTIFIED -- Even jump traceable by O(n log_2 n).
@@ -159,7 +159,7 @@ ArrayComp -> BOGL2			"[Downey, Jockusch and Stob 1996, Array nonrecursive degree
 Low -/> ArrayComp			"There is a low c.e. degree that is array noncomputable [Downey, Jockusch and Stob 1996, Array nonrecursive degrees and genericity]"
 SuperLow -> ArrayComp		"[Nies and Ng] (see Exercise 8.2.10 in [Nies 2009, Computability and Randomness]"
 OmegaLow -> ArrayComp		# UNJUSTIFIED
-CET -> ArrayComp			# UNJUSTIFIED
+CET -> ArrayComp			"See Corollary 8.2.8 in [Nies 2009, Computability and randomness]"
 
 Low -> BOGL1				""
 BOGL1 -> BOGL2				""
@@ -175,15 +175,15 @@ BBmin -> BN1G				"If $A\oplus B$ is 1-generic then $A$ and $B$ are Turing incomp
 PD(BBmin) = 1				"In [Downey and Greenberg 2008, Turing degreed of reals of positive effective packing dimension], it is shown that there is an $X$ of minimal degree and effective packing dimension 1. In fact, this partially relativizes to allow $X$ to have effective packing dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) packing dimension 1"
 HD(BN1R) = 1				"In [Greenberg and Miller 2011, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of effective Hausdorff dimension 1 that computes no 1-random. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of reals that bound no 1-random has (classical) Hausdorff dimension 1"
 BBmin -/> NotHigh			"There is a high minimal degree by Cooper's jump inversion theorem for minimal degrees"
-
 BBmin -/> BNmin				"Consider any minimal degree"
 BNmin -> NotPA				"There is nonempty $\Pi^0_1$ class of reals, each of which computes a minimal degree [Groszek, Slaman 1997, $\Pi^0_1$ classes and minimal degrees]"
 BB2R -> BNmin               "The 1-generics are downward dense below any 2-random [Barmpalias, Day, Lewis 2012]"
 LowSchnorr -/> BNmin		"The standard construction of a minimal degree makes it computably traceable"
+LowSchnorr -/> BBmin		"Force with pairs of computable perfect trees to produce incomparable degrees that join to a computably traceable degree"
 
 BB1G -/> BNmin				"There is a 1-generic bounding a minimal degree [Kumabe 1990; Chong and Downey 1990]"
 BB1G -/> BNDeltaTwo			"There is a $\Delta^0_2$ 1-generic"
-BB1G -/> BNHIF				# UNJUSTIFIED
+BB1G -/> BNHIF				"Downey and Yu constructed a hyperimmune-free (minimal) degree below a 1-generic [2006, Arithmetical Sacks Forcing]"
 
 BB2G -> BNDeltaTwo			"Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). There are no $\Delta^0_2$ 2-generics"
 BB2G -> BNHIF				"Martin proved that the 2-generic degrees are downward dense below every 2-generic (see [Jockusch 1980, Degrees of generic sets]). But every 2-generic (even every 1-generic) is hyperimmune"
