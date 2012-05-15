@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
   {% from 'macros.html' import svgellipse, svgarrow, stripePattern, button, openImplicationKey %}
   <title>The Computability Menagerie</title>
@@ -43,12 +42,11 @@
   </style>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.4.4.compressed.js') }}"></script>
-  <script type="text/javascript"><![CDATA[
+  <script type="text/javascript">
      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
      $PROPERTIES = {{ propertiesMap|tojson|safe }};
      $SHOW_OPEN = '{{ "true" if showOpen else "false" }}';
      $CLASSES = '{{ classesParam }}';
-]]>
   </script>
   <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>

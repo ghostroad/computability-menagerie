@@ -24,7 +24,6 @@ def displayMenagerie(m):
     processedSvg = SVGPostProcessor().process(g)
     
     response = make_response(render_template("menagerie.html", graph = processedSvg, showOpen=showOpenImplications, propertiesMap = app.config['propertiesMap'], excludedClasses = excludedClasses, classesParam = classesParam, gatewayPage = app.config['gatewayPage']))
-    response.headers["Content-Type"] = "application/xhtml+xml"
     return response
 
 @app.route('/showProofs/<className>')
