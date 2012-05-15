@@ -125,7 +125,7 @@ function showSelectedClasses() {
 							   .html(function() {
 								     var items = [];
 								     nodes.each(function() {
-										    if (this.selected) items.push('<li>' + $PROPERTIES[this.id][2] + '</li>');
+										    if (this.selected) items.push('<li><span class="className">' + $PROPERTIES[this.id][2] + '</span></li>');
 										});
 								     items.sort();
 								     return '<ul>' + items.join("") + "</ul>";

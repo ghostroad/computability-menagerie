@@ -59,7 +59,7 @@ def buildMap(menagerie, A, B):
 
 class HtmlClassDecorator:
     def decorate(self, cls):
-        return '<span class="className">' + cls.displayName() + '</span>'
+        return cls.displayName()
 
 class HtmlWriter(Printable):
     def __init__(self):
