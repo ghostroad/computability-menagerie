@@ -1,6 +1,5 @@
-{% from 'macros.html' import button %}
 <table>
-  <tr><td><span class="className">{{ cls|decorate|safe }}</span></td></tr>
+  <tr><td>{{ cls|decorate|safe }}</td></tr>
   <tr><td>{% if cls.cardinality.known() %} {{cls.cardinality.prettyPropertyValue()}} {% else %} cardinality unknown {% endif %}</td></tr>
   <tr><td>{% if cls.category.known() %} {{cls.category.prettyPropertyValue()}} {% else %} category unknown {% endif %}</td></tr>
   <tr><td>measure {% if cls.measure.known() %} {{ cls.measure.propertyValue }} {% else %} unknown {% endif %}</td></tr>

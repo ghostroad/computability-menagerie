@@ -28,12 +28,11 @@ class Coloring:
 
     def buildPropertiesMap(self):
         properties = {}
-        decorator = HtmlClassDecorator()
         for cls in self.menagerie.classes:
             category = self.categoryLookupTable[(cls.cardinality.propertyValue, 
                                                  cls.category.propertyValue)]
             measure = self.measureClass(cls)
-            properties[cls.name] = (category, measure, decorator.decorate(cls))
+            properties[cls.name] = (category, measure, cls.longName)
         return properties
 
     def measureClass(self, cls):
@@ -59,7 +58,7 @@ def buildMap(menagerie, A, B):
 
 class HtmlClassDecorator:
     def decorate(self, cls):
-        return cls.displayName()
+        return "<span class=\"className\">" + cls.displayName() + "</span>"
 
 class HtmlWriter(Printable):
     def __init__(self):
