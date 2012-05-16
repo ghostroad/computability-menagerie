@@ -32,7 +32,7 @@ class Coloring:
             category = self.categoryLookupTable[(cls.cardinality.propertyValue, 
                                                  cls.category.propertyValue)]
             measure = self.measureClass(cls)
-            properties[cls.name] = (category, measure, cls.longName)
+            properties[cls.name] = (category, measure, cls.displayName())
         return properties
 
     def measureClass(self, cls):
