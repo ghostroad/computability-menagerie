@@ -233,12 +233,13 @@ NotDNC -> BNSC				"A shift-complex sequence $X$ is DNC as witnessed by (a finite
 BIF -> HIF                  "Every hyperimmune degree is bi-immune [Jockusch 1969]"
 BIF -> BN1R                 "Every 1-random (in fact, every Kurtz random) is bi-immune"
 BIF -> NotDNC				"Every DNC function computes a bi-immune set [Lewis]"
-BIF -> LowKurtz				"Every DNC function computes a bi-immune set [Lewis], as does every hyperimmune degree [Jockusch 1969]. But low for Kurtz random is equivalent to non-DNC and hyperimmune-free [Greenberg and Miller 2009, Lowness for Kurtz randomness]"
-BIF -/> BBmin				"There is a pair of sets $A$ and $B$ of incomparable degree such that $A\oplus B$ computes no bi-immune set [Jockusch 1969]"
-BIF -/> BNmin               "There is a minimal bi-immune free degree [Jockusch 1969]"
-BIF -/> BNHIF				"There is a nonzero bi-immune free degree and every bi-immune free degree is hyperimmune-free [Jockusch 1969]"
-BIF is uncountable			# UNJUSTIFIED
+BIF -> LowKurtz				"Every DNC function computes a bi-immune set [Lewis], as does every hyperimmune degree [Jockusch 1969, The degrees of bi-immune sets]. But low for Kurtz random is equivalent to non-DNC and hyperimmune-free [Greenberg and Miller 2009, Lowness for Kurtz randomness]"
+BIF -/> BBmin				"There is a pair of sets $A$ and $B$ of incomparable degree such that $A\oplus B$ computes no bi-immune set [Jockusch 1969, The degrees of bi-immune sets]"
+BIF -/> BNmin               "There is a minimal bi-immune free degree [Jockusch 1969, The degrees of bi-immune sets]"
+BIF -/> BNHIF				"There is a nonzero bi-immune free degree and every bi-immune free degree is hyperimmune-free [Jockusch 1969, The degrees of bi-immune sets]"
+BIF is uncountable			"The construction of bi-immune free degrees in [Jockusch 1969, The degrees of bi-immune sets] using computable perfect trees can be modified to produce continuum many such degrees"
 PD(BIF) = 1					"For any $X$, there is a bi-immune free set with effective packing dimension 1 relative to $X$ [Khan]"
+LowKurtz -/> BIF			"Jockusch sketches a construction of a hyperimmune-free bi-immune set at the end of [1969, The degrees of bi-immune sets]. It can easily be modified to ensure the set has non-DNR degree (hence is low for Kurtz random) as well [Mushfeq]"
 
 BNW2G -> BN2G				""
 BN1G -> BNW2G				""
