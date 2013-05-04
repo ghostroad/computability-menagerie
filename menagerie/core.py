@@ -312,6 +312,8 @@ class Property(Justifiable):
 class IsProperty(Property):
     __slots__ = []
     def __unicode__(self):
+        if self.propertyValue is None:
+            return "The {0} of {1} is unknown".format(self.propertyName, self.cls)
         return "{0} is {1}".format(self.cls, self.prettyPropertyValue())
     def writeSummaryKnown(self, out):
         out.writeClass(self.cls)
@@ -409,7 +411,7 @@ class CompositeJustification(NonEmpty, Printable):
         for child in self.children:
             self.weight += child.weight
     def __unicode__(self):
-        return self.children.__unicode__()
+        return "[" + ", ".join([child.plain() for child in self.children]) + "]"        
     def plain(self):
         return "[" + ", ".join([child.plain() for child in self.children]) + "]"
     def compileReference(self):
