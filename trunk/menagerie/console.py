@@ -1,5 +1,5 @@
 from core import *
-import os, stat, sys, time
+import os, stat, sys, time, imp
 from optparse import OptionParser, OptionGroup
 import pyparsing
 
@@ -55,8 +55,7 @@ def compileMenagerie(errorHandler, args):
             info.write(error.encode('utf-8') + "\n")
     open(pyFilename, "w").write(m.compile())	
     print "Done.\n"
-    sys.path.append(os.getcwd())	
-    return __import__(pyFile).menagerie
+    return imp.load_source(pyFile, pyFilename).menagerie
 
 def compilationError(message):
     info.write(message)

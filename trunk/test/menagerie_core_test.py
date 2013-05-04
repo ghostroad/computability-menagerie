@@ -46,6 +46,24 @@ class TestMenagerie(unittest.TestCase):
             There is a noncomputable c.e.\ low for random [Ku\u010dera and Terwijn 1999, Lowness for the class of random sets] and every noncomputable c.e.\ set computes a 1-generic""", unicode(TextWriter().write(BN1R.doesNotImply(BBmin))))
         self.assertEqual("""BN1G -> BN2G""", unicode(TextWriter().write(m["BN1G"].implies(m["BN2G"]))))
 
+    def test_cardinality_and_category_should_be_unknown_unless_specified(self):
+        m = Menagerie()
+        parser = MenagerieParser(m)
+        parser.read("A -> B")
+        A = m["A"]
+    	Deductions().apply(m)
+    	self.assertFalse(A.cardinality.known())
+    	self.assertEqual("The cardinality of A is unknown", unicode(A.cardinality))
+    	self.assertEqual("The category of A is unknown", unicode(A.category))
+    	
+    def test_inspecting_a_composite_justification(self):
+        m = Menagerie()
+        parser = MenagerieParser(m)
+        parser.read("A -> B\nB -> C")
+        Deductions().apply(m)
+        A = m["A"]
+        C = m["C"]
+        self.assertEqual("[A -> B : UNJUSTIFIED, B -> C : UNJUSTIFIED]", unicode(A.implies(C).justification))
 
     def test_load_a_database_from_a_string(self):
         m = Menagerie()
