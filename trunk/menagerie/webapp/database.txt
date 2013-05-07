@@ -252,7 +252,7 @@ BNW2G -/> NotPAinZP			"By relativizing the hyperimmune-free basis theorem to $\e
 FSI is uncountable 			"There is a perfect $\Pi^0_1$ class of reals with finite self-information. [Herbert 2013]"
 FSI -> JumpTraceable		"[Hirschfeldt, Weber 2012]"
 Low1Rand -> FSI				"See, for example, [Hirschfeldt, Weber 2012]"
-FSI -/> BNHIF				"There is a perfect $\Pi^0_1$ class of reals with finite self-information. [Herbert 2013]"
+FSI -/> BNHIF				"There is a perfect $\Pi^0_1$ class of reals with finite self-information [Herbert 2013]. By the hyperimmune-free basis theorem, there is a hyperimmune-free real with finite self-information."
 
 #
 # The End

@@ -163,7 +163,7 @@ menagerie.addImplication(DeltaTwo, BNW2G, DirectJustification(u'If $A$ is $\\Del
 menagerie.addNonimplication(DeltaTwo, NotAboveZP, DirectJustification(u"$\\emptyset'$ is $\\Delta^0_2$"))
 menagerie.setProperty(FSI, "cardinality", 1, DirectJustification(u'There is a perfect $\\Pi^0_1$ class of reals with finite self-information. [Herbert 2013]'))
 menagerie.addImplication(FSI, JumpTraceable, DirectJustification(u'[Hirschfeldt, Weber 2012]'))
-menagerie.addNonimplication(FSI, BNHIF, DirectJustification(u'There is a perfect $\\Pi^0_1$ class of reals with finite self-information. [Herbert 2013]'))
+menagerie.addNonimplication(FSI, BNHIF, DirectJustification(u'There is a perfect $\\Pi^0_1$ class of reals with finite self-information [Herbert 2013]. By the hyperimmune-free basis theorem, there is a hyperimmune-free real with finite self-information.'))
 menagerie.addImplication(HIF, NotDNCinZP, DirectJustification(u'This is a slight generalization of Kurtz\u2019s result that no 2-random set can be computably dominated'))
 menagerie.addImplication(HIF, BN1G, DirectJustification(u'Every 1-generic is hyperimmune'))
 menagerie.addImplication(HIF, NotHigh, DirectJustification(u"By Martin's theorem and the definition of hyperimmune-free"))
