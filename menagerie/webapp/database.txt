@@ -251,7 +251,7 @@ BNW2G -/> NotPAinZP			"By relativizing the hyperimmune-free basis theorem to $\e
 
 FSI is uncountable 			"The class of reals with finite self-information contains a perfect set. [Herbert 2013]"
 FSI -> JumpTraceable		"[Hirschfeldt, Weber 2012]"
-Low1Rand -> FSI
+Low1Rand -> FSI				"See, for example, [Hirschfeldt, Weber 2012]"
 
 
 #
