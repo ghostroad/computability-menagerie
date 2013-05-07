@@ -68,7 +68,7 @@ BNW2G "bounds no weak 2-generic"			# Bounding a weak 2-generic is equivalent to 
 BOGL1 "bounds only GL_1"
 BOGL2 "bounds only GL_2"
 DeltaTwo "Delta_2"
-FSI "Finite self-information"
+FSI "finite self-information"
 HIF "hyperimmune-free"
 JumpTraceable "jump traceable"
 Low "low"
