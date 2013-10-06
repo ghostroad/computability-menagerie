@@ -48,7 +48,6 @@
      $CLASSES = '{{ classesParam }}';
      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
   </script>
-  <script type="text/javascript" src="{{ url_for('static', filename='hovertip.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='menagerie.js') }}"></script>
  </head>
 
@@ -109,6 +108,9 @@
        Selected classes
      </div>
 
+   </div>
+
+   <div id="nodeData" style="display: none;">
    </div>
 
   <div id="keys" style="display: none;">
