@@ -12,6 +12,7 @@ var numSelectedLink;
 var viewSubgraphButton;
 var excludedClassesDiv;
 var selectedClassesDiv;
+var nodeDataDiv;
 var numSelected = 0;
 var currentSizeColoring;
 var currentColoring;
@@ -113,6 +114,29 @@ var RecoloringMode = {
     }
 };
 
+function showNodeData(event) {
+    var nodeId = event.target.parentNode.id;
+    var viewportX = event.pageX - $(window).scrollLeft();
+	var viewportY = event.pageY - $(window).scrollTop();
+	var width = $(window).width();
+	if ((viewportX < width - 200) || (viewportY > 200)) {
+	    nodeDataDiv.css({
+				    'bottom':'auto',
+				    'left':'auto',
+				    'top': '10px',
+				    'right': '10px'});
+	      } else {
+		  nodeDataDiv.css({
+				    'top' : 'auto',
+				    'right' : 'auto',
+				    'bottom': '10px',
+				    'left': '10px'});
+	      }
+    nodeDataDiv.showing = window.setTimeout(function() {
+        nodeDataDiv.html("Loading...").load($SCRIPT_ROOT + '/_properties/' + nodeId).show();
+    }, 300);
+}
+
 function showExcludedClasses() {
     excludedClassesDiv.showing = window.setTimeout(function() {
 						       excludedClassesDiv.show();
@@ -169,7 +193,7 @@ function toggleOpenImplications() {
 }
 
 $(document).ready(function(){
-		      if (!window.Touch) hovertipInit();
+		      //if (!window.Touch) hovertipInit();
 
 		      nodes = $('g[class="node"]');
 		      nonstrictArrows = $('g[id|="nonstrict"]');
@@ -202,9 +226,11 @@ $(document).ready(function(){
 		      selectedClassesDiv.hover(function() { postponeHidingDiv(selectedClassesDiv); },
 					       function() { hideDiv(selectedClassesDiv);});	      
 
+              nodeDataDiv = $('#nodeData')
 
 		      toggleNonstrictArrowHighlight();
 
+              nodes.hover(function(event) {postponeHidingDiv(nodeDataDiv); showNodeData(event);}, function() {hideDiv(nodeDataDiv); });
 		      nodes.each(function(i, node) {
 				     node.selected = false; 
 				     node.sizeColor = "";
