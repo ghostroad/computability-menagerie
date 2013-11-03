@@ -17,6 +17,7 @@ var numSelected = 0;
 var currentSizeColoring;
 var currentColoring;
 var restoreCheckedClassesButton;
+var touchEnabled = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
 
 function getSelectedClasses() {
     var selected = [];
@@ -193,7 +194,6 @@ function toggleOpenImplications() {
 }
 
 $(document).ready(function(){
-		      //if (!window.Touch) hovertipInit();
 
 		      nodes = $('g[class="node"]');
 		      nonstrictArrows = $('g[id|="nonstrict"]');
@@ -230,7 +230,7 @@ $(document).ready(function(){
 
 		      toggleNonstrictArrowHighlight();
 
-              nodes.hover(function(event) {postponeHidingDiv(nodeDataDiv); showNodeData(event);}, function() {hideDiv(nodeDataDiv); });
+              if (!touchEnabled) nodes.hover(function(event) {postponeHidingDiv(nodeDataDiv); showNodeData(event);}, function() {hideDiv(nodeDataDiv); });
 		      nodes.each(function(i, node) {
 				     node.selected = false; 
 				     node.sizeColor = "";
