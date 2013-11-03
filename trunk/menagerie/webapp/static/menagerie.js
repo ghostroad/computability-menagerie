@@ -17,7 +17,7 @@ var numSelected = 0;
 var currentSizeColoring;
 var currentColoring;
 var restoreCheckedClassesButton;
-var touchEnabled = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+var touchEnabled = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
 function getSelectedClasses() {
     var selected = [];
