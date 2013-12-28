@@ -4,19 +4,12 @@ var settings = {
     "showHelp" : "false"
 };
 
-var nodes;
-var showProofsButton;
-var nonstrictArrows;
-var excludeSelectedButton;
+var nodes, nonstrictArrows;
+var showProofsButton, excludeSelectedButton, viewSubgraphButton, restoreCheckedClassesButton, coloringModeSelector;
+var excludedClassesDiv, selectedClassesDiv, nodeDataDiv;
 var numSelectedLink;
-var viewSubgraphButton;
-var excludedClassesDiv;
-var selectedClassesDiv;
-var nodeDataDiv;
 var numSelected = 0;
-var currentSizeColoring;
-var currentColoring;
-var restoreCheckedClassesButton;
+var currentSizeColoring, currentColoring;
 var touchEnabled = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 
 function getSelectedClasses() {
@@ -214,6 +207,7 @@ $(document).ready(function(){
 		      viewSubgraphButton = $('#viewSubgraph');
 		      excludeSelectedButton = $('#excludeSelected');
 		      restoreCheckedClassesButton = $('#restoreChecked');
+		      coloringModeSelector = $('#coloringModeSelector');
 
 		      excludedClassesDiv = $('#excludedClasses');
 		      $('#excludedClassesLink').hover(showExcludedClasses, function() { hideDiv(excludedClassesDiv); });
@@ -265,10 +259,10 @@ function readAndApplySettings() {
 			      settings[pieces[0]] = pieces[1];
 			  });
     if (settings["coloring"] == "category") {
-	$('#coloringModeSelector').val("category");
+	coloringModeSelector.val("category");
 	CategoryMode.apply(); 
     } else {
-	$('#coloringModeSelector').val("measure");
+	coloringModeSelector.val("measure");
 	MeasureMode.apply();
     }
     if (settings["showKey"] == "true") $('#keys').show();
@@ -285,10 +279,11 @@ function updateHash(key, value) {
 }
 
 function disableButtonsIfAppropriate() {
-    enable(numSelected > 1, viewSubgraphButton, viewSubgraph); 
-    enable(numSelected == 2 || numSelected == 1, showProofsButton, showProofs);
-    enable(numSelected > 0 && numSelected <= nodes.length - 2, excludeSelectedButton, excludeSelected);
-    enable(numSelected > 0, numSelectedLink, function() { });
+    enable(numSelected > 1, viewSubgraphButton); 
+    enable(numSelected == 2 || numSelected == 1, showProofsButton);
+    enable(numSelected > 0 && numSelected <= nodes.length - 2, excludeSelectedButton);
+    enable(numSelected > 0, numSelectedLink);
+    enable(numSelected == 0, coloringModeSelector)
 }
 
 function enable(condition, anchor, action) {

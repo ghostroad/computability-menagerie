@@ -40,6 +40,10 @@ span.button.disabled {
     pointer-events: none;
 }
 
+select.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
 span.button:hover {
     color:red;
 }
