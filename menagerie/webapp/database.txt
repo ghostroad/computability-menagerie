@@ -54,6 +54,7 @@ BB2R "bounded by a 2-random"
 BB3R "bounded by a 3-random"
 BBmin "minimal or computable"
 BIF "bi-immune free"
+BND1 "bounds no density-one"
 BN1G "bounds no 1-generic"
 BN2G "bounds no 2-generic"
 BN3G "bounds no 3-generic"
@@ -173,7 +174,7 @@ LowSchnorr -/> BOGL1		# UNJUSTIFIED -- Lerman (1983, Thm. V.3.12) constructed a 
 
 BBmin -> BN1R				"If $A\oplus B$ is 1-random then $A$ and $B$ are Turing incomparable"
 BBmin -> BN1G				"If $A\oplus B$ is 1-generic then $A$ and $B$ are Turing incomparable"
-PD(BBmin) = 1				"In [Downey and Greenberg 2008, Turing degreed of reals of positive effective packing dimension], it is shown that there is an $X$ of minimal degree and effective packing dimension 1. In fact, this partially relativizes to allow $X$ to have effective packing dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) packing dimension 1"
+PD(BBmin) = 1				"In [Downey and Greenberg 2008, Turing degrees of reals of positive effective packing dimension], it is shown that there is an $X$ of minimal degree and effective packing dimension 1. In fact, this partially relativizes to allow $X$ to have effective packing dimension 1 relative to any given oracle. Therefore, the class of minimal degrees has (classical) packing dimension 1"
 HD(BN1R) = 1				"In [Greenberg and Miller 2011, Diagonally non-recursive functions and effective Hausdorff dimension], it is shown that there is an $X$ of effective Hausdorff dimension 1 that computes no 1-random. In fact, this partially relativizes to allow $X$ to have effective Hausdorff dimension 1 relative to any given oracle. Therefore, the class of reals that bound no 1-random has (classical) Hausdorff dimension 1"
 BBmin -/> NotHigh			"There is a high minimal degree by Cooper's jump inversion theorem for minimal degrees"
 BBmin -/> BNmin				"Consider any minimal degree"
@@ -253,6 +254,12 @@ FSI is uncountable 			"There is a perfect $\Pi^0_1$ class of reals with finite s
 FSI -> JumpTraceable		"[Hirschfeldt, Weber 2012]"
 Low1Rand -> FSI				"See, for example, [Hirschfeldt, Weber 2012]"
 FSI -/> BNHIF				"There is a perfect $\Pi^0_1$ class of reals with finite self-information [Herbert 2013]. By the hyperimmune-free basis theorem, there is a hyperimmune-free real with finite self-information."
+
+BND1 -> BN1G				"Every 1-generic is a density-one point."
+BND1 -> BN1R				"Given any ML-random real $A \oplus B$, either $A$ or $B$ is balanced random. Every balanced random real is a density-one point [Bienvenu, Greenberg, Kučera, Nies, Turetsky 2013]."
+BBmin -> BND1				"Every positive density point is either ML-random or computes a 1-generic [Khan, Miller 2014]."
+BND1 -/> BNSC				"There are arbitrarily slow-growing DNC functions that compute no Kurtz random real [Khan, Miller 2012], and hence no positive density point. On the other hand, sufficiently slow-growing DNC functions compute shift-complex sequences [Khan 2013]."
+LowKurtz -> BND1			"The degrees that are low for Kurtz randomness are exactly the hyperimmune-free and non-DNC ones [Greenberg, Miller 2009]. However, every positive density point is Kurtz random, so it is either ML-random (in which case, it is DNC), or hyperimmune (every hyperimmune-free Kurtz random is weak 2-random [Yu])."
 
 #
 # The End
