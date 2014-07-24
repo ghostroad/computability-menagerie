@@ -84,6 +84,7 @@ NotPA "not PA"
 NotPAinZP "not PA in 0'"
 OmegaLow "low for Omega"
 SuperLow "superlow"
+NotAED "not almost everywhere dominating"	# Almost everywhere dominating is equivalent to uniformly almost everywhere dominating [Kjos-Hanssen, Miller, Solomon 2006]
 
 #
 # Facts
@@ -260,6 +261,13 @@ BND1 -> BN1R				"Given any ML-random real $A \oplus B$, either $A$ or $B$ is bal
 BBmin -> BND1				"Every positive density point is either ML-random or computes a 1-generic [Khan, Miller 2014]."
 BND1 -/> BNSC				"There are arbitrarily slow-growing DNC functions that compute no Kurtz random real [Khan, Miller 2012], and hence no positive density point. On the other hand, sufficiently slow-growing DNC functions compute shift-complex sequences [Khan 2013]."
 LowKurtz -> BND1			"Every density-one point is Kurtz random, hence high for Kurtz randomness."
+
+NotHigh -> NotAED			""
+ArrayComp -> NotAED		"Every almost everywhere dominating degree is array noncomputable [Barmpalias, Tracing and domination in the Turing degrees, 2012]"
+DeltaTwo -/> NotAED		"$0'$ is almost everywhere dominating [Dobrinen, Simpson 2004]."
+NotDNC -/> NotAED		"There is an incomplete c.e. set that is almost everywhere dominating [Cholak, Greenberg, Miller 2006]. An incomplete c.e. set is never DNC by the Arslanov completeness criterion."
+NotAED -> NotAboveZP 	"$0'$ is almost everywhere dominating [Dobrinen, Simpson 2004]."
+BNDeltaTwo -/> NotAED	"[]" 
 
 #
 # The End
