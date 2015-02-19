@@ -3,43 +3,8 @@
 <head>
   {% from 'macros.html' import svgellipse, svgarrow, stripePattern, button, openImplicationKey %}
   <title>The Computability Menagerie</title>
+  <meta name="viewport" content="initial-scale=0.5">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"/>
-  <!-- SVG node styling. This needs to be inline for Firefox -->
-  <style type="text/css">
-    .countable ellipse, .countable rect {fill: #B0B0B0;}
-    .uncountableMeager ellipse, .uncountableMeager rect {fill: #DBBB7C;}
-    .uncountableComeager ellipse, .uncountableComeager rect {fill: #D3665C;}
-    .uncountableUnknown ellipse {fill: url(#uncountableUnknown)}
-    .unknownMeager ellipse {fill: url(#unknownMeager)}
-    .unknownUnknown ellipse {fill: url(#unknownUnknown)}
-
-    .level0 ellipse, .level0 rect {fill: #B0B0B0;}
-    .level1 ellipse, .level1 rect {fill: #E69FB8;}
-    .level2 ellipse, .level2 rect {fill: #A487C5;}
-    .level3 ellipse, .level3 rect {fill: #79A4DD;}
-    .level4 ellipse, .level4 rect {fill: #72BB94;}
-    {% for smallest in range(4) %}{% for largest in range(smallest+1, 5) %}
-    .level{{smallest}}-{{largest}} ellipse {fill: url(#level{{smallest}}-{{largest}})}{% endfor %}{% endfor %}
-
-    .above ellipse, .above rect {fill: #F02F2F;}
-    .eqAbove ellipse {fill: url(#eqAbove);}
-    .below ellipse, .below rect {fill: #3F95EB;}
-    .eqBelow ellipse {fill: url(#eqBelow);}
-    .comp ellipse, .comp rect {fill: #9D38DF;}
-    .inc ellipse, .inc rect {fill: lightgray;}
-    .eqComp ellipse {fill: url(#eqComp);}
-    .aboveComp ellipse {fill: url(#aboveComp);}
-    .belowComp ellipse {fill: url(#belowComp);}
-    .belowInc ellipse {fill: url(#belowInc);}
-    .aboveInc ellipse {fill: url(#aboveInc);}
-    .eqInc ellipse {fill: url(#eqInc);}
-    .compInc ellipse {fill: url(#compInc);}
-
-    .notBetw ellipse, .notBetw rect {fill: #B0B0B0;}
-    .betw ellipse, .betw rect {fill: lightcoral;}
-    .possiblyBetw ellipse {fill: url(#possiblyBetw);}
-    .selected ellipse, .selected rect {fill: #FCDC31;}
-  </style>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <script src="{{ url_for('static', filename='jquery-1.4.4.compressed.js') }}"></script>
   <script>
