@@ -127,7 +127,7 @@ function showNodeData(event) {
 				    'left': '10px'});
 	      }
     nodeDataDiv.showing = window.setTimeout(function() {
-        nodeDataDiv.html("Loading...").load($SCRIPT_ROOT + '/_properties/' + nodeId).show();
+        nodeDataDiv.hide().load($SCRIPT_ROOT + '/_properties/' + nodeId, function() {nodeDataDiv.show();});
     }, 300);
 }
 
@@ -224,7 +224,6 @@ $(document).ready(function(){
 
 		      toggleNonstrictArrowHighlight();
 
-              if (!touchEnabled) nodes.hover(function(event) {postponeHidingDiv(nodeDataDiv); showNodeData(event);}, function() {hideDiv(nodeDataDiv); });
 		      nodes.each(function(i, node) {
 				     node.selected = false; 
 				     node.sizeColor = "";
