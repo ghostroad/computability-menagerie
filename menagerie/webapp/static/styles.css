@@ -6,6 +6,12 @@ body {
 g text {
     pointer-events: none;
     font-family: "Lucida Grande",Lucida,Helvetica,sans-serif;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 g.node:hover {
@@ -29,15 +35,6 @@ div.justifications {
 span.button {
     color: darkblue;
     text-decoration: underline; 
-}
-
-g text {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
 span.button span {
@@ -165,4 +162,40 @@ div.classList ul {
 g.highlightArrow path {
     stroke-dasharray: 5,5;
 }
+
+
+
+.countable ellipse, .countable rect {fill: #B0B0B0;}
+.uncountableMeager ellipse, .uncountableMeager rect {fill: #DBBB7C;}
+.uncountableComeager ellipse, .uncountableComeager rect {fill: #D3665C;}
+.uncountableUnknown ellipse {fill: url(#uncountableUnknown)}
+.unknownMeager ellipse {fill: url(#unknownMeager)}
+.unknownUnknown ellipse {fill: url(#unknownUnknown)}
+
+.level0 ellipse, .level0 rect {fill: #B0B0B0;}
+.level1 ellipse, .level1 rect {fill: #E69FB8;}
+.level2 ellipse, .level2 rect {fill: #A487C5;}
+.level3 ellipse, .level3 rect {fill: #79A4DD;}
+.level4 ellipse, .level4 rect {fill: #72BB94;}
+{% for smallest in range(4) %}{% for largest in range(smallest+1, 5) %}
+.level{{smallest}}-{{largest}} ellipse {fill: url(#level{{smallest}}-{{largest}})}{% endfor %}{% endfor %}
+
+.above ellipse, .above rect {fill: #F02F2F;}
+.eqAbove ellipse {fill: url(#eqAbove);}
+.below ellipse, .below rect {fill: #3F95EB;}
+.eqBelow ellipse {fill: url(#eqBelow);}
+.comp ellipse, .comp rect {fill: #9D38DF;}
+.inc ellipse, .inc rect {fill: lightgray;}
+.eqComp ellipse {fill: url(#eqComp);}
+.aboveComp ellipse {fill: url(#aboveComp);}
+.belowComp ellipse {fill: url(#belowComp);}
+.belowInc ellipse {fill: url(#belowInc);}
+.aboveInc ellipse {fill: url(#aboveInc);}
+.eqInc ellipse {fill: url(#eqInc);}
+.compInc ellipse {fill: url(#compInc);}
+
+.notBetw ellipse, .notBetw rect {fill: #B0B0B0;}
+.betw ellipse, .betw rect {fill: lightcoral;}
+.possiblyBetw ellipse {fill: url(#possiblyBetw);}
+.selected ellipse, .selected rect {fill: #FCDC31;}
 
