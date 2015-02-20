@@ -5,11 +5,6 @@
   <title>The Computability Menagerie</title>
   <meta name="viewport" content="initial-scale=0.5">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"/>
-  <!-- dynamically generated composite SVG node stylings -->
-  <style type="text/css">
-    {% for smallest in range(4) %}{% for largest in range(smallest+1, 5) %}
-    .level{{smallest}}-{{largest}} ellipse {fill: url(#level{{smallest}}-{{largest}})}{% endfor %}{% endfor %}
-  </style>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
   <script src="{{ url_for('static', filename='jquery-1.4.4.compressed.js') }}"></script>
   <script>
