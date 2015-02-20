@@ -177,7 +177,16 @@ g.highlightArrow path {
 .level2 ellipse, .level2 rect {fill: #A487C5;}
 .level3 ellipse, .level3 rect {fill: #79A4DD;}
 .level4 ellipse, .level4 rect {fill: #72BB94;}
-
+    .level0-1 ellipse {fill: url(#level0-1)}
+    .level0-2 ellipse {fill: url(#level0-2)}
+    .level0-3 ellipse {fill: url(#level0-3)}
+    .level0-4 ellipse {fill: url(#level0-4)}
+    .level1-2 ellipse {fill: url(#level1-2)}
+    .level1-3 ellipse {fill: url(#level1-3)}
+    .level1-4 ellipse {fill: url(#level1-4)}
+    .level2-3 ellipse {fill: url(#level2-3)}
+    .level2-4 ellipse {fill: url(#level2-4)}
+    .level3-4 ellipse {fill: url(#level3-4)}
 .above ellipse, .above rect {fill: #F02F2F;}
 .eqAbove ellipse {fill: url(#eqAbove);}
 .below ellipse, .below rect {fill: #3F95EB;}
