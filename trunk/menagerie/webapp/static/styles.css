@@ -177,8 +177,6 @@ g.highlightArrow path {
 .level2 ellipse, .level2 rect {fill: #A487C5;}
 .level3 ellipse, .level3 rect {fill: #79A4DD;}
 .level4 ellipse, .level4 rect {fill: #72BB94;}
-{% for smallest in range(4) %}{% for largest in range(smallest+1, 5) %}
-.level{{smallest}}-{{largest}} ellipse {fill: url(#level{{smallest}}-{{largest}})}{% endfor %}{% endfor %}
 
 .above ellipse, .above rect {fill: #F02F2F;}
 .eqAbove ellipse {fill: url(#eqAbove);}
