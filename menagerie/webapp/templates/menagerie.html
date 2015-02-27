@@ -22,36 +22,34 @@
      </div>
      <div id="controls">
        <table>
-	 <tr>
-	   <td>{{ button("numSelectedLink", '<span id="numSelected">0</span> selected'|safe, disabled=True) }}{% if excludedClasses %}, {{ button("excludedClassesLink", excludedClasses|length ~ " excluded") }} {% endif %}
-	   </td>
-	   <td>{{ button("showProofs", "View proofs", onclick="showProofs();", disabled=True) }}</td>
-	   <td>{{ button("viewSubgraph", "View subgraph", onclick="viewSubgraph();", disabled=True) }}</td>
-	   <td>{{ button("excludeSelected", "Exclude selected", onclick="excludeSelected();", disabled=True) }}</td>
-	   <td>{{ button("unselectAll", "Deselect All", onclick="unselectAll();") }}</td>
-	   <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
-	   <td>{{ button("openImplications", "Suppress open implications" if showOpen else "Display open implications" , onclick="toggleOpenImplications();") }}</td>
-	   <td>{{ button("toggleHelp", "Help") }}</td>
-	   <td>{{ button("toggleKey", "Key") }}</td>
-
-	 </tr>
+	       <tr>
+	           <td>{{ button("numSelectedLink", '<span id="numSelected">0</span> selected'|safe, disabled=True) }}{% if excludedClasses %}, {{ button("excludedClassesLink", excludedClasses|length ~ " excluded") }} {% endif %}
+	           </td>
+	           <td>{{ button("showProofs", "View proofs", onclick="showProofs();", disabled=True) }}</td>
+	           <td>{{ button("viewSubgraph", "View subgraph", onclick="viewSubgraph();", disabled=True) }}</td>
+        	   <td>{{ button("excludeSelected", "Exclude selected", onclick="excludeSelected();", disabled=True) }}</td>
+	           <td>{{ button("unselectAll", "Deselect All", onclick="unselectAll();") }}</td>
+	           <td><select id="coloringModeSelector" onchange="currentColoring.handleSizeColoringToggle();"><option value="measure">Color by measure</option><option value="category">Color by category</option></select></td>
+        	   <td>{{ button("openImplications", "Suppress open implications" if showOpen else "Display open implications" , onclick="toggleOpenImplications();") }}</td>
+	           <td>{{ button("toggleHelp", "Help") }}</td>
+	           <td>{{ button("toggleKey", "Key") }}</td>
+	       </tr>
        </table>
      </div>
 
      <div id="help" style="display: none;">
-	<p>How a class is colored says a great deal about its properties and how it relates to other classes. We recommend enabling the key (click "Key"). Here are a few things to try:</p>
-       <ul>
-	 
-	 <li>Select/deselect classes by clicking on them.</li>
-	 <li>When no classes are selected, switch between coloring by "measure" (Hausdorff dimension, packing dimension and Lebesgue measure) and category using the dropdown.</li>
-	 <li>Double-click on a class to see its properties in detail (opens a new tab). Alternatively, hover over the class to see a short summary.</li>
-	 <li>When one or more classes are selected, the graph is recolored to indicate how other classes relate to the selected classes.</li>
-	 <li>Select a pair of classes, then click "View proofs" to see the implications between them (opens a new tab/window).</li>
-	 <li>Select a group of classes, then click "View subgraph" to generate a subgraph consisting only of the selected classes (opens a new tab/window).</li>
-	 <li>Select a group of classes, then click "Exclude selected" to remove those classes from the graph.</li>
-	 <li>Bookmark the page to save your settings.</li>
-       </ul>
-       <p>{{ button("dismissHelp", "Dismiss this window") }}</p>
+	   <p>Classes are color-coded according to their properties and how they relate to other classes. We recommend enabling the key (click "Key"). Here are a few things to try:</p>
+        <ul>
+            <li>Select/deselect classes by clicking on them.</li>
+            <li>When no classes are selected, switch between coloring by "measure" (Hausdorff dimension, packing dimension and Lebesgue measure) and category using the dropdown.</li>
+            <li>Double-click on a class to see its properties in detail (opens a new tab).</li>
+            <li>When one or more classes are selected, the graph is recolored to indicate how other classes relate to the selected classes.</li>
+            <li>Select a pair of classes, then click "View proofs" to see the implications between them (opens a new tab/window).</li>
+            <li>Select a group of classes, then click "View subgraph" to generate a subgraph consisting only of the selected classes (opens a new tab/window).</li>
+            <li>Select a group of classes, then click "Exclude selected" to remove those classes from the graph.</li>
+            <li>Bookmark the page to save your settings.</li>
+        </ul>
+        <p>{{ button("dismissHelp", "Dismiss this window") }}</p>
      </div>
 
      {% if excludedClasses %}
@@ -72,12 +70,12 @@
        Selected classes
      </div>
 
-   </div>
+    </div>
 
-   <div id="nodeData" style="display: none;">
-   </div>
+    <div id="nodeData" style="display: none;">
+    </div>
 
-  <div id="keys" style="display: none;">
+    <div id="keys" style="display: none;">
     <div id="recoloringKey" class="key" style="display: none;">
 	<table>
 	  <tr><td>{{ svgarrow("black", "highlightArrow") }}</td><td> Nonstrict implication </td></tr>
@@ -114,18 +112,9 @@
     </div>
   </div>
 
-  <table>
-    <tr>
-      <td>
 	<div id="graph" style="width:{{ graph.attributes.width.value}}">
 	  {{ graph.toxml() | safe }}
 	</div>
-      </td>
-      <td>
-	<div id="space"></div>
-      </td>
-    </tr>
-  </table>
 
   <svg height="0pt" width="0pt" id="paintServers" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>

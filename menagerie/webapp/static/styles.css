@@ -61,6 +61,7 @@ div#space{
 div#graph{
     padding-top: 75px;
     padding-bottom:150px;
+    padding-right:250px;
 }
 
 div#nodeData {
