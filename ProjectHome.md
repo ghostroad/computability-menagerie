@@ -1,0 +1,1 @@
+A web application and command line tool for processing and visualizing a database of facts about downward-closed classes of Turing degrees. It is inspired by the diagram by Greg Kuperberg of Scott Aaronson's 'Complexity Zoo' (https://www.math.ucdavis.edu/~greg/zoology/diagram.xml).
