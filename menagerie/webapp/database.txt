@@ -69,6 +69,7 @@ BNW2G "bounds no weak 2-generic"			# Bounding a weak 2-generic is equivalent to 
 BOGL1 "bounds only GL_1"
 BOGL2 "bounds only GL_2"
 DeltaTwo "Delta_2"
+EBIF "effectively bi-immune free"
 FSI "finite self-information"
 HIF "hyperimmune-free"
 JumpTraceable "jump traceable"
@@ -267,8 +268,13 @@ ArrayComp -> NotAED		"Every almost everywhere dominating degree is array noncomp
 DeltaTwo -/> NotAED		"$0'$ is almost everywhere dominating [Dobrinen, Simpson 2004]."
 NotDNC -/> NotAED		"There is an incomplete c.e. set that is almost everywhere dominating [Cholak, Greenberg, Miller 2006]. An incomplete c.e. set is never DNC by the Arslanov completeness criterion."
 NotAED -> NotAboveZP 	"$0'$ is almost everywhere dominating [Dobrinen, Simpson 2004]."
-BNDeltaTwo -/> NotAED	"[]" 
+BNDeltaTwo -/> NotAED	 
 
+EBIF -> BN1R           "Every 1-random is effectively immune, hence effectively bi-immune."
+EBIF -/> NotDNC        "There is a DNC function that computes no effectively bi-immune set. [Beros 2015]"
+BIF -> EBIF            ""
+EBIF -/> HIF           "No 1-generic computes an effectively bi-immune set, because being effectively immune is equivalent to being of DNC degree. So there are hyperimmune sets that compute no effectively bi-immune set."
+NotDNC -> EBIF         "Every effectively immune set computes a DNC function."
 #
 # The End
 #
