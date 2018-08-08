@@ -244,7 +244,7 @@ $(document).ready(function(){
 				     };
 				     node.addEventListener("click", function(evt) { 
 							       evt.target.parentNode.toggleSelected(); currentColoring.handleSelect(); }, true);
-				     node.addEventListener("dblclick", function(evt) { showClassDetails(evt.target.parentNode.id); }, true);
+				     //node.addEventListener("dblclick", function(evt) { showClassDetails(evt.target.parentNode.id); }, true);
 				 });
 
 		      readAndApplySettings();
