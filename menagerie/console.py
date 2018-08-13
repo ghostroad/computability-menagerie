@@ -73,7 +73,7 @@ def configureApp(m):
     from menagerie.webapp.apputils import Coloring
     app.config['menagerie'] = m
     app.config['propertiesMap'] = Coloring(m).buildPropertiesMap()
-    app.config['gatewayPage'] = "http://www.math.wisc.edu/~jmiller/menagerie.html"
+    app.config['gatewayPage'] = "http://math.hawaii.edu/~khan/index.html#menagerie"
     return app
 
 def compileMain():
